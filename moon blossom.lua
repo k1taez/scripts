@@ -818,22 +818,22 @@ end
 function enableShaders()
     local bloom = Instance.new("BloomEffect")
     bloom.Name = "MoonBlossomBloom"
-    bloom.Intensity = 0.2
-    bloom.Size = 1
+    bloom.Intensity = 4
+    bloom.Size = 3
     bloom.Threshold = 0.4
     bloom.Parent = Lighting
     
     local colorCorrection = Instance.new("ColorCorrectionEffect")
     colorCorrection.Name = "MoonBlossomColorCorrection"
-    colorCorrection.Brightness = -0.1
+    colorCorrection.Brightness = -0.4
     colorCorrection.Contrast = 0.5
-    colorCorrection.Saturation = -0.2
+    colorCorrection.Saturation = -0.8
     colorCorrection.TintColor = Color3.fromRGB(200, 200, 200)
     colorCorrection.Parent = Lighting
     
     local atmosphere = Instance.new("Atmosphere")
     atmosphere.Name = "MoonBlossomAtmosphere"
-    atmosphere.Density = 0.6
+    atmosphere.Density = 0.1
     atmosphere.Offset = 0.4
     atmosphere.Color = Color3.fromRGB(50, 50, 50)
     atmosphere.Decay = Color3.fromRGB(30, 30, 30)
@@ -849,7 +849,7 @@ function enableShaders()
     
     local dof = Instance.new("DepthOfFieldEffect")
     dof.Name = "MoonBlossomDOF"
-    dof.FarIntensity = 0.2
+    dof.FarIntensity = 0.1
     dof.FocusDistance = 0.05
     dof.InFocusRadius = 20
     dof.NearIntensity = 0.2
@@ -1020,4 +1020,5 @@ for _, child in ipairs(ScreenGui:GetDescendants()) do
         child.Visible = true
     end
 end
+
 
