@@ -819,7 +819,7 @@ function enableShaders()
     local bloom = Instance.new("BloomEffect")
     bloom.Name = "MoonBlossomBloom"
     bloom.Intensity = 0.2
-    bloom.Size = 10
+    bloom.Size = 1
     bloom.Threshold = 0.4
     bloom.Parent = Lighting
     
@@ -843,13 +843,13 @@ function enableShaders()
     
     local sunRays = Instance.new("SunRaysEffect")
     sunRays.Name = "MoonBlossomSunRays"
-    sunRays.Intensity = 0.05 -- Заменили 0.极 на 0.05
+    sunRays.Intensity = 0.4 -- Заменили 0.极 на 0.05
     sunRays.Spread = 3
     sunRays.Parent = Lighting -- Заменили sun极.Parent на sunRays.Parent
     
     local dof = Instance.new("DepthOfFieldEffect")
     dof.Name = "MoonBlossomDOF"
-    dof.FarIntensity = 2
+    dof.FarIntensity = 0.2
     dof.FocusDistance = 0.05
     dof.InFocusRadius = 20
     dof.NearIntensity = 0.2
@@ -1020,3 +1020,4 @@ for _, child in ipairs(ScreenGui:GetDescendants()) do
         child.Visible = true
     end
 end
+
