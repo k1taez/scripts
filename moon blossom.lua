@@ -825,9 +825,9 @@ function enableShaders()
     
     local colorCorrection = Instance.new("ColorCorrectionEffect")
     colorCorrection.Name = "MoonBlossomColorCorrection"
-    colorCorrection.Brightness = 1
-    colorCorrection.Contrast = 0.3
-    colorCorrection.Saturation = 1
+    colorCorrection.Brightness = 5
+    colorCorrection.Contrast = 0.01
+    colorCorrection.Saturation = 0.4
     colorCorrection.TintColor = Color3.fromRGB(200, 200, 200)
     colorCorrection.Parent = Lighting
     
@@ -864,14 +864,14 @@ function enableShaders()
     local topLight = Instance.new("PointLight")
     topLight.Name = "MoonBlossomTopLight" -- Заменили Name极 на Name
     topLight.Brightness = 30
-    topLight.Range = 100
+    topLight.Range = 10
     topLight.Color = Color3.fromRGB(50, 50, 50)
     topLight.Position = Vector3.new(0, 100, 0)
     topLight.Parent = Workspace.Terrain
     
     local frontLight = Instance.new("PointLight")
     frontLight.Name = "MoonBlossomFrontLight"
-    frontLight.Brightness = 30
+    frontLight.Brightness = 3
     frontLight.Range = 80
     frontLight.Color = Color3.fromRGB(50, 50, 50)
     frontLight.Position = Vector3.new(0, 5, 50)
@@ -1020,6 +1020,7 @@ for _, child in ipairs(ScreenGui:GetDescendants()) do
         child.Visible = true
     end
 end
+
 
 
 
