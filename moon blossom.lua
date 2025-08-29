@@ -825,10 +825,10 @@ function enableShaders()
     
     local colorCorrection = Instance.new("ColorCorrectionEffect")
     colorCorrection.Name = "MoonBlossomColorCorrection"
-    colorCorrection.Brightness = 5
-    colorCorrection.Contrast = 0.01
-    colorCorrection.Saturation = 0.4
-    colorCorrection.TintColor = Color3.fromRGB(50, 50, 50)
+    colorCorrection.Brightness = -0.1
+    colorCorrection.Contrast = 0.5
+    colorCorrection.Saturation = -0.2
+    colorCorrection.TintColor = Color3.fromRGB(200, 200, 200)
     colorCorrection.Parent = Lighting
     
     local atmosphere = Instance.new("Atmosphere")
@@ -1020,6 +1020,7 @@ for _, child in ipairs(ScreenGui:GetDescendants()) do
         child.Visible = true
     end
 end
+
 
 
 
