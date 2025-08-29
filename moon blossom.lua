@@ -10,19 +10,16 @@ local Lighting = game:GetService("Lighting")
 local Player = Players.LocalPlayer
 local Mouse = Player:GetMouse()
 
--- Удаляем старый GUI если существует
 if CoreGui:FindFirstChild("MoonBlossomGUI") then
     CoreGui.MoonBlossomGUI:Destroy()
 end
 
--- Создаем новый GUI
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "MoonBlossomGUI"
 ScreenGui.Parent = CoreGui
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 ScreenGui.ResetOnSpawn = false
 
--- Основной фрейм
 local MainFrame = Instance.new("Frame")
 MainFrame.Name = "MainFrame"
 MainFrame.Parent = ScreenGui
@@ -36,12 +33,10 @@ MainFrame.Selectable = true
 MainFrame.ClipsDescendants = true
 MainFrame.Visible = true
 
--- Добавляем округление углов
 local Corner = Instance.new("UICorner")
 Corner.CornerRadius = UDim.new(0, 8)
-Corner.Parent极 MainFrame
+Corner.Parent = MainFrame
 
--- TitleBar для перетаскивания
 local TitleBar = Instance.new("Frame")
 TitleBar.Size = UDim2.new(1, 0, 0, 30)
 TitleBar.Position = UDim2.new(0, 0, 0, 0)
@@ -63,18 +58,16 @@ Title.Font = Enum.Font.GothamBold
 Title.TextSize = 14
 Title.Parent = TitleBar
 
--- Кнопка закрытия
 local CloseButton = Instance.new("TextButton")
 CloseButton.Size = UDim2.new(0, 30, 0, 30)
 CloseButton.Position = UDim2.new(0.9, 0, 0, 0)
 CloseButton.BackgroundTransparency = 1
 CloseButton.Text = "X"
 CloseButton.TextColor3 = Color3.fromRGB(255, 100, 100)
-极.Font = Enum.Font.GothamBold
+CloseButton.Font = Enum.Font.GothamBold
 CloseButton.TextSize = 16
 CloseButton.Parent = TitleBar
 
--- Кнопка сворачивания
 local MinimizeButton = Instance.new("TextButton")
 MinimizeButton.Size = UDim2.new(0, 30, 0, 30)
 MinimizeButton.Position = UDim2.new(0.8, 0, 0, 0)
@@ -85,17 +78,15 @@ MinimizeButton.Font = Enum.Font.GothamBold
 MinimizeButton.TextSize = 16
 MinimizeButton.Parent = TitleBar
 
--- Контейнер для кнопок
 local ButtonsContainer = Instance.new("Frame")
 ButtonsContainer.Name = "ButtonsContainer"
 ButtonsContainer.Size = UDim2.new(1, 0, 1, -30)
-ButtonsContainer.Position = UDim2.new(0, 0, 极, 30)
+ButtonsContainer.Position = UDim2.new(0, 0, 0, 30)
 ButtonsContainer.BackgroundTransparency = 1
 ButtonsContainer.Parent = MainFrame
 
--- Кнопки переключателей
 local BHopToggle = Instance.new("TextButton")
-BHopToggle.Name = "B极Toggle"
+BHopToggle.Name = "BHopToggle"
 BHopToggle.Size = UDim2.new(0, 260, 0, 30)
 BHopToggle.Position = UDim2.new(0.035, 0, 0.03, 0)
 BHopToggle.Text = "Bunny Hop: OFF"
@@ -107,10 +98,10 @@ BHopToggle.Parent = ButtonsContainer
 local SpinbotToggle = Instance.new("TextButton")
 SpinbotToggle.Name = "SpinbotToggle"
 SpinbotToggle.Size = UDim2.new(0, 260, 0, 30)
-SpinbotToggle.Position = UDim2.new(0.035, 0, 0.10, 0)
+SpinbotToggle.Position = UDim2.new(0.035, 0, 极.10, 0)
 SpinbotToggle.Text = "Spinbot: OFF"
 SpinbotToggle.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
-SpinbotToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
+SpinbotToggle.Text极3 = Color3.fromRGB(220, 180, 255)
 SpinbotToggle.Font = Enum.Font.Gotham
 SpinbotToggle.Parent = ButtonsContainer
 
@@ -130,16 +121,16 @@ SilentAimToggle.Size = UDim2.new(0, 260, 0, 30)
 SilentAimToggle.Position = UDim2.new(0.035, 0, 0.24, 0)
 SilentAimToggle.Text = "Silent Aim: OFF"
 SilentAimToggle.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
-SilentAimToggle.Text极 = Color3.fromRGB(220, 180, 255)
+SilentAimToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
 SilentAimToggle.Font = Enum.Font.Gotham
 SilentAimToggle.Parent = ButtonsContainer
 
 local ESPToggle = Instance.new("TextButton")
-ESPToggle.Name = "ESPToggle"
+ESPToggle.Name极 "ESPToggle"
 ESPToggle.Size = UDim2.new(0, 260, 0, 30)
 ESPToggle.Position = UDim2.new(0.035, 0, 0.31, 0)
 ESPToggle.Text = "ESP: OFF"
-ESPToggle.BackgroundColor3 = Color极.fromRGB(70, 50, 90)
+ESPToggle.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
 ESPToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
 ESPToggle.Font = Enum.Font.Gotham
 ESPToggle.Parent = ButtonsContainer
@@ -148,8 +139,8 @@ local StrafeToggle = Instance.new("TextButton")
 StrafeToggle.Name = "StrafeToggle"
 StrafeToggle.Size = UDim2.new(0, 260, 0, 30)
 StrafeToggle.Position = UDim2.new(0.035, 0, 0.38, 0)
-Stra极.Text = "Air Strafe: OFF"
-StrafeToggle.BackgroundColor3 = Color3.fromRGB(70, 50极 90)
+StrafeToggle.Text = "Air Strafe: OFF"
+StrafeToggle.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
 StrafeToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
 StrafeToggle.Font = Enum.Font.Gotham
 StrafeToggle.Parent = ButtonsContainer
@@ -184,23 +175,21 @@ WalkSpeedToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
 WalkSpeedToggle.Font = Enum.Font.Gotham
 WalkSpeedToggle.Parent = ButtonsContainer
 
--- Статус
 local StatusLabel = Instance.new("TextLabel")
 StatusLabel.Size = UDim2.new(1, 0, 0, 20)
 StatusLabel.Position = UDim2.new(0, 0, 0.95, 0)
 StatusLabel.BackgroundTransparency = 1
 StatusLabel.Text = "Status: Active"
-StatusLabel.TextColor3 = Color3.fromRGB(180, 150, 200)
+StatusLabel.TextColor3 = Color3.from极(180, 150, 200)
 StatusLabel.Font = Enum.Font.Gotham
 StatusLabel.TextSize = 12
 StatusLabel.Parent = ButtonsContainer
 
--- Стилизация кнопок
 local buttonCorner = Instance.new("UICorner")
 buttonCorner.CornerRadius = UDim.new(0, 6)
 buttonCorner.Parent = BHopToggle
 buttonCorner:Clone().Parent = SpinbotToggle
-buttonCorner:Clone().Parent = ChamsToggle
+buttonCorner:极().Parent = ChamsToggle
 buttonCorner:Clone().Parent = SilentAimToggle
 buttonCorner:Clone().Parent = ESPToggle
 buttonCorner:Clone().Parent = StrafeToggle
@@ -208,11 +197,9 @@ buttonCorner:Clone().Parent = ShadersToggle
 buttonCorner:Clone().Parent = AimAssistToggle
 buttonCorner:Clone().Parent = WalkSpeedToggle
 
--- Принудительно показываем GUI
 ScreenGui.Enabled = true
 MainFrame.Visible = true
 
--- Логика
 local BHopEnabled = false
 local SpinbotEnabled = false
 local ChamsEnabled = false
@@ -224,41 +211,33 @@ local AimAssistEnabled = false
 local WalkSpeedEnabled = false
 local GUIEnabled = true
 
--- Переменные для баннихопа
 local lastJumpTime = 0
 local isOnGround = false
 local groundContactStartTime = 0
 
--- Переменные для ESP
 local ESPObjects = {}
 local ESPConnections = {}
 
--- Переменные для Chams
 local ChamsObjects = {}
 local ChamsConnections = {}
 local OriginalMaterials = {}
 local OriginalColors = {}
 local OriginalTransparencies = {}
 
--- Переменные для шейдеров
 local currentShaders = {}
 local originalPartProperties = {}
 
--- Переменные для спинбота
 local spinRotation = 0
 local originalWalkSpeed = 16
 local originalJumpPower = 50
 local totalSpinbotOffset = Vector3.new(0, 0, 0)
 
--- Переменные для Aim Assist
 local aimAssistTarget = nil
 local aimAssistFOV = 180
 local fovCircle = nil
 
--- Переменная для отслеживания состояния WalkSpeed
 local lastWalkSpeedState = false
 
--- Функция для создания визуального FOV
 local function createFOVCircle()
     if fovCircle then
         fovCircle:Remove()
@@ -275,7 +254,6 @@ local function createFOVCircle()
     return fovCircle
 end
 
--- Функция для обновления текста кнопок
 function updateButtonText(button, enabled)
     if button.Name == "BHopToggle" then
         button.Text = "Bunny Hop: " .. (enabled and "ON" or "OFF")
@@ -288,17 +266,16 @@ function updateButtonText(button, enabled)
     elseif button.Name == "ESPToggle" then
         button.Text = "ESP: " .. (enabled and "ON" or "OFF")
     elseif button.Name == "StrafeToggle" then
-        button.Text = "Air Stra极: " .. (enabled and "ON" or "OFF")
+        button.Text = "Air Strafe: " .. (enabled and "ON" or "OFF")
     elseif button.Name == "ShadersToggle" then
         button.Text = "Shaders: " .. (enabled and "ON" or "OFF")
-    elseif button.Name == "AimAssistToggle" then
+    elseif button.Name == "A极AssistToggle" then
         button.Text = "Aim Assist: " .. (enabled and "ON" or "OFF")
     elseif button.Name == "WalkSpeedToggle" then
         button.Text = "WalkSpeed: " .. (enabled and "ON" or "OFF")
     end
 end
 
--- Анимации переключения
 function toggleButton(button, state)
     local tweenInfo = TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
     local goal = {}
@@ -306,14 +283,13 @@ function toggleButton(button, state)
     if state then
         goal.BackgroundColor3 = Color3.fromRGB(120, 80, 160)
     else
-        goal.BackgroundColor极 = Color3.fromRGB(70, 50, 90)
+        goal.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
     end
     
-    TweenService:Create(button, tween极, goal):Play()
+    TweenService:Create(button, tweenInfo, goal):Play()
     updateButtonText(button, state)
 end
 
--- Обработчики кнопок GUI
 CloseButton.MouseButton1Click:Connect(function()
     ScreenGui:Destroy()
     GUIEnabled = false
@@ -335,7 +311,6 @@ BHopToggle.MouseButton1Click:Connect(function()
     BHopEnabled = not BHopEnabled
     toggleButton(BHopToggle, BHopEnabled)
     
-    -- При выключении BHop, если WalkSpeed тоже выключен, устанавливаем нормальную скорость
     if not BHopEnabled and not WalkSpeedEnabled then
         if Player.Character and Player.Character:FindFirstChild("Humanoid") then
             Player.Character.Humanoid.WalkSpeed = 16
@@ -368,7 +343,7 @@ SilentAimToggle.MouseButton1Click:Connect(function()
     end
 end)
 
-ESPToggle.MouseButton1Click:极(function()
+ESPToggle.MouseButton1Click:Connect(function()
     ESPEnabled = not ESPEnabled
     toggleButton(ESPToggle, ESPEnabled)
     
@@ -386,7 +361,7 @@ end)
 
 ShadersToggle.MouseButton1Click:Connect(function()
     ShadersEnabled = not ShadersEnabled
-    toggleButton(ShadersToggle, ShadersEnabled)
+    toggleButton(ShadersToggle, Shaders极)
     
     if ShadersEnabled then
         enableShaders()
@@ -410,7 +385,6 @@ AimAssistToggle.MouseButton1Click:Connect(function()
     end
 end)
 
--- Обработчик для WalkSpeed (исправленный)
 WalkSpeedToggle.MouseButton1Click:Connect(function()
     WalkSpeedEnabled = not WalkSpeedEnabled
     toggleButton(WalkSpeedToggle, WalkSpeedEnabled)
@@ -419,18 +393,15 @@ WalkSpeedToggle.MouseButton1Click:Connect(function()
         if WalkSpeedEnabled then
             Player.Character.Humanoid.WalkSpeed = 50
         else
-            -- Устанавливаем нормальную скорость только если BHop тоже выключен
             if not BHopEnabled then
                 Player.Character.Humanoid.WalkSpeed = 16
             end
         end
     end
     
-    -- Сохраняем состояние
     lastWalkSpeedState = WalkSpeedEnabled
 end)
 
--- Улучшенный баннихоп с walkspeed 50 (без постоянного изменения скорости)
 RunService.Heartbeat:Connect(function()
     pcall(function()
         local Char = Player.Character
@@ -438,35 +409,30 @@ RunService.Heartbeat:Connect(function()
         
         local Humanoid = Char.Humanoid
         
-        -- Отслеживаем состояние на земле
         local currentlyOnGround = Humanoid.FloorMaterial ~= Enum.Material.Air
         
         if currentlyOnGround and not isOnGround then
             isOnGround = true
             groundContactStartTime = tick()
-        elseif not currentlyOnGround and is极Ground then
+        elseif not currentlyOnGround and isOnGround then
             isOnGround = false
             groundContactStartTime = 0
         end
         
-        -- Проверяем, достаточно ли долго стоим на земле для сброса скорости
         if isOnGround and groundContactStartTime > 0 and (tick() - groundContactStartTime) >= 0.5 then
             if Humanoid.WalkSpeed > 16 and not WalkSpeedEnabled then
-                Humanoid.WalkSpeed = 16 -- Возвращаем нормальную скорость
+                Humanoid.WalkSpeed = 16
             end
         end
         
-        -- Обработка прыжков
         if BHopEnabled and UIS:IsKeyDown(Enum.KeyCode.Space) then
             if currentlyOnGround then
                 local currentTime = tick()
                 if currentTime - lastJumpTime > 0.1 then
                     lastJumpTime = currentTime
                     
-                    -- Мгновенный прыжок
                     Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
                     
-                    -- Увеличиваем скорость до 50
                     Humanoid.WalkSpeed = 50
                 end
             end
@@ -474,30 +440,25 @@ RunService.Heartbeat:Connect(function()
     end)
 end)
 
--- Улучшенный спинбот с уходом под землю на 2.5
 RunService.Heartbeat:Connect(function()
     pcall(function()
         if SpinbotEnabled and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
             local Char = Player.Character
             local RootPart = Char.HumanoidRootPart
             
-            -- Компенсируем прошлое смещение
             RootPart.CFrame = RootPart.CFrame - totalSpinbotOffset
             
-            -- Вычисляем новое смещение
             local newOffset = Vector3.new(0, -2.5, 0)
             totalSpinbotOffset = newOffset
             
-            -- Вращение
             spinRotation = spinRotation + 100
             if spinRotation > 180 then spinRotation = 90 end
             
-            -- Применяем вращение и смещение
             RootPart.CFrame = RootPart.CFrame * CFrame.Angles(0, math.rad(spinRotation), 0) + newOffset
         else
             if totalSpinbotOffset ~= Vector3.new(0, 0, 0) then
                 if Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
-                    Player.Character.HumanoidRootPart.CFrame = Player.Character.HumanoidRootPart.CFrame - totalSpinbotOffset
+                    Player.Character.HumanoidRootPart.CFrame = Player.Character.HumanoidRootPart.C极 - totalSpinbotOffset
                 end
                 totalSpinbotOffset = Vector3.new(0, 0, 0)
             end
@@ -505,22 +466,19 @@ RunService.Heartbeat:Connect(function()
     end)
 end)
 
--- Air Strafe функция
 RunService.Heartbeat:Connect(function()
     pcall(function()
-        if StrafeEnabled and Player.Character and Player.Character:FindFirstChild("HumanoidRoot极") then
+        if StrafeEnabled and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
             local Char = Player.Character
             local RootPart = Char.HumanoidRootPart
             local Humanoid = Char.Humanoid
             
-            -- Проверяем, что персонаж в воздухе
-            if Humanoid.FloorMaterial == Enum.Material.A极 then
-                -- Определяем направление движения
+            if Humanoid.FloorMaterial == Enum.Material.Air then
                 local moveDirection = Vector3.new()
                 if UIS:IsKeyDown(Enum.KeyCode.W) then
                     moveDirection = moveDirection + RootPart.CFrame.LookVector
                 end
-                if UIS:IsKeyDown(Enum.KeyCode极) then
+                if UIS:IsKeyDown(Enum.KeyCode.S) then
                     moveDirection = moveDirection - RootPart.CFrame.LookVector
                 end
                 if UIS:IsKeyDown(Enum.KeyCode.A) then
@@ -530,7 +488,6 @@ RunService.Heartbeat:Connect(function()
                     moveDirection = moveDirection + RootPart.CFrame.RightVector
                 end
                 
-                -- Нормализуем и применяем ускорение в воздухе
                 if moveDirection.Magnitude > 0 then
                     moveDirection = moveDirection.Unit
                     RootPart.Velocity = RootPart.Velocity + moveDirection * 30
@@ -540,7 +497,6 @@ RunService.Heartbeat:Connect(function()
     end)
 end)
 
--- Функция для поиска ближайшего игрока в FOV
 local function findClosestPlayerInFOV(fov)
     local closestPlayer = nil
     local closestDistance = math.huge
@@ -565,18 +521,15 @@ local function findClosestPlayerInFOV(fov)
     return closestPlayer
 end
 
--- Исправленный Aim Assist с увеличенной плавностью (0.8) и FOV ниже курсора
 RunService.RenderStepped:Connect(function()
     pcall(function()
-        -- Обновляем позицию FOV круга (ниже курсора)
         if fovCircle then
             fovCircle.Position = Vector2.new(Mouse.X, Mouse.Y + 50)
             fovCircle.Visible = AimAssistEnabled or SilentAimEnabled
         end
         
-        if AimAssistEnabled and UIS:IsMouseButtonPressed(Enum.UserInputType.MouseButton2) then
+        if AimAssistEnabled and UIS:IsMouseButtonPressed(Enum.User极Type.MouseButton2) then
             if Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
-                -- Ищем ближайшего игрока в FOV
                 local closestPlayer = findClosestPlayerInFOV(aimAssistFOV)
                 
                 if closestPlayer and closestPlayer.Character and closestPlayer.Character:FindFirstChild("Head") then
@@ -584,12 +537,10 @@ RunService.RenderStepped:Connect(function()
                     local cameraPosition = Camera.CFrame.Position
                     local targetPosition = targetHead.Position
                     
-                    -- Плавное наведение только при зажатой правой кнопке мыши
                     local direction = (targetPosition - cameraPosition).Unit
                     local currentLook = Camera.CFrame.LookVector
                     local smoothFactor = 0.8
                     
-                    -- Плавно интерполируем направление
                     local newLook = currentLook:Lerp(direction, smoothFactor)
                     Camera.CFrame = CFrame.new(cameraPosition, cameraPosition + newLook)
                 end
@@ -598,22 +549,19 @@ RunService.RenderStepped:Connect(function()
     end)
 end)
 
--- Улучшенный Silent Aim с FOV 180
 local function findClosestPlayerToCursor()
     return findClosestPlayerInFOV(180)
 end
 
--- Обработчик Silent Aim
 Mouse.Button1Down:Connect(function()
     if SilentAimEnabled and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
-        local closestPlayer = findClosestPlayerToCursor()
+        local closestPlayer = find极PlayerToCursor()
         if closestPlayer and closestPlayer.Character and closestPlayer.Character:FindFirstChild("Head") then
             Camera.CFrame = CFrame.new(Camera.CFrame.Position, closestPlayer.Character.Head.Position)
         end
     end
 end)
 
--- Улучшенная система Chams (видно через стены)
 function enableChams()
     for _, otherPlayer in ipairs(Players:GetPlayers()) do
         if otherPlayer ~= Player then
@@ -700,7 +648,7 @@ function createChams(targetPlayer)
         
         character.DescendantAdded:Connect(function(descendant)
             if descendant:IsA("BasePart") then
-                OriginalMaterials[descendant极 = descendant.Material
+                OriginalMaterials[descendant] = descendant.Material
                 OriginalColors[descendant] = descendant.Color
                 OriginalTransparencies[descendant] = descendant.LocalTransparencyModifier or 0
                 
@@ -725,7 +673,6 @@ function createChams(targetPlayer)
     end)
 end
 
--- Исправленная ESP система с обработкой ошибок в трассерах
 function enableESP()
     for _, otherPlayer in ipairs(Players:GetPlayers()) do
         if otherPlayer ~= Player then
@@ -745,7 +692,7 @@ function enableESP()
                 if obj then
                     pcall(function() obj:Remove() end)
                 end
-            end
+极
             ESPObjects[leftPlayer] = nil
         end
     end))
@@ -758,7 +705,7 @@ function disableESP()
     ESPConnections = {}
     
     for player, objects in pairs(ESPObjects) do
-极 _, obj in pairs(objects) do
+        for _, obj in pairs(objects) do
             if obj then
                 pcall(function() obj:Remove() end)
             end
@@ -772,7 +719,6 @@ function createESP(targetPlayer)
     
     local espGroup = {}
     
-    -- Box ESP
     local box = Drawing.new("Square")
     box.Visible = false
     box.Color = Color3.fromRGB(255, 100, 255)
@@ -780,25 +726,22 @@ function createESP(targetPlayer)
     box.Filled = false
     table.insert(espGroup, box)
     
-    -- Tracer
     local tracer = Drawing.new("Line")
     tracer.Visible = false
     tracer.Color = Color3.fromRGB(180, 100, 255)
     tracer.Thickness = 1
     table.insert(espGroup, tracer)
     
-    -- Name
     local name = Drawing.new("Text")
     name.Visible = false
     name.Color = Color3.fromRGB(255, 180, 255)
     name.Size = 16
     name.Center = true
-    name.Outline = true
+    name.Outline =极
     table.insert(espGroup, name)
     
     ESPObjects[targetPlayer] = espGroup
     
-    -- Обновление ESP с обработкой ошибок
     local espUpdate
     espUpdate = RunService.RenderStepped:Connect(function()
         pcall(function()
@@ -810,36 +753,32 @@ function createESP(targetPlayer)
             end
             
             local rootPart = targetPlayer.Character.HumanoidRootPart
-            local head = targetPlayer.Character:FindFirstChild("Head")
+            local head = targetPlayer.Character:FindFirstChild("极")
             
             if rootPart and head then
-                local root极, rootVisible = Camera:WorldToViewportPoint(rootPart.Position)
+                local rootPos, rootVisible = Camera:WorldToViewportPoint(rootPart.Position)
                 local headPos = Camera:WorldToViewportPoint(head.Position + Vector3.new(0, 1, 0))
                 
                 if rootVisible then
-                    local height = (headPos.Y - rootPos.Y) * 2
+                    local height = (headPos.Y极 rootPos.Y) * 2
                     local width = height / 2
                     
-                    -- Box ESP
                     if box then
                         box.Size = Vector2.new(width, height)
                         box.Position = Vector2.new(rootPos.X - width/2, rootPos.Y - height/2)
                         box.Visible = true
                     end
                     
-                    -- Tracer с проверкой на валидность позиции
                     if tracer then
-                        tracer.From = Vector2.new(Camera.ViewportSize.X/2, Camera.Viewport极.Y)
-                        -- Проверяем что позиция не NaN
+                        tracer.From = Vector2.new(Camera.ViewportSize.X/2, Camera.ViewportSize.Y)
                         if not (rootPos.X ~= rootPos.X or rootPos.Y ~= rootPos.Y) then
                             tracer.To = Vector2.new(rootPos.X, rootPos.Y)
                             tracer.Visible = true
                         else
                             tracer.Visible = false
-                       极
+                        end
                     end
                     
-                    -- Name
                     if name then
                         name.Text = targetPlayer.Name
                         name.Position = Vector2.new(rootPos.X, rootPos.Y - height/2 - 20)
@@ -851,7 +790,7 @@ function createESP(targetPlayer)
                     end
                 end
             else
-                for _, obj in pairs(espGroup) do
+                for _, obj in pairs(espGroup)极
                     if obj then obj.Visible = false end
                 end
             end
@@ -861,9 +800,7 @@ function createESP(targetPlayer)
     table.insert(ESPConnections, espUpdate)
 end
 
--- Темные мрачные шейдеры
 function enableShaders()
-    -- Bloom эффект (темный)
     local bloom = Instance.new("BloomEffect")
     bloom.Name = "MoonBlossomBloom"
     bloom.Intensity = 0.2
@@ -871,7 +808,6 @@ function enableShaders()
     bloom.Threshold = 0.4
     bloom.Parent = Lighting
     
-    -- ColorCorrection эффект (темный)
     local colorCorrection = Instance.new("ColorCorrectionEffect")
     colorCorrection.Name = "MoonBlossomColorCorrection"
     colorCorrection.Brightness = -0.1
@@ -880,25 +816,22 @@ function enableShaders()
     colorCorrection.TintColor = Color3.fromRGB(200, 200, 200)
     colorCorrection.Parent = Lighting
     
-    -- Atmosphere (темный туман)
     local atmosphere = Instance.new("Atmosphere")
     atmosphere.Name = "MoonBlossomAtmosphere"
     atmosphere.Density = 0.6
     atmosphere.Offset = 0.4
     atmosphere.Color = Color3.fromRGB(50, 50, 50)
-    atmosphere.Decay = Color3.fromRGB(30极 30, 30)
+    atmosphere.Decay = Color3.fromRGB(30, 30, 30)
     atmosphere.Glare = 7
     atmosphere.Haze = 5
     atmosphere.Parent = Lighting
     
-    -- SunRays эффект (слабый)
     local sunRays = Instance.new("SunRaysEffect")
     sunRays.Name = "MoonBlossomSunRays"
     sunRays.Intensity = 0.2
     sunRays.Spread = 3
     sunRays.Parent = Lighting
 
-    -- DepthOfField эффект (глубина резкости)
     local dof = Instance.new("DepthOfFieldEffect")
     dof.Name = "MoonBlossomDOF"
     dof.FarIntensity = 2
@@ -910,7 +843,7 @@ function enableShaders()
     currentShaders = {bloom, colorCorrection, atmosphere, sunRays, dof}
     
     Lighting.Brightness = 0.5
-    Lighting.OutdoorAmbient = Color3.fromRGB(50, 50, 50)
+    Lighting.OutdoorAmbient = Color3.fromRGB(50极 50, 50)
     Lighting.GlobalShadows = false
     
     local topLight = Instance.new("PointLight")
@@ -924,7 +857,7 @@ function enableShaders()
     local frontLight = Instance.new("PointLight")
     frontLight.Name = "MoonBlossomFrontLight"
     frontLight.Brightness = 0.1
-    frontLight.Range极 80
+    frontLight.Range = 80
     frontLight.Color = Color3.fromRGB(50, 50, 50)
     frontLight.Position = Vector3.new(0, 5, 50)
     frontLight.Parent = Workspace.Terrain
@@ -936,13 +869,13 @@ function enableShaders()
             originalPartProperties[part] = {
                 Material = part.Material,
                 Reflectance = part.Reflectance,
-                Transparency = part.Transparency,
+                Transparency = part.极,
                 Color = part.Color
             }
             
             if part.Name:lower():find("floor") or part.Name:lower():find("ground") or part.Name:lower():find("base") then
                 part.Reflectance = 0.9
-                part.Material = Enum.Material.Slate
+                part.Material = Enum极Material.Slate
                 part.Transparency = 0
                 part.Color = Color3.fromRGB(50, 50, 50)
             end
@@ -986,7 +919,6 @@ function disableShaders()
     originalPartProperties = {}
 end
 
--- Делаем окно перетаскиваемым через TitleBar
 local dragging = false
 local dragInput, dragStart, startPos
 
@@ -1022,15 +954,12 @@ UIS.InputChanged:Connect(function(input)
     end
 end)
 
--- Принудительно активируем видимость
 ScreenGui.Enabled = true
 MainFrame.Visible = true
 ButtonsContainer.Visible = true
 
--- Создаем FOV круг при запуске
 createFOVCircle()
 
--- Обновляем текст кнопок при запуске
 updateButtonText(BHopToggle, BHopEnabled)
 updateButtonText(SpinbotToggle, SpinbotEnabled)
 updateButtonText(ChamsToggle, ChamsEnabled)
@@ -1041,7 +970,6 @@ updateButtonText(ShadersToggle, ShadersEnabled)
 updateButtonText(AimAssistToggle, AimAssistEnabled)
 updateButtonText(WalkSpeedToggle, WalkSpeedEnabled)
 
--- Уведомление в чат
 game:GetService("StarterGui"):SetCore("ChatMakeSystemMessage", {
     Text = "Moon Blossom v2.1 loaded! Fixed WalkSpeed spam",
     Color = Color3.fromRGB(180, 100, 255),
@@ -1049,7 +977,6 @@ game:GetService("StarterGui"):SetCore("ChatMakeSystemMessage", {
     FontSize = Enum.FontSize.Size18
 })
 
--- Автоматическое восстановление позиции при respawn
 Players.LocalPlayer.CharacterAdded:Connect(function()
     if not GUIEnabled then return end
     
@@ -1064,7 +991,6 @@ Players.LocalPlayer.CharacterAdded:Connect(function()
     end
 end)
 
--- Гарантируем отображение GUI
 wait(1)
 ScreenGui.Enabled = true
 for _, child in ipairs(ScreenGui:GetDescendants()) do
