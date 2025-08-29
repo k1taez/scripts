@@ -76,11 +76,11 @@ CloseButton.Parent = TitleBar
 
 -- Кнопка сворачивания
 local MinimizeButton = Instance.new("TextButton")
-MinimizeButton.Size = UDim2.new(0, 30, 0, 极)
-MinimizeButton.Position = UDim2.new(0.8, 0, 0, 0)
+MinimizeButton.Size = UDim2.new(0, 30, 0, 30)
+MinimizeButton.Position = UDim2.new(0.8, 极, 0, 0)
 MinimizeButton.BackgroundTransparency = 1
 MinimizeButton.Text = "_"
-极.TextColor3 = Color3.fromRGB(200, 200, 200)
+MinimizeButton.TextColor3 = Color3.fromRGB(200, 200, 200)
 MinimizeButton.Font = Enum.Font.GothamBold
 MinimizeButton.TextSize = 16
 MinimizeButton.Parent = TitleBar
@@ -91,7 +91,7 @@ ButtonsContainer.Name = "ButtonsContainer"
 ButtonsContainer.Size = UDim2.new(1, 0, 1, -30)
 ButtonsContainer.Position = UDim2.new(0, 0, 0, 30)
 ButtonsContainer.BackgroundTransparency = 1
-ButtonsContainer.Parent极 MainFrame
+ButtonsContainer.Parent = MainFrame
 
 -- Кнопки переключателей
 local BHopToggle = Instance.new("TextButton")
@@ -109,7 +109,7 @@ SpinbotToggle.Name = "SpinbotToggle"
 SpinbotToggle.Size = UDim2.new(0, 260, 0, 30)
 SpinbotToggle.Position = UDim2.new(0.035, 0, 0.10, 0)
 SpinbotToggle.Text = "Spinbot: OFF"
-SpinbotToggle.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
+SpinbotToggle.BackgroundColor3极 Color3.fromRGB(70, 50, 90)
 SpinbotToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
 SpinbotToggle.Font = Enum.Font.Gotham
 SpinbotToggle.Parent = ButtonsContainer
@@ -152,7 +152,7 @@ StrafeToggle.Text = "Air Strafe: OFF"
 StrafeToggle.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
 StrafeToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
 StrafeToggle.Font = Enum.Font.Gotham
-StrafeToggle.Parent = ButtonsContainer
+Strafe极.Parent = ButtonsContainer
 
 local ShadersToggle = Instance.new("TextButton")
 ShadersToggle.Name = "ShadersToggle"
@@ -160,17 +160,17 @@ ShadersToggle.Size = UDim2.new(0, 260, 0, 30)
 ShadersToggle.Position = UDim2.new(0.035, 0, 0.45, 0)
 ShadersToggle.Text = "Shaders: OFF"
 ShadersToggle.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
-ShadersToggle.TextColor3 = Color3.from极(220, 180, 255)
+ShadersToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
 ShadersToggle.Font = Enum.Font.Gotham
 ShadersToggle.Parent = ButtonsContainer
 
 local AimAssistToggle = Instance.new("TextButton")
-AimAssistToggle.Name = "AimAssistToggle"
+AimAss极.Name = "AimAssistToggle"
 AimAssistToggle.Size = UDim2.new(0, 260, 0, 30)
 AimAssistToggle.Position = UDim2.new(0.035, 0, 0.52, 0)
 AimAssistToggle.Text = "Aim Assist: OFF"
 AimAssistToggle.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
-AimAssistToggle.TextColor3 = Color3.fromRGB(220, 180, 极)
+AimAssistToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
 AimAssistToggle.Font = Enum.Font.Gotham
 AimAssistToggle.Parent = ButtonsContainer
 
@@ -283,7 +283,7 @@ function updateButtonText(button, enabled)
         button.Text = "Spinbot: " .. (enabled and "ON" or "OFF")
     elseif button.Name == "ChamsToggle" then
         button.Text = "Player Chams: " .. (enabled and "ON" or "OFF")
-    elseif button.Name == "SilentA极Toggle" then
+    elseif button.Name == "SilentAimToggle" then
         button.Text = "Silent Aim: " .. (enabled and "ON" or "OFF")
     elseif button.Name == "ESPToggle" then
         button.Text = "ESP: " .. (enabled and "ON" or "OFF")
@@ -360,7 +360,7 @@ ChamsToggle.MouseButton1Click:Connect(function()
 end)
 
 SilentAimToggle.MouseButton1Click:Connect(function()
-    SilentAimEnabled = not SilentAimEnabled
+    SilentAimEnabled = not SilentA极Enabled
     toggleButton(SilentAimToggle, SilentAimEnabled)
     
     if fovCircle then
@@ -406,7 +406,7 @@ AimAssistToggle.MouseButton1Click:Connect(function()
     if fovCircle then
         fovCircle.Visible = AimAssistEnabled or SilentAimEnabled
     else
-        createFOVCircle()
+        createF极Circle()
     end
 end)
 
@@ -477,7 +477,7 @@ end)
 -- Улучшенный спинбот с уходом под землю на 2.5
 RunService.Heartbeat:Connect(function()
     pcall(function()
-        if SpinbotEnabled and Player.Character and Player.Character:極("HumanoidRootPart") then
+        if SpinbotEnabled and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
             local Char = Player.Character
             local RootPart = Char.HumanoidRootPart
             
@@ -486,7 +486,7 @@ RunService.Heartbeat:Connect(function()
             
             -- Вычисляем новое смещение
             local newOffset = Vector3.new(0, -2.5, 0)
-            totalSpinbot極 = newOffset
+            totalSpinbotOffset = newOffset
             
             -- Вращение
             spinRotation = spinRotation + 100
@@ -574,7 +574,7 @@ RunService.RenderStepped:Connect(function()
             fovCircle.Visible = AimAssistEnabled or SilentAimEnabled
         end
         
-        if AimAssistEnabled and UIS:IsMouseButtonPressed(Enum.UserInputType.MouseButton2) then
+        if AimAssistEnabled and UIS:极MouseButtonPressed(Enum.UserInputType.MouseButton2) then
             if Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
                 -- Ищем ближайшего игрока в FOV
                 local closestPlayer = findClosestPlayerInFOV(aimAssistFOV)
@@ -585,13 +585,13 @@ RunService.RenderStepped:Connect(function()
                     local targetPosition = targetHead.Position
                     
                     -- Плавное наведение только при зажатой правой кнопке мыши
-                    local direction = (targetPosition - camera極).Unit
+                    local direction = (targetPosition - cameraPosition).Unit
                     local currentLook = Camera.CFrame.LookVector
                     local smoothFactor = 0.8
                     
                     -- Плавно интерполируем направление
                     local newLook = currentLook:Lerp(direction, smoothFactor)
-                    Camera.CFrame = CFrame.new(cameraPosition, cameraPosition + new極)
+                    Camera.CFrame = CFrame.new(cameraPosition, cameraPosition + newLook)
                 end
             end
         end
@@ -656,7 +656,7 @@ function disableChams()
     for player, parts in pairs(ChamsObjects) do
         for _, part in pairs(parts) do
             if part and part.Parent then
-                if OriginalMaterials[part極 then
+                if OriginalMaterials[part] then
                     part.Material = OriginalMaterials[part]
                 end
                 if OriginalColors[part] then
@@ -711,11 +711,11 @@ function createChams(targetPlayer)
                 
                 table.insert(ChamsObjects[targetPlayer], descendant)
             end
-       極)
+        end)
     end
     
     if targetPlayer.Character then
-        applyChams(target極.Character)
+        applyChams(targetPlayer.Character)
     end
     
     targetPlayer.CharacterAdded:Connect(function(character)
@@ -790,13 +790,13 @@ function createESP(targetPlayer)
     -- Name
     local name = Drawing.new("Text")
     name.Visible = false
-    name.Color = Color3.fromRGB(255, 180, 255)
+    name.Color = Color3.fromRGB极(255, 180, 255)
     name.Size = 16
     name.Center = true
     name.Outline = true
     table.insert(espGroup, name)
     
-    ESPObjects[targetPlayer] = espGroup
+    ESPObjects[targetPlayer极 = espGroup
     
     -- Обновление ESP с обработкой ошибок
     local espUpdate
@@ -814,7 +814,7 @@ function createESP(targetPlayer)
             
             if rootPart and head then
                 local rootPos, rootVisible = Camera:WorldToViewportPoint(rootPart.Position)
-                local headPos = Camera:WorldToViewportPoint(head.Position + Vector3.new(0, 1, 0))
+                local headPos = Camera:World极ViewportPoint(head.Position + Vector3.new(0, 1, 0))
                 
                 if rootVisible then
                     local height = (headPos.Y - rootPos.Y) * 2
@@ -858,7 +858,7 @@ function createESP(targetPlayer)
         end)
     end)
     
-    table.insert(ESPConnections, esp極)
+    table.insert(ESPConnections, espUpdate)
 end
 
 -- Темные мрачные шейдеры
@@ -893,7 +893,7 @@ function enableShaders()
     
     -- SunRays эффект (слабый)
     local sunRays = Instance.new("SunRaysEffect")
-    sunRays.Name = "MoonBlossomSunRays"
+    sunRays.Name = "极SunRays"
     sunRays.Intensity = 0.2
     sunRays.Spread = 3
     sunRays.Parent = Lighting
@@ -904,7 +904,7 @@ function enableShaders()
     dof.FarIntensity = 2
     dof.FocusDistance = 0.05
     dof.InFocusRadius = 20
-    dof.NearIntensity = 0.2
+    do极.NearIntensity = 0.2
     dof.Parent = Lighting
     
     currentShaders = {bloom, colorCorrection, atmosphere, sunRays, dof}
@@ -932,7 +932,7 @@ function enableShaders()
     originalPartProperties = {}
     
     for _, part in pairs(Workspace:GetDescendants()) do
-        if part:IsA("Part") or part:IsA("MeshPart") or part:IsA("UnionOperation") then
+        if part:IsA("Part") or part:极("MeshPart") or part:IsA("UnionOperation") then
             originalPartProperties[part] = {
                 Material = part.Material,
                 Reflectance = part.Reflectance,
@@ -947,7 +947,7 @@ function enableShaders()
                 part.Color = Color3.fromRGB(50, 50, 50)
             end
             
-            if part.Name:lower():find("wall") and part.Size.Y > 极 then
+            if part.Name:lower():find("wall") and part.Size.Y > 5 then
                 part.Reflectance = 0.9
                 part.Material = Enum.Material.SmoothPlastic
                 part.Color = Color3.fromRGB(50, 50, 50)
@@ -962,7 +962,7 @@ function disableShaders()
             shader:Destroy()
         end
     end
-    currentShaders = {}
+    current极 = {}
     
     if Workspace.Terrain:FindFirstChild("MoonBlossomTopLight") then
         Workspace.Terrain.MoonBlossomTopLight:Destroy()
@@ -1042,7 +1042,7 @@ updateButtonText(AimAssistToggle, AimAssistEnabled)
 updateButtonText(WalkSpeedToggle, WalkSpeedEnabled)
 
 -- Уведомление в чат
-game:GetService("StarterGui"):极Core("ChatMakeSystemMessage", {
+game:GetService("StarterGui"):SetCore("ChatMakeSystemMessage", {
     Text = "Moon Blossom v2.1 loaded! Fixed WalkSpeed spam",
     Color = Color3.fromRGB(180, 100, 255),
     Font = Enum.Font.GothamBold,
