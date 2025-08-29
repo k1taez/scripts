@@ -818,9 +818,9 @@ end
 function enableShaders()
     local bloom = Instance.new("BloomEffect")
     bloom.Name = "MoonBlossomBloom"
-    bloom.Intensity = 52
-    bloom.Size = 40
-    bloom.Threshold = 6
+    bloom.Intensity = 50
+    bloom.Size = 100
+    bloom.Threshold = 30
     bloom.Parent = Lighting
     
     local colorCorrection = Instance.new("ColorCorrectionEffect")
@@ -837,41 +837,41 @@ function enableShaders()
     atmosphere.Offset = 0.1
     atmosphere.Color = Color3.fromRGB(50, 50, 50)
     atmosphere.Decay = Color3.fromRGB(30, 30, 30)
-    atmosphere.Glare = 0.2
-    atmosphere.Haze = 0.3
+    atmosphere.Glare = 80
+    atmosphere.Haze = 40
     atmosphere.Parent = Lighting -- Заменили atmosphere.P极 на atmosphere.Parent
     
     local sunRays = Instance.new("SunRaysEffect")
     sunRays.Name = "MoonBlossomSunRays"
-    sunRays.Intensity = 2 -- Заменили 0.极 на 0.05
-    sunRays.Spread = 30
+    sunRays.Intensity = 20 -- Заменили 0.极 на 0.05
+    sunRays.Spread = 300
     sunRays.Parent = Lighting -- Заменили sun极.Parent на sunRays.Parent
     
     local dof = Instance.new("DepthOfFieldEffect")
     dof.Name = "MoonBlossomDOF"
-    dof.FarIntensity = 20
-    dof.FocusDistance = 1
-    dof.InFocusRadius = 20
-    dof.NearIntensity = 0.2
+    dof.FarIntensity = 200
+    dof.FocusDistance = 10
+    dof.InFocusRadius = 200
+    dof.NearIntensity = 2
     dof.Parent = Lighting
     
     currentShaders = {bloom, colorCorrection, atmosphere, sunRays, dof}
     
-    Lighting.Brightness = 10
+    Lighting.Brightness = 100
     Lighting.OutdoorAmbient = Color3.fromRGB(50, 50, 50)
     Lighting.GlobalShadows = false
     
     local topLight = Instance.new("PointLight")
     topLight.Name = "MoonBlossomTopLight" -- Заменили Name极 на Name
-    topLight.Brightness = 30
-    topLight.Range = 10
+    topLight.Brightness = 300
+    topLight.Range = 100
     topLight.Color = Color3.fromRGB(50, 50, 50)
     topLight.Position = Vector3.new(0, 100, 0)
     topLight.Parent = Workspace.Terrain
     
     local frontLight = Instance.new("PointLight")
     frontLight.Name = "MoonBlossomFrontLight"
-    frontLight.Brightness = 3
+    frontLight.Brightness = 30
     frontLight.Range = 80
     frontLight.Color = Color3.fromRGB(50, 50, 50)
     frontLight.Position = Vector3.new(0, 5, 50)
@@ -1020,6 +1020,7 @@ for _, child in ipairs(ScreenGui:GetDescendants()) do
         child.Visible = true
     end
 end
+
 
 
 
