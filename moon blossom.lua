@@ -57,7 +57,7 @@ local Title = Instance.new("TextLabel")
 Title.Size = UDim2.new(0.7, 0, 1, 0)
 Title.Position = UDim2.new(0.05, 0, 0, 0)
 Title.BackgroundTransparency = 1
-Title.Text = "Moon Blossom v2.0"
+Title.Text = "Moon Blossom v2.1"
 Title.TextColor3 = Color3.fromRGB(220, 180, 255)
 Title.Font = Enum.Font.GothamBold
 Title.TextSize = 14
@@ -76,22 +76,22 @@ CloseButton.Parent = TitleBar
 
 -- Кнопка сворачивания
 local MinimizeButton = Instance.new("TextButton")
-MinimizeButton.Size = UDim2.new(0, 30, 0, 30)
+MinimizeButton.Size = UDim2.new(0, 30, 0, 极)
 MinimizeButton.Position = UDim2.new(0.8, 0, 0, 0)
 MinimizeButton.BackgroundTransparency = 1
 MinimizeButton.Text = "_"
-MinimizeButton.TextColor3 = Color3.fromRGB(200, 200, 200)
+极.TextColor3 = Color3.fromRGB(200, 200, 200)
 MinimizeButton.Font = Enum.Font.GothamBold
 MinimizeButton.TextSize = 16
 MinimizeButton.Parent = TitleBar
 
--- Контейнер для кнопок (будет скрываться при сворачивании)
+-- Контейнер для кнопок
 local ButtonsContainer = Instance.new("Frame")
 ButtonsContainer.Name = "ButtonsContainer"
 ButtonsContainer.Size = UDim2.new(1, 0, 1, -30)
 ButtonsContainer.Position = UDim2.new(0, 0, 0, 30)
 ButtonsContainer.BackgroundTransparency = 1
-ButtonsContainer.Parent = MainFrame
+ButtonsContainer.Parent极 MainFrame
 
 -- Кнопки переключателей
 local BHopToggle = Instance.new("TextButton")
@@ -117,7 +117,7 @@ SpinbotToggle.Parent = ButtonsContainer
 local ChamsToggle = Instance.new("TextButton")
 ChamsToggle.Name = "ChamsToggle"
 ChamsToggle.Size = UDim2.new(0, 260, 0, 30)
-ChamsToggle.Position = UDim極.new(0.035, 0, 0.17, 0)
+ChamsToggle.Position = UDim2.new(0.035, 0, 0.17, 0)
 ChamsToggle.Text = "Player Chams: OFF"
 ChamsToggle.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
 ChamsToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
@@ -126,7 +126,7 @@ ChamsToggle.Parent = ButtonsContainer
 
 local SilentAimToggle = Instance.new("TextButton")
 SilentAimToggle.Name = "SilentAimToggle"
-SilentAimToggle.Size = UDim2.new(0, 260, 0, 極)
+SilentAimToggle.Size = UDim2.new(0, 260, 0, 30)
 SilentAimToggle.Position = UDim2.new(0.035, 0, 0.24, 0)
 SilentAimToggle.Text = "Silent Aim: OFF"
 SilentAimToggle.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
@@ -150,7 +150,7 @@ StrafeToggle.Size = UDim2.new(0, 260, 0, 30)
 StrafeToggle.Position = UDim2.new(0.035, 0, 0.38, 0)
 StrafeToggle.Text = "Air Strafe: OFF"
 StrafeToggle.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
-StrafeToggle.Text極 = Color3.fromRGB(220, 180, 255)
+StrafeToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
 StrafeToggle.Font = Enum.Font.Gotham
 StrafeToggle.Parent = ButtonsContainer
 
@@ -160,7 +160,7 @@ ShadersToggle.Size = UDim2.new(0, 260, 0, 30)
 ShadersToggle.Position = UDim2.new(0.035, 0, 0.45, 0)
 ShadersToggle.Text = "Shaders: OFF"
 ShadersToggle.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
-ShadersToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
+ShadersToggle.TextColor3 = Color3.from极(220, 180, 255)
 ShadersToggle.Font = Enum.Font.Gotham
 ShadersToggle.Parent = ButtonsContainer
 
@@ -170,9 +170,9 @@ AimAssistToggle.Size = UDim2.new(0, 260, 0, 30)
 AimAssistToggle.Position = UDim2.new(0.035, 0, 0.52, 0)
 AimAssistToggle.Text = "Aim Assist: OFF"
 AimAssistToggle.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
-AimAssistToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
+AimAssistToggle.TextColor3 = Color3.fromRGB(220, 180, 极)
 AimAssistToggle.Font = Enum.Font.Gotham
-AimAss極istToggle.Parent = ButtonsContainer
+AimAssistToggle.Parent = ButtonsContainer
 
 local WalkSpeedToggle = Instance.new("TextButton")
 WalkSpeedToggle.Name = "WalkSpeedToggle"
@@ -255,6 +255,9 @@ local aimAssistTarget = nil
 local aimAssistFOV = 180
 local fovCircle = nil
 
+-- Переменная для отслеживания состояния WalkSpeed
+local lastWalkSpeedState = false
+
 -- Функция для создания визуального FOV
 local function createFOVCircle()
     if fovCircle then
@@ -280,7 +283,7 @@ function updateButtonText(button, enabled)
         button.Text = "Spinbot: " .. (enabled and "ON" or "OFF")
     elseif button.Name == "ChamsToggle" then
         button.Text = "Player Chams: " .. (enabled and "ON" or "OFF")
-    elseif button.Name == "SilentAimToggle" then
+    elseif button.Name == "SilentA极Toggle" then
         button.Text = "Silent Aim: " .. (enabled and "ON" or "OFF")
     elseif button.Name == "ESPToggle" then
         button.Text = "ESP: " .. (enabled and "ON" or "OFF")
@@ -288,7 +291,7 @@ function updateButtonText(button, enabled)
         button.Text = "Air Strafe: " .. (enabled and "ON" or "OFF")
     elseif button.Name == "ShadersToggle" then
         button.Text = "Shaders: " .. (enabled and "ON" or "OFF")
-    elseif button.Name == "A极AssistToggle" then
+    elseif button.Name == "AimAssistToggle" then
         button.Text = "Aim Assist: " .. (enabled and "ON" or "OFF")
     elseif button.Name == "WalkSpeedToggle" then
         button.Text = "WalkSpeed: " .. (enabled and "ON" or "OFF")
@@ -306,7 +309,7 @@ function toggleButton(button, state)
         goal.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
     end
     
-    TweenService:Create(button, tween極, goal):Play()
+    TweenService:Create(button, tweenInfo, goal):Play()
     updateButtonText(button, state)
 end
 
@@ -331,6 +334,13 @@ end)
 BHopToggle.MouseButton1Click:Connect(function()
     BHopEnabled = not BHopEnabled
     toggleButton(BHopToggle, BHopEnabled)
+    
+    -- При выключении BHop, если WalkSpeed тоже выключен, устанавливаем нормальную скорость
+    if not BHopEnabled and not WalkSpeedEnabled then
+        if Player.Character and Player.Character:FindFirstChild("Humanoid") then
+            Player.Character.Humanoid.WalkSpeed = 16
+        end
+    end
 end)
 
 SpinbotToggle.MouseButton1Click:Connect(function()
@@ -400,6 +410,7 @@ AimAssistToggle.MouseButton1Click:Connect(function()
     end
 end)
 
+-- Обработчик для WalkSpeed (исправленный)
 WalkSpeedToggle.MouseButton1Click:Connect(function()
     WalkSpeedEnabled = not WalkSpeedEnabled
     toggleButton(WalkSpeedToggle, WalkSpeedEnabled)
@@ -408,12 +419,18 @@ WalkSpeedToggle.MouseButton1Click:Connect(function()
         if WalkSpeedEnabled then
             Player.Character.Humanoid.WalkSpeed = 50
         else
-            Player.Character.Humanoid.WalkSpeed = 16
+            -- Устанавливаем нормальную скорость только если BHop тоже выключен
+            if not BHopEnabled then
+                Player.Character.Humanoid.WalkSpeed = 16
+            end
         end
     end
+    
+    -- Сохраняем состояние
+    lastWalkSpeedState = WalkSpeedEnabled
 end)
 
--- Улучшенный баннихоп с walkspeed 50
+-- Улучшенный баннихоп с walkspeed 50 (без постоянного изменения скорости)
 RunService.Heartbeat:Connect(function()
     pcall(function()
         local Char = Player.Character
@@ -429,13 +446,13 @@ RunService.Heartbeat:Connect(function()
             groundContactStartTime = tick()
         elseif not currentlyOnGround and isOnGround then
             isOnGround = false
-            groundContactStart極 = 0
+            groundContactStartTime = 0
         end
         
         -- Проверяем, достаточно ли долго стоим на земле для сброса скорости
         if isOnGround and groundContactStartTime > 0 and (tick() - groundContactStartTime) >= 0.5 then
             if Humanoid.WalkSpeed > 16 and not WalkSpeedEnabled then
-                Humanoid.WalkSpeed = 16
+                Humanoid.WalkSpeed = 16 -- Возвращаем нормальную скорость
             end
         end
         
@@ -454,20 +471,13 @@ RunService.Heartbeat:Connect(function()
                 end
             end
         end
-        
-        -- Обработка WalkSpeed
-        if WalkSpeedEnabled and Humanoid.WalkSpeed ~= 50 then
-            Humanoid.WalkSpeed = 50
-        elseif not WalkSpeedEnabled and not BHopEnabled and Humanoid.WalkSpeed ~= 16 then
-            Humanoid.WalkSpeed = 16
-        end
     end)
 end)
 
 -- Улучшенный спинбот с уходом под землю на 2.5
 RunService.Heartbeat:Connect(function()
     pcall(function()
-        if SpinbotEnabled and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
+        if SpinbotEnabled and Player.Character and Player.Character:極("HumanoidRootPart") then
             local Char = Player.Character
             local RootPart = Char.HumanoidRootPart
             
@@ -476,7 +486,7 @@ RunService.Heartbeat:Connect(function()
             
             -- Вычисляем новое смещение
             local newOffset = Vector3.new(0, -2.5, 0)
-            totalSpinbotOffset = newOffset
+            totalSpinbot極 = newOffset
             
             -- Вращение
             spinRotation = spinRotation + 100
@@ -513,7 +523,7 @@ RunService.Heartbeat:Connect(function()
                 if UIS:IsKeyDown(Enum.KeyCode.S) then
                     moveDirection = moveDirection - RootPart.CFrame.LookVector
                 end
-                if UIS:IsKeyDown(Enum.KeyCode.A極 then
+                if UIS:IsKeyDown(Enum.KeyCode.A) then
                     moveDirection = moveDirection - RootPart.CFrame.RightVector
                 end
                 if UIS:IsKeyDown(Enum.KeyCode.D) then
@@ -542,7 +552,7 @@ local function findClosestPlayerInFOV(fov)
             local screenPos, onScreen = Camera:WorldToViewportPoint(rootPart.Position)
             
             if onScreen then
-                local distance = (Vector2.new(screenPos.X, screenPos.Y) - mouse極).Magnitude
+                local distance = (Vector2.new(screenPos.X, screenPos.Y) - mousePos).Magnitude
                 
                 if distance <= fov and distance < closestDistance then
                     closestDistance = distance
@@ -575,13 +585,13 @@ RunService.RenderStepped:Connect(function()
                     local targetPosition = targetHead.Position
                     
                     -- Плавное наведение только при зажатой правой кнопке мыши
-                    local direction = (targetPosition - cameraPosition).Unit
+                    local direction = (targetPosition - camera極).Unit
                     local currentLook = Camera.CFrame.LookVector
                     local smoothFactor = 0.8
                     
                     -- Плавно интерполируем направление
                     local newLook = currentLook:Lerp(direction, smoothFactor)
-                    Camera.CFrame = CFrame.new(cameraPosition, cameraPosition + newLook)
+                    Camera.CFrame = CFrame.new(cameraPosition, cameraPosition + new極)
                 end
             end
         end
@@ -590,7 +600,7 @@ end)
 
 -- Улучшенный Silent Aim с FOV 180
 local function findClosestPlayerToCursor()
-    return findClosestPlayerIn極(180)
+    return findClosestPlayerInFOV(180)
 end
 
 -- Обработчик Silent Aim
@@ -646,7 +656,7 @@ function disableChams()
     for player, parts in pairs(ChamsObjects) do
         for _, part in pairs(parts) do
             if part and part.Parent then
-                if OriginalMaterials[part] then
+                if OriginalMaterials[part極 then
                     part.Material = OriginalMaterials[part]
                 end
                 if OriginalColors[part] then
@@ -701,11 +711,11 @@ function createChams(targetPlayer)
                 
                 table.insert(ChamsObjects[targetPlayer], descendant)
             end
-        end)
+       極)
     end
     
     if targetPlayer.Character then
-        applyChams(targetPlayer.Character)
+        applyChams(target極.Character)
     end
     
     targetPlayer.CharacterAdded:Connect(function(character)
@@ -848,7 +858,7 @@ function createESP(targetPlayer)
         end)
     end)
     
-    table.insert(ESPConnections, espUpdate)
+    table.insert(ESPConnections, esp極)
 end
 
 -- Темные мрачные шейдеры
@@ -937,7 +947,7 @@ function enableShaders()
                 part.Color = Color3.fromRGB(50, 50, 50)
             end
             
-            if part.Name:lower():find("wall") and part.Size.Y > 5 then
+            if part.Name:lower():find("wall") and part.Size.Y > 极 then
                 part.Reflectance = 0.9
                 part.Material = Enum.Material.SmoothPlastic
                 part.Color = Color3.fromRGB(50, 50, 50)
@@ -1032,8 +1042,8 @@ updateButtonText(AimAssistToggle, AimAssistEnabled)
 updateButtonText(WalkSpeedToggle, WalkSpeedEnabled)
 
 -- Уведомление в чат
-game:GetService("StarterGui"):SetCore("ChatMakeSystemMessage", {
-    Text = "Moon Blossom v2.0 loaded! Fixed tracers & improved stability",
+game:GetService("StarterGui"):极Core("ChatMakeSystemMessage", {
+    Text = "Moon Blossom v2.1 loaded! Fixed WalkSpeed spam",
     Color = Color3.fromRGB(180, 100, 255),
     Font = Enum.Font.GothamBold,
     FontSize = Enum.FontSize.Size18
