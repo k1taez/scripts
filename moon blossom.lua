@@ -863,16 +863,16 @@ function enableShaders()
     
     local topLight = Instance.new("PointLight")
     topLight.Name = "MoonBlossomTopLight" -- Заменили Name极 на Name
-    topLight.Brightness = 0.1
-    topLight.Range = 100
+    topLight.Brightness = 3
+    topLight.Range = 10
     topLight.Color = Color3.fromRGB(50, 50, 50)
     topLight.Position = Vector3.new(0, 100, 0)
     topLight.Parent = Workspace.Terrain
     
     local frontLight = Instance.new("PointLight")
     frontLight.Name = "MoonBlossomFrontLight"
-    frontLight.Brightness = 0.1
-    frontLight.Range = 80
+    frontLight.Brightness = 3
+    frontLight.Range = 8
     frontLight.Color = Color3.fromRGB(50, 50, 50)
     frontLight.Position = Vector3.new(0, 5, 50)
     frontLight.Parent = Workspace.Terrain
@@ -889,14 +889,14 @@ function enableShaders()
             }
             
             if part.Name:lower():find("floor") or part.Name:lower():find("ground") or part.Name:lower():find("base") then
-                part.Reflectance = 0.9
+                part.Reflectance = 3
                 part.Material = Enum.Material.Slate
-                part.Transparency = 0
+                part.Transparency = 0.4
                 part.Color = Color3.fromRGB(50, 50, 50)
             end
             
             if part.Name:lower():find("wall") and part.Size.Y > 5 then
-                part.Reflectance = 0.9
+                part.Reflectance = 1.4
                 part.Material = Enum.Material.SmoothPlastic
                 part.Color = Color3.fromRGB(50, 50, 50)
             end
@@ -1020,5 +1020,6 @@ for _, child in ipairs(ScreenGui:GetDescendants()) do
         child.Visible = true
     end
 end
+
 
 
