@@ -39,7 +39,7 @@ MainFrame.Visible = true
 -- Добавляем округление углов
 local Corner = Instance.new("UICorner")
 Corner.CornerRadius = UDim.new(0, 8)
-Corner.Parent = MainFrame
+Corner.Parent极 MainFrame
 
 -- TitleBar для перетаскивания
 local TitleBar = Instance.new("Frame")
@@ -70,14 +70,14 @@ CloseButton.Position = UDim2.new(0.9, 0, 0, 0)
 CloseButton.BackgroundTransparency = 1
 CloseButton.Text = "X"
 CloseButton.TextColor3 = Color3.fromRGB(255, 100, 100)
-CloseButton.Font = Enum.Font.GothamBold
+极.Font = Enum.Font.GothamBold
 CloseButton.TextSize = 16
 CloseButton.Parent = TitleBar
 
 -- Кнопка сворачивания
 local MinimizeButton = Instance.new("TextButton")
 MinimizeButton.Size = UDim2.new(0, 30, 0, 30)
-MinimizeButton.Position = UDim2.new(0.8, 极, 0, 0)
+MinimizeButton.Position = UDim2.new(0.8, 0, 0, 0)
 MinimizeButton.BackgroundTransparency = 1
 MinimizeButton.Text = "_"
 MinimizeButton.TextColor3 = Color3.fromRGB(200, 200, 200)
@@ -89,13 +89,13 @@ MinimizeButton.Parent = TitleBar
 local ButtonsContainer = Instance.new("Frame")
 ButtonsContainer.Name = "ButtonsContainer"
 ButtonsContainer.Size = UDim2.new(1, 0, 1, -30)
-ButtonsContainer.Position = UDim2.new(0, 0, 0, 30)
+ButtonsContainer.Position = UDim2.new(0, 0, 极, 30)
 ButtonsContainer.BackgroundTransparency = 1
 ButtonsContainer.Parent = MainFrame
 
 -- Кнопки переключателей
 local BHopToggle = Instance.new("TextButton")
-BHopToggle.Name = "BHopToggle"
+BHopToggle.Name = "B极Toggle"
 BHopToggle.Size = UDim2.new(0, 260, 0, 30)
 BHopToggle.Position = UDim2.new(0.035, 0, 0.03, 0)
 BHopToggle.Text = "Bunny Hop: OFF"
@@ -109,7 +109,7 @@ SpinbotToggle.Name = "SpinbotToggle"
 SpinbotToggle.Size = UDim2.new(0, 260, 0, 30)
 SpinbotToggle.Position = UDim2.new(0.035, 0, 0.10, 0)
 SpinbotToggle.Text = "Spinbot: OFF"
-SpinbotToggle.BackgroundColor3极 Color3.fromRGB(70, 50, 90)
+SpinbotToggle.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
 SpinbotToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
 SpinbotToggle.Font = Enum.Font.Gotham
 SpinbotToggle.Parent = ButtonsContainer
@@ -130,7 +130,7 @@ SilentAimToggle.Size = UDim2.new(0, 260, 0, 30)
 SilentAimToggle.Position = UDim2.new(0.035, 0, 0.24, 0)
 SilentAimToggle.Text = "Silent Aim: OFF"
 SilentAimToggle.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
-SilentAimToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
+SilentAimToggle.Text极 = Color3.fromRGB(220, 180, 255)
 SilentAimToggle.Font = Enum.Font.Gotham
 SilentAimToggle.Parent = ButtonsContainer
 
@@ -139,7 +139,7 @@ ESPToggle.Name = "ESPToggle"
 ESPToggle.Size = UDim2.new(0, 260, 0, 30)
 ESPToggle.Position = UDim2.new(0.035, 0, 0.31, 0)
 ESPToggle.Text = "ESP: OFF"
-ESPToggle.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
+ESPToggle.BackgroundColor3 = Color极.fromRGB(70, 50, 90)
 ESPToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
 ESPToggle.Font = Enum.Font.Gotham
 ESPToggle.Parent = ButtonsContainer
@@ -148,11 +148,11 @@ local StrafeToggle = Instance.new("TextButton")
 StrafeToggle.Name = "StrafeToggle"
 StrafeToggle.Size = UDim2.new(0, 260, 0, 30)
 StrafeToggle.Position = UDim2.new(0.035, 0, 0.38, 0)
-StrafeToggle.Text = "Air Strafe: OFF"
-StrafeToggle.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
+Stra极.Text = "Air Strafe: OFF"
+StrafeToggle.BackgroundColor3 = Color3.fromRGB(70, 50极 90)
 StrafeToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
 StrafeToggle.Font = Enum.Font.Gotham
-Strafe极.Parent = ButtonsContainer
+StrafeToggle.Parent = ButtonsContainer
 
 local ShadersToggle = Instance.new("TextButton")
 ShadersToggle.Name = "ShadersToggle"
@@ -165,7 +165,7 @@ ShadersToggle.Font = Enum.Font.Gotham
 ShadersToggle.Parent = ButtonsContainer
 
 local AimAssistToggle = Instance.new("TextButton")
-AimAss极.Name = "AimAssistToggle"
+AimAssistToggle.Name = "AimAssistToggle"
 AimAssistToggle.Size = UDim2.new(0, 260, 0, 30)
 AimAssistToggle.Position = UDim2.new(0.035, 0, 0.52, 0)
 AimAssistToggle.Text = "Aim Assist: OFF"
@@ -288,7 +288,7 @@ function updateButtonText(button, enabled)
     elseif button.Name == "ESPToggle" then
         button.Text = "ESP: " .. (enabled and "ON" or "OFF")
     elseif button.Name == "StrafeToggle" then
-        button.Text = "Air Strafe: " .. (enabled and "ON" or "OFF")
+        button.Text = "Air Stra极: " .. (enabled and "ON" or "OFF")
     elseif button.Name == "ShadersToggle" then
         button.Text = "Shaders: " .. (enabled and "ON" or "OFF")
     elseif button.Name == "AimAssistToggle" then
@@ -306,10 +306,10 @@ function toggleButton(button, state)
     if state then
         goal.BackgroundColor3 = Color3.fromRGB(120, 80, 160)
     else
-        goal.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
+        goal.BackgroundColor极 = Color3.fromRGB(70, 50, 90)
     end
     
-    TweenService:Create(button, tweenInfo, goal):Play()
+    TweenService:Create(button, tween极, goal):Play()
     updateButtonText(button, state)
 end
 
@@ -360,7 +360,7 @@ ChamsToggle.MouseButton1Click:Connect(function()
 end)
 
 SilentAimToggle.MouseButton1Click:Connect(function()
-    SilentAimEnabled = not SilentA极Enabled
+    SilentAimEnabled = not SilentAimEnabled
     toggleButton(SilentAimToggle, SilentAimEnabled)
     
     if fovCircle then
@@ -368,7 +368,7 @@ SilentAimToggle.MouseButton1Click:Connect(function()
     end
 end)
 
-ESPToggle.MouseButton1Click:Connect(function()
+ESPToggle.MouseButton1Click:极(function()
     ESPEnabled = not ESPEnabled
     toggleButton(ESPToggle, ESPEnabled)
     
@@ -406,7 +406,7 @@ AimAssistToggle.MouseButton1Click:Connect(function()
     if fovCircle then
         fovCircle.Visible = AimAssistEnabled or SilentAimEnabled
     else
-        createF极Circle()
+        createFOVCircle()
     end
 end)
 
@@ -444,7 +444,7 @@ RunService.Heartbeat:Connect(function()
         if currentlyOnGround and not isOnGround then
             isOnGround = true
             groundContactStartTime = tick()
-        elseif not currentlyOnGround and isOnGround then
+        elseif not currentlyOnGround and is极Ground then
             isOnGround = false
             groundContactStartTime = 0
         end
@@ -508,19 +508,19 @@ end)
 -- Air Strafe функция
 RunService.Heartbeat:Connect(function()
     pcall(function()
-        if StrafeEnabled and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
+        if StrafeEnabled and Player.Character and Player.Character:FindFirstChild("HumanoidRoot极") then
             local Char = Player.Character
             local RootPart = Char.HumanoidRootPart
             local Humanoid = Char.Humanoid
             
             -- Проверяем, что персонаж в воздухе
-            if Humanoid.FloorMaterial == Enum.Material.Air then
+            if Humanoid.FloorMaterial == Enum.Material.A极 then
                 -- Определяем направление движения
                 local moveDirection = Vector3.new()
                 if UIS:IsKeyDown(Enum.KeyCode.W) then
                     moveDirection = moveDirection + RootPart.CFrame.LookVector
                 end
-                if UIS:IsKeyDown(Enum.KeyCode.S) then
+                if UIS:IsKeyDown(Enum.KeyCode极) then
                     moveDirection = moveDirection - RootPart.CFrame.LookVector
                 end
                 if UIS:IsKeyDown(Enum.KeyCode.A) then
@@ -574,7 +574,7 @@ RunService.RenderStepped:Connect(function()
             fovCircle.Visible = AimAssistEnabled or SilentAimEnabled
         end
         
-        if AimAssistEnabled and UIS:极MouseButtonPressed(Enum.UserInputType.MouseButton2) then
+        if AimAssistEnabled and UIS:IsMouseButtonPressed(Enum.UserInputType.MouseButton2) then
             if Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
                 -- Ищем ближайшего игрока в FOV
                 local closestPlayer = findClosestPlayerInFOV(aimAssistFOV)
@@ -700,7 +700,7 @@ function createChams(targetPlayer)
         
         character.DescendantAdded:Connect(function(descendant)
             if descendant:IsA("BasePart") then
-                OriginalMaterials[descendant] = descendant.Material
+                OriginalMaterials[descendant极 = descendant.Material
                 OriginalColors[descendant] = descendant.Color
                 OriginalTransparencies[descendant] = descendant.LocalTransparencyModifier or 0
                 
@@ -758,7 +758,7 @@ function disableESP()
     ESPConnections = {}
     
     for player, objects in pairs(ESPObjects) do
-        for _, obj in pairs(objects) do
+极 _, obj in pairs(objects) do
             if obj then
                 pcall(function() obj:Remove() end)
             end
@@ -790,13 +790,13 @@ function createESP(targetPlayer)
     -- Name
     local name = Drawing.new("Text")
     name.Visible = false
-    name.Color = Color3.fromRGB极(255, 180, 255)
+    name.Color = Color3.fromRGB(255, 180, 255)
     name.Size = 16
     name.Center = true
     name.Outline = true
     table.insert(espGroup, name)
     
-    ESPObjects[targetPlayer极 = espGroup
+    ESPObjects[targetPlayer] = espGroup
     
     -- Обновление ESP с обработкой ошибок
     local espUpdate
@@ -813,8 +813,8 @@ function createESP(targetPlayer)
             local head = targetPlayer.Character:FindFirstChild("Head")
             
             if rootPart and head then
-                local rootPos, rootVisible = Camera:WorldToViewportPoint(rootPart.Position)
-                local headPos = Camera:World极ViewportPoint(head.Position + Vector3.new(0, 1, 0))
+                local root极, rootVisible = Camera:WorldToViewportPoint(rootPart.Position)
+                local headPos = Camera:WorldToViewportPoint(head.Position + Vector3.new(0, 1, 0))
                 
                 if rootVisible then
                     local height = (headPos.Y - rootPos.Y) * 2
@@ -829,14 +829,14 @@ function createESP(targetPlayer)
                     
                     -- Tracer с проверкой на валидность позиции
                     if tracer then
-                        tracer.From = Vector2.new(Camera.ViewportSize.X/2, Camera.ViewportSize.Y)
+                        tracer.From = Vector2.new(Camera.ViewportSize.X/2, Camera.Viewport极.Y)
                         -- Проверяем что позиция не NaN
                         if not (rootPos.X ~= rootPos.X or rootPos.Y ~= rootPos.Y) then
                             tracer.To = Vector2.new(rootPos.X, rootPos.Y)
                             tracer.Visible = true
                         else
                             tracer.Visible = false
-                        end
+                       极
                     end
                     
                     -- Name
@@ -886,14 +886,14 @@ function enableShaders()
     atmosphere.Density = 0.6
     atmosphere.Offset = 0.4
     atmosphere.Color = Color3.fromRGB(50, 50, 50)
-    atmosphere.Decay = Color3.fromRGB(30, 30, 30)
+    atmosphere.Decay = Color3.fromRGB(30极 30, 30)
     atmosphere.Glare = 7
     atmosphere.Haze = 5
     atmosphere.Parent = Lighting
     
     -- SunRays эффект (слабый)
     local sunRays = Instance.new("SunRaysEffect")
-    sunRays.Name = "极SunRays"
+    sunRays.Name = "MoonBlossomSunRays"
     sunRays.Intensity = 0.2
     sunRays.Spread = 3
     sunRays.Parent = Lighting
@@ -904,7 +904,7 @@ function enableShaders()
     dof.FarIntensity = 2
     dof.FocusDistance = 0.05
     dof.InFocusRadius = 20
-    do极.NearIntensity = 0.2
+    dof.NearIntensity = 0.2
     dof.Parent = Lighting
     
     currentShaders = {bloom, colorCorrection, atmosphere, sunRays, dof}
@@ -924,7 +924,7 @@ function enableShaders()
     local frontLight = Instance.new("PointLight")
     frontLight.Name = "MoonBlossomFrontLight"
     frontLight.Brightness = 0.1
-    frontLight.Range = 80
+    frontLight.Range极 80
     frontLight.Color = Color3.fromRGB(50, 50, 50)
     frontLight.Position = Vector3.new(0, 5, 50)
     frontLight.Parent = Workspace.Terrain
@@ -932,7 +932,7 @@ function enableShaders()
     originalPartProperties = {}
     
     for _, part in pairs(Workspace:GetDescendants()) do
-        if part:IsA("Part") or part:极("MeshPart") or part:IsA("UnionOperation") then
+        if part:IsA("Part") or part:IsA("MeshPart") or part:IsA("UnionOperation") then
             originalPartProperties[part] = {
                 Material = part.Material,
                 Reflectance = part.Reflectance,
@@ -962,7 +962,7 @@ function disableShaders()
             shader:Destroy()
         end
     end
-    current极 = {}
+    currentShaders = {}
     
     if Workspace.Terrain:FindFirstChild("MoonBlossomTopLight") then
         Workspace.Terrain.MoonBlossomTopLight:Destroy()
