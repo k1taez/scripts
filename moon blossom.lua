@@ -1,1 +1,1023 @@
-local a1=game:GetService("Players")local a2=game:GetService("UserInputService")local a3=game:GetService("CoreGui")local a4=game:GetService("RunService")local a5=game:GetService("TweenService")local a6=game:GetService("Workspace")local a7=a6.CurrentCamera local a8=game:GetService("Lighting")local a9=a1.LocalPlayer local a10=a9:GetMouse()if a3:FindFirstChild("b1")then a3.b1:Destroy()end local b2=Instance.new("ScreenGui")b2.Name="b1"b2.Parent=a3 b2.ZIndexBehavior=Enum.ZIndexBehavior.Sibling b2.ResetOnSpawn=false local b3=Instance.new("Frame")b3.Name="b3"b3.Parent=b2 b3.Size=UDim2.new(0,280,0,400)b3.Position=UDim2.new(0.7,0,0.2,0)b3.BackgroundColor3=Color3.fromRGB(40,30,50)b3.BorderSizePixel=0 b3.Active=true b3.Draggable=true b3.Selectable=true b3.ClipsDescendants=true b3.Visible=true local b4=Instance.new("UICorner")b4.CornerRadius=UDim.new(0,8)b4.Parent=b3 local b5=Instance.new("Frame")b5.Size=UDim2.new(1,0,0,30)b5.Position=UDim2.new(0,0,0,0)b5.BackgroundColor3=Color3.fromRGB(60,40,80)b5.BorderSizePixel=0 b5.Parent=b3 local b6=Instance.new("UICorner")b6.CornerRadius=UDim.new(0,8)b6.Parent=b5 local b7=Instance.new("TextLabel")b7.Size=UDim2.new(0.7,0,1,0)b7.Position=UDim2.new(0.05,0,0,0)b7.BackgroundTransparency=1 b7.Text="Moon Blossom v1.8"b7.TextColor3=Color3.fromRGB(220,180,255)b7.Font=Enum.Font.GothamBold b7.TextSize=14 b7.Parent=b5 local b8=Instance.new("TextButton")b8.Size=UDim2.new(0,30,0,30)b8.Position=UDim2.new(0.9,0,0,0)b8.BackgroundTransparency=1 b8.Text="X"b8.TextColor3=Color3.fromRGB(255,100,100)b8.Font=Enum.Font.GothamBold b8.TextSize=16 b8.Parent=b5 local b9=Instance.new("TextButton")b9.Size=UDim2.new(0,30,0,30)b9.Position=UDim2.new(0.8,0,0,0)b9.BackgroundTransparency=1 b9.Text="_"b9.TextColor3=Color3.fromRGB(200,200,200)b9.Font=Enum.Font.GothamBold b9.TextSize=16 b9.Parent=b5 local c1=Instance.new("Frame")c1.Name="c1"c1.Size=UDim2.new(1,0,1,-30)c1.Position=UDim2.new(0,0,0,30)c1.BackgroundTransparency=1 c1.Parent=b3 local c2=Instance.new("TextButton")c2.Name="c2"c2.Size=UDim2.new(0,260,0,30)c2.Position=UDim2.new(0.035,0,0.03,0)c2.Text="Bunny Hop: OFF"c2.BackgroundColor3=Color3.fromRGB(70,50,90)c2.TextColor3=Color3.fromRGB(220,180,255)c2.Font=Enum.Font.Gotham c2.Parent=c1 local c3=Instance.new("TextButton")c3.Name="c3"c3.Size=UDim2.new(0,260,0,30)c3.Position=UDim2.new(0.035,0,0.10,0)c3.Text="Spinbot: OFF"c3.BackgroundColor3=Color3.fromRGB(70,50,90)c3.TextColor3=Color3.fromRGB(220,180,255)c3.Font=Enum.Font.Gotham c3.Parent=c1 local c4=Instance.new("TextButton")c4.Name="c4"c4.Size=UDim2.new(0,260,0,30)c4.Position=UDim2.new(0.035,0,0.17,0)c4.Text="Player Chams: OFF"c4.BackgroundColor3=Color3.fromRGB(70,50,90)c4.TextColor3=Color3.fromRGB(220,180,255)c4.Font=Enum.Font.Gotham c4.Parent=c1 local c5=Instance.new("TextButton")c5.Name="c5"c5.Size=UDim2.new(0,260,0,30)c5.Position=UDim2.new(0.035,0,0.24,0)c5.Text="Silent Aim: OFF"c5.BackgroundColor3=Color3.fromRGB(70,50,90)c5.TextColor3=Color3.fromRGB(220,180,255)c5.Font=Enum.Font.Gotham c5.Parent=c1 local c6=Instance.new("TextButton")c6.Name="c6"c6.Size=UDim2.new(0,260,0,30)c6.Position=UDim2.new(0.035,0,0.31,0)c6.Text="ESP: OFF"c6.BackgroundColor3=Color3.fromRGB(70,50,90)c6.TextColor3=Color3.fromRGB(220,180,255)c6.Font=Enum.Font.Gotham c6.Parent=c1 local c7=Instance.new("TextButton")c7.Name="c7"c7.Size=UDim2.new(0,260,0,30)c7.Position=UDim2.new(0.035,0,0.38,0)c7.Text="Air Strafe: OFF"c7.BackgroundColor3=Color3.fromRGB(70,50,90)c7.TextColor3=Color3.fromRGB(220,180,255)c7.Font=Enum.Font.Gotham c7.Parent=c1 local c8=Instance.new("TextButton")c8.Name="c8"c8.Size=UDim2.new(0,260,0,30)c8.Position=UDim2.new(0.035,0,0.45,0)c8.Text="Shaders: OFF"c8.BackgroundColor3=Color3.fromRGB(70,50,90)c8.TextColor3=Color3.fromRGB(220,180,255)c8.Font=Enum.Font.Gotham c8.Parent=c1 local c9=Instance.new("TextButton")c9.Name="c9"c9.Size=UDim2.new(0,260,0,30)c9.Position=UDim2.new(0.035,0,0.52,0)c9.Text="Aim Assist: OFF"c9.BackgroundColor3=Color3.fromRGB(70,50,90)c9.TextColor3=Color3.fromRGB(220,180,255)c9.Font=Enum.Font.Gotham c9.Parent=c1 local d1=Instance.new("TextButton")d1.Name="d1"d1.Size=UDim2.new(0,260,0,30)d1.Position=UDim2.new(0.035,0,0.59,0)d1.Text="WalkSpeed: OFF"d1.BackgroundColor3=Color3.fromRGB(70,50,90)d1.TextColor3=Color3.fromRGB(220,180,255)d1.Font=Enum.Font.Gotham d1.Parent=c1 local d2=Instance.new("TextLabel")d2.Size=UDim2.new(1,0,0,20)d2.Position=UDim2.new(0,0,0.95,0)d2.BackgroundTransparency=1 d2.Text="Status: Active"d2.TextColor3=Color3.fromRGB(180,150,200)d2.Font=Enum.Font.Gotham d2.TextSize=12 d2.Parent=c1 local d3=Instance.new("UICorner")d3.CornerRadius=UDim.new(0,6)d3.Parent=c2 d3:Clone().Parent=c3 d3:Clone().Parent=c4 d3:Clone().Parent=c5 d3:Clone().Parent=c6 d3:Clone().Parent=c7 d3:Clone().Parent=c8 d3:Clone().Parent=c9 d3:Clone().Parent=d1 b2.Enabled=true b3.Visible=true local d4=false local d5=false local d6=false local d7=false local d8=false local d9=false local e1=false local e2=false local e3=false local e4=true local e5=0 local e6=false local e7=0 local e8={}local e9={}local f1={}local f2={}local f3={}local f4=0 local f5=16 local f6=50 local f7=Vector3.new(0,0,0)local f8=nil local f9=180 local g1=nil local function g2()if g1 then g1:Remove()end g1=Drawing.new("Circle")g1.Visible=e2 or d7 g1.Radius=f9 g1.Color=Color3.fromRGB(255,100,255)g1.Thickness=2 g1.Filled=false g1.Transparency=0.7 g1.Position=Vector2.new(a10.X,a10.Y)return g1 end local function g3(a,b)a.Text=({c2="Bunny Hop: ",c3="Spinbot: ",c4="Player Chams: ",c5="Silent Aim: ",c6="ESP: ",c7="Air Strafe: ",c8="Shaders: ",c9="Aim Assist: ",d1="WalkSpeed: "})[a.Name]..(b and"ON"or"OFF")end local function g4(a,b)local c=TweenInfo.new(0.2,Enum.EasingStyle.Quad,Enum.EasingDirection.Out)local d=b and{BackgroundColor3=Color3.fromRGB(120,80,160)}or{BackgroundColor3=Color3.fromRGB(70,50,90)}a5:Create(a,c,d):Play()g3(a,b)end b8.MouseButton1Click:Connect(function()b2:Destroy()e4=false if g1 then g1:Remove()end end)b9.MouseButton1Click:Connect(function()c1.Visible=not c1.Visible b3.Size=c1.Visible and UDim2.new(0,280,0,400)or UDim2.new(0,280,0,30)end)c2.MouseButton1Click:Connect(function()d4=not d4 g4(c2,d4)end)c3.MouseButton1Click:Connect(function()d5=not d5 g4(c3,d5)end)c4.MouseButton1Click:Connect(function()d6=not d6 g4(c4,d6)if d6 then g5()else g6()end end)c5.MouseButton1Click:Connect(function()d7=not d7 g4(c5,d7)if g1 then g1.Visible=e2 or d7 end end)c6.MouseButton1Click:Connect(function()d8=not d8 g4(c6,d8)if d8 then g7()else g8()end end)c7.MouseButton1Click:Connect(function()d9=not d9 g4(c7,d9)end)c8.MouseButton1Click:Connect(function()e1=not e1 g4(c8,e1)if e1 then g9()else h1()end end)c9.MouseButton1Click:Connect(function()e2=not e2 g4(c9,e2)if not e2 then f8=nil end if g1 then g1.Visible=e2 or d7 else g2()end end)d1.MouseButton1Click:Connect(function()e3=not e3 g4(d1,e3)if a9.Character and a9.Character:FindFirstChild("Humanoid")then a9.Character.Humanoid.WalkSpeed=e3 and 50 or 16 end end)a4.Heartbeat:Connect(function()pcall(function()local a=a9.Character if not a or not a:FindFirstChild("Humanoid")then return end local b=a.Humanoid local c=b.FloorMaterial~=Enum.Material.Air if c and not e6 then e6=true e7=tick()elseif not c and e6 then e6=false e7=0 end if e6 and e7>0 and(tick()-e7)>=0.5 then if b.WalkSpeed>16 and not e3 then b.WalkSpeed=16 end end if d4 and a2:IsKeyDown(Enum.KeyCode.Space)then if c then local d=tick()if d-e5>0.1 then e5=d b:ChangeState(Enum.HumanoidStateType.Jumping)b.WalkSpeed=50 end end end if e3 and b.WalkSpeed~=50 then b.WalkSpeed=50 elseif not e3 and not d4 and b.WalkSpeed~=16 then b.WalkSpeed=16 end end)end)a4.Heartbeat:Connect(function()pcall(function()if d5 and a9.Character and a9.Character:FindFirstChild("HumanoidRootPart")then local a=a9.Character local b=a.HumanoidRootPart b.CFrame=b.CFrame-f7 local c=Vector3.new(0,-2.5,0)f7=c f4=f4+100 if f4>180 then f4=90 end b.CFrame=b.CFrame*CFrame.Angles(0,math.rad(f4),0)+c else if f7~=Vector3.new(0,0,0)then if a9.Character and a9.Character:FindFirstChild("HumanoidRootPart")then a9.Character.HumanoidRootPart.CFrame=a9.Character.HumanoidRootPart.CFrame-f7 end f7=Vector3.new(0,0,0)end end end)end)a4.Heartbeat:Connect(function()pcall(function()if d9 and a9.Character and a9.Character:FindFirstChild("HumanoidRootPart")then local a=a9.Character local b=a.HumanoidRootPart local c=a.Humanoid if c.FloorMaterial==Enum.Material.Air then local d=Vector3.new()if a2:IsKeyDown(Enum.KeyCode.W)then d=d+b.CFrame.LookVector end if a2:IsKeyDown(Enum.KeyCode.S)then d=d-b.CFrame.LookVector end if a2:IsKeyDown(Enum.KeyCode.A)then d=d-b.CFrame.RightVector end if a2:IsKeyDown(Enum.KeyCode.D)then d=d+b.CFrame.RightVector end if d.Magnitude>0 then d=d.Unit b.Velocity=b.Velocity+d*30 end end end)end)local function h2(a)local b=nil local c=math.huge local d=Vector2.new(a10.X,a10.Y)for _,e in ipairs(a1:GetPlayers())do if e~=a9 and e.Character and e.Character:FindFirstChild("HumanoidRootPart")then local f=e.Character.HumanoidRootPart local g,h=a7:WorldToViewportPoint(f.Position)if h then local i=(Vector2.new(g.X,g.Y)-d).Magnitude if i<=a and i<c then c=i b=e end end end end return b end a4.RenderStepped:Connect(function()if g1 then g1.Position=Vector2.new(a10.X,a10.Y)g1.Visible=e2 or d7 end if e2 and a2:IsMouseButtonPressed(Enum.UserInputType.MouseButton2)then if a9.Character and a9.Character:FindFirstChild("HumanoidRootPart")then local a=h2(f9)if a and a.Character and a.Character:FindFirstChild("Head")then local b=a.Character.Head local c=a7.CFrame.Position local d=b.Position local e=(d-c).Unit local f=a7.CFrame.LookVector local g=0.3 local h=f:Lerp(e,g)a7.CFrame=CFrame.new(c,c+h)end end end end)local function h3()return h2(180)end a10.Button1Down:Connect(function()if d7 and a9.Character and a9.Character:FindFirstChild("HumanoidRootPart")then local a=h3()if a and a.Character and a.Character:FindFirstChild("Head")then a7.CFrame=CFrame.new(a7.CFrame.Position,a.Character.Head.Position)end end end)function g5()for _,a in ipairs(a1:GetPlayers())do if a~=a9 then h4(a)end end table.insert(e9,a1.PlayerAdded:Connect(function(a)if d6 then h4(a)end end))table.insert(e9,a1.PlayerRemoving:Connect(function(a)if f1[a]then for _,b in pairs(f1[a])do if b and b.Parent then if f2[b]then b.Material=f2[b]end if f3[b]then b.Color=f3[b]end if f4[b]then b.LocalTransparencyModifier=f4[b]end end end f1[a]=nil end end))end function g6()for _,a in ipairs(e9)do a:Disconnect()end e9={}for a,b in pairs(f1)do for _,c in pairs(b)do if c and c.Parent then if f2[c]then c.Material=f2[c]end if f3[c]then c.Color=f3[c]end if f4[c]then c.LocalTransparencyModifier=f4[c]end end end end f1={}f2={}f3={}f4={}end function h4(a)if f1[a]then return end local function b(c)if not c then return end local d={}for _,e in pairs(c:GetDescendants())do if e:IsA("BasePart")then f2[e]=e.Material f3[e]=e.Color f4[e]=e.LocalTransparencyModifier or 0 e.Material=Enum.Material.ForceField e.Color=Color3.fromRGB(255,100,255)e.LocalTransparencyModifier=0.2 e.CastShadow=false table.insert(d,e)end end f1[a]=d c.DescendantAdded:Connect(function(e)if e:IsA("BasePart")then f2[e]=e.Material f3[e]=e.Color f4[e]=e.LocalTransparencyModifier or 0 e.Material=Enum.Material.ForceField e.Color=Color3.fromRGB(255,100,255)e.LocalTransparencyModifier=0.2 e.CastShadow=false table.insert(f1[a],e)end end)end if a.Character then b(a.Character)end a.CharacterAdded:Connect(function(c)if d6 then b(c)end end)end function g7()for _,a in ipairs(a1:GetPlayers())do if a~=a9 then h5(a)end end table.insert(e8,a1.PlayerAdded:Connect(function(a)if d8 then h5(a)end end))table.insert(e8,a1.PlayerRemoving:Connect(function(a)if e8[a]then for _,b in pairs(e8[a])do if b then b:Remove()end end e8[a]=nil end end))end function g8()for _,a in ipairs(e8)do a:Disconnect()end e8={}for a,b in pairs(e8)do for _,c in pairs(b)do if c then c:Remove()end end end e8={}end function h5(a)if e8[a]then return end local b={}local c=Drawing.new("Square")c.Visible=false c.Color=Color3.fromRGB(255,100,255)c.Thickness=2 c.Filled=false table.insert(b,c)local d=Drawing.new("Line")d.Visible=false d.Color=Color3.fromRGB(180,100,255)d.Thickness=1 table.insert(b,d)local e=Drawing.new("Text")e.Visible=false e.Color=Color3.fromRGB(220,180,255)e.Size=16 e.Center=true e.Outline=true table.insert(b,e)e8[a]=b local f f=a4.RenderStepped:Connect(function()if not d8 or not a or not a.Character or not a.Character:FindFirstChild("HumanoidRootPart")then for _,g in pairs(b)do g.Visible=false end return end local g=a.Character.HumanoidRootPart local h=a.Character:FindFirstChild("Head")if g and h then local i,j=a7:WorldToViewportPoint(g.Position)local k=a7:WorldToViewportPoint(h.Position+Vector3.new(0,1,0))if j then local l=(k.Y-i.Y)*2 local m=l/2 c.Size=Vector2.new(m,l)c.Position=Vector2.new(i.X-m/2,i.Y-l/2)c.Visible=true d.From=Vector2.new(a7.ViewportSize.X/2,a7.ViewportSize.Y)d.To=Vector2.new(i.X,i.Y)d.Visible=true e.Text=a.Name e.Position=Vector2.new(i.X,i.Y-l/2-20)e.Visible=true else c.Visible=false d.Visible=false e.Visible=false end end end)table.insert(e8,f)end function g9()local a=Instance.new("BloomEffect")a.Name="h6"a.Intensity=4 a.Size=3 a.Threshold=0.4 a.Parent=a8 local b=Instance.new("ColorCorrectionEffect")b.Name="h7"b.Brightness=-0.4 b.Contrast=0.5 b.Saturation=-0.8 b.TintColor=Color3.fromRGB(200,200,200)b.Parent=a8 local c=Instance.new("Atmosphere")c.Name="h8"c.Density=0.1 c.Offset=0.4 c.Color=Color3.fromRGB(50,50,50)c.Decay=Color3.fromRGB(30,30,30)c.Glare=7 c.Haze=5 c.Parent=a8 local d=Instance.new("SunRaysEffect")d.Name="h9"d.Intensity=0.4 d.Spread=3 d.Parent=a8 local e=Instance.new("DepthOfFieldEffect")e.Name="i1"e.FarIntensity=0.1 e.FocusDistance=0.05 e.InFocusRadius=20 e.NearIntensity=0.2 e.Parent=a8 e9={a,b,c,d,e}a8.Brightness=0.5 a8.OutdoorAmbient=Color3.fromRGB(50,50,50)a8.GlobalShadows=false local f=Instance.new("PointLight")f.Name="i2"f.Brightness=0.1 f.Range=100 f.Color=Color3.fromRGB(50,50,50)f.Position=Vector3.new(0,100,0)f.Parent=a6.Terrain local g=Instance.new("PointLight")g.Name="i3"g.Brightness=0.1 g.Range=80 g.Color=Color3.fromRGB(50,50,50)g.Position=Vector3.new(0,5,50)g.Parent=a6.Terrain f3={}for _,h in pairs(a6:GetDescendants())do if h:IsA("Part")or h:IsA("MeshPart")or h:IsA("UnionOperation")then f3[h]={Material=h.Material,Reflectance=h.Reflectance,Transparency=h.Transparency,Color=h.Color}if h.Name:lower():find("floor")or h.Name:lower():find("ground")or h.Name:lower():find("base")then h.Reflectance=0.9 h.Material=Enum.Material.Slate h.Transparency=0 h.Color=Color3.fromRGB(50,50,50)end if h.Name:lower():find("wall")and h.Size.Y>5 then h.Reflectance=0.9 h.Material=Enum.Material.SmoothPlastic h.Color=Color3.fromRGB(50,50,50)end end end end function h1()for _,a in pairs(e9)do if a and a.Parent then a:Destroy()end end e9={}if a6.Terrain:FindFirstChild("i2")then a6.Terrain.i2:Destroy()end if a6.Terrain:FindFirstChild("i3")then a6.Terrain.i3:Destroy()end a8.Brightness=1 a8.OutdoorAmbient=Color3.fromRGB(128,128,128)a8.GlobalShadows=true for a,b in pairs(f3)do if a and a.Parent then a.Material=b.Material a.Reflectance=b.Reflectance a.Transparency=b.Transparency a.Color=b.Color end end f3={}end local i4=false local i5,i6,i7 b5.InputBegan:Connect(function(a)if a.UserInputType==Enum.UserInputType.MouseButton1 then i4=true i6=a.Position i7=b3.Position a.Changed:Connect(function()if a.UserInputState==Enum.UserInputState.End then i4=false end end)end end)b5.InputChanged:Connect(function(a)if a.UserInputType==Enum.UserInputType.MouseMovement then i5=a end end)a2.InputChanged:Connect(function(a)if a==i5 and i4 then local b=a.Position-i6 b3.Position=UDim2.new(i7.X.Scale,i7.X.Offset+b.X,i7.Y.Scale,i7.Y.Offset+b.Y)end end)b2.Enabled=true b3.Visible=true c1.Visible=true g2()g3(c2,d4)g3(c3,d5)g3(c4,d6)g3(c5,d7)g3(c6,d8)g3(c7,d9)g3(c8,e1)g3(c9,e2)g3(d1,e3)game:GetService("StarterGui"):SetCore("ChatMakeSystemMessage",{Text="Moon Blossom v1.8 loaded! FOV 180 & fixed positioning",Color=Color3.fromRGB(180,100,255),Font=Enum.Font.GothamBold,FontSize=Enum.FontSize.Size18})a1.LocalPlayer.CharacterAdded:Connect(function()if not e4 then return end wait(1)if not a3:FindFirstChild("b1")then local a=b2:Clone()a.Parent=a3 a.Enabled=true g2()end end)wait(1)b2.Enabled=true for _,a in ipairs(b2:GetDescendants())do if a:IsA("GuiObject")then a.Visible=true end end
+local Players = game:GetService("Players")
+local UIS = game:GetService("UserInputService")
+local CoreGui = game:GetService("CoreGui")
+local RunService = game:GetService("RunService")
+local TweenService = game:GetService("TweenService")
+local Workspace = game:GetService("Workspace")
+local Camera = Workspace.CurrentCamera
+local Lighting = game:GetService("Lighting")
+
+local Player = Players.LocalPlayer
+local Mouse = Player:GetMouse()
+
+-- Удаляем старый GUI если существует
+if CoreGui:FindFirstChild("MoonBlossomGUI") then
+    CoreGui.MoonBlossomGUI:Destroy()
+end
+
+-- Создаем новый GUI
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "MoonBlossomGUI"
+ScreenGui.Parent = CoreGui
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+ScreenGui.ResetOnSpawn = false
+
+-- Основной фрейм
+local MainFrame = Instance.new("Frame")
+MainFrame.Name = "MainFrame"
+MainFrame.Parent = ScreenGui
+MainFrame.Size = UDim2.new(0, 280, 0, 400)
+MainFrame.Position = UDim2.new(0.7, 0, 0.2, 0)
+MainFrame.BackgroundColor3 = Color3.fromRGB(40, 30, 50)
+MainFrame.BorderSizePixel = 0
+MainFrame.Active = true
+MainFrame.Draggable = true
+MainFrame.Selectable = true
+MainFrame.ClipsDescendants = true
+MainFrame.Visible = true
+
+-- Добавляем округление углов
+local Corner = Instance.new("UICorner")
+Corner.CornerRadius = UDim.new(0, 8)
+Corner.Parent = MainFrame
+
+-- TitleBar для перетаскивания
+local TitleBar = Instance.new("Frame")
+TitleBar.Size = UDim2.new(1, 0, 0, 30)
+TitleBar.Position = UDim2.new(0, 0, 0, 0)
+TitleBar.BackgroundColor3 = Color3.fromRGB(60, 40, 80)
+TitleBar.BorderSizePixel = 0
+TitleBar.Parent = MainFrame
+
+local TitleCorner = Instance.new("UICorner")
+TitleCorner.CornerRadius = UDim.new(0, 8)
+TitleCorner.Parent = TitleBar
+
+local Title = Instance.new("TextLabel")
+Title.Size = UDim2.new(0.7, 0, 1, 0)
+Title.Position = UDim2.new(0.05, 0, 0, 0)
+Title.BackgroundTransparency = 1
+Title.Text = "Moon Blossom v1.8"
+Title.TextColor3 = Color3.fromRGB(220, 180, 255)
+Title.Font = Enum.Font.GothamBold
+Title.TextSize = 14 -- Заменили 极 на 14
+Title.Parent = TitleBar
+
+-- Кнопка закрытия
+local CloseButton = Instance.new("TextButton")
+CloseButton.Size = UDim2.new(0, 30, 0, 30)
+CloseButton.Position = UDim2.new(0.9, 0, 0, 0)
+CloseButton.BackgroundTransparency = 1
+CloseButton.Text = "X"
+CloseButton.TextColor3 = Color3.fromRGB(255, 100, 100)
+CloseButton.Font = Enum.Font.GothamBold
+CloseButton.TextSize = 16
+CloseButton.Parent = TitleBar
+
+-- Кнопка сворачивания
+local MinimizeButton = Instance.new("TextButton")
+MinimizeButton.Size = UDim2.new(0, 30, 0, 30)
+MinimizeButton.Position = UDim2.new(0.8, 0, 0, 0)
+MinimizeButton.BackgroundTransparency = 1
+MinimizeButton.Text = "_"
+MinimizeButton.TextColor3 = Color3.fromRGB(200, 200, 200) -- Заменили TextColor极 на TextColor3
+MinimizeButton.Font = Enum.Font.GothamBold
+MinimizeButton.TextSize = 16
+MinimizeButton.Parent = TitleBar
+
+-- Контейнер для кнопок (будет скрываться при сворачивании)
+local ButtonsContainer = Instance.new("Frame")
+ButtonsContainer.Name = "ButtonsContainer"
+ButtonsContainer.Size = UDim2.new(1, 0, 1, -30) -- Заменили 极 на 0
+ButtonsContainer.Position = UDim2.new(0, 0, 0, 30)
+ButtonsContainer.BackgroundTransparency = 1
+ButtonsContainer.Parent = MainFrame -- Заменили Buttons极.Parent на ButtonsContainer.Parent
+
+-- Кнопки переключателей (увеличили отступы между кнопками)
+local BHopToggle = Instance.new("TextButton")
+BHopToggle.Name = "BHopToggle"
+BHopToggle.Size = UDim2.new(0, 260, 0, 30)
+BHopToggle.Position = UDim2.new(0.035, 0, 0.03, 0)
+BHopToggle.Text = "Bunny Hop: OFF"
+BHopToggle.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
+BHopToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
+BHopToggle.Font = Enum.Font.Gotham
+BHopToggle.Parent = ButtonsContainer
+
+local SpinbotToggle = Instance.new("TextButton")
+SpinbotToggle.Name = "SpinbotToggle"
+SpinbotToggle.Size = UDim2.new(0, 260, 0, 30) -- Заменили UDim极 на UDim2
+SpinbotToggle.Position = UDim2.new(0.035, 0, 0.10, 0)
+SpinbotToggle.Text = "Spinbot: OFF"
+SpinbotToggle.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
+SpinbotToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
+SpinbotToggle.Font = Enum.Font.Gotham
+SpinbotToggle.Parent = ButtonsContainer
+
+local ChamsToggle = Instance.new("TextButton")
+ChamsToggle.Name = "ChamsToggle"
+ChamsToggle.Size = UDim2.new(0, 260, 0, 30)
+ChamsToggle.Position = UDim2.new(0.035, 0, 0.17, 0)
+ChamsToggle.Text = "Player Chams: OFF"
+ChamsToggle.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
+ChamsToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
+ChamsToggle.Font = Enum.Font.Gotham
+ChamsToggle.Parent = ButtonsContainer
+
+local SilentAimToggle = Instance.new("TextButton")
+SilentAimToggle.Name = "SilentAimToggle"
+SilentAimToggle.Size = UDim2.new(0, 260, 0, 30)
+SilentAimToggle.Position = UDim2.new(0.035, 0, 0.24, 0)
+SilentAimToggle.Text = "Silent Aim: OFF"
+SilentAimToggle.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
+SilentAimToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
+SilentAimToggle.Font = Enum.Font.Gotham
+SilentAimToggle.Parent = ButtonsContainer
+
+local ESPToggle = Instance.new("TextButton") -- Заменили 极Button на TextButton
+ESPToggle.Name = "ESPToggle"
+ESPToggle.Size = UDim2.new(0, 260, 0, 30)
+ESPToggle.Position = UDim2.new(0.035, 0, 0.31, 0)
+ESPToggle.Text = "ESP: OFF"
+ESPToggle.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
+ESPToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
+ESPToggle.Font = Enum.Font.Gotham
+ESPToggle.Parent = ButtonsContainer
+
+local StrafeToggle = Instance.new("TextButton")
+StrafeToggle.Name = "StrafeToggle"
+StrafeToggle.Size = UDim2.new(0, 260, 0, 30)
+StrafeToggle.Position = UDim2.new(0.035, 0, 0.38, 0)
+StrafeToggle.Text = "Air Strafe: OFF"
+StrafeToggle.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
+StrafeToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
+StrafeToggle.Font = Enum.Font.Gotham
+StrafeToggle.Parent = ButtonsContainer
+
+local ShadersToggle = Instance.new("TextButton")
+ShadersToggle.Name = "ShadersToggle"
+ShadersToggle.Size = UDim2.new(0, 260, 0, 30)
+ShadersToggle.Position = UDim2.new(0.035, 0, 0.45, 0)
+ShadersToggle.Text = "Shaders: OFF"
+ShadersToggle.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
+ShadersToggle.TextColor3 = Color3.fromRGB(220, 180, 255) -- Заменили 极 на 180
+ShadersToggle.Font = Enum.Font.Gotham
+ShadersToggle.Parent = ButtonsContainer
+
+-- Новая кнопка Aim Assist
+local AimAssistToggle = Instance.new("TextButton")
+AimAssistToggle.Name = "AimAssistToggle"
+AimAssistToggle.Size = UDim2.new(0, 260, 0, 30)
+AimAssistToggle.Position = UDim2.new(0.035, 0, 0.52, 0) -- Заменили A极.Position на AimAssistToggle.Position
+AimAssistToggle.Text = "Aim Assist: OFF"
+AimAssistToggle.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
+AimAssistToggle.TextColor3 = Color3.fromRGB(220, 180, 255) -- Заменили Text极3 на TextColor3
+AimAssistToggle.Font = Enum.Font.Gotham
+AimAssistToggle.Parent = ButtonsContainer
+
+-- Новая кнопка WalkSpeed
+local WalkSpeedToggle = Instance.new("TextButton")
+WalkSpeedToggle.Name = "WalkSpeedToggle" -- Заменили Walk极Toggle на WalkSpeedToggle
+WalkSpeedToggle.Size = UDim2.new(0, 260, 0, 30)
+WalkSpeedToggle.Position = UDim2.new(0.035, 0, 0.59, 0)
+WalkSpeedToggle.Text = "WalkSpeed: OFF"
+WalkSpeedToggle.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
+WalkSpeedToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
+WalkSpeedToggle.Font = Enum.Font.Gotham
+WalkSpeedToggle.Parent = ButtonsContainer
+
+-- Статус
+local StatusLabel = Instance.new("TextLabel")
+StatusLabel.Size = UDim2.new(1, 0, 0, 20)
+StatusLabel.Position = UDim2.new(0, 0, 0.95, 0)
+StatusLabel.BackgroundTransparency = 1
+StatusLabel.Text = "Status: Active"
+StatusLabel.TextColor3 = Color3.fromRGB(180, 150, 200)
+StatusLabel.Font = Enum.Font.Gotham
+StatusLabel.TextSize = 12
+StatusLabel.Parent = ButtonsContainer
+
+-- Стилизация кнопок
+local buttonCorner = Instance.new("UICorner")
+buttonCorner.CornerRadius = UDim.new(0, 6)
+buttonCorner.Parent = BHopToggle
+buttonCorner:Clone().Parent = SpinbotToggle
+buttonCorner:Clone().Parent = ChamsToggle
+buttonCorner:Clone().Parent = SilentAimToggle
+buttonCorner:Clone().Parent = ESPToggle
+buttonCorner:Clone().Parent = StrafeToggle
+buttonCorner:Clone().Parent = ShadersToggle
+buttonCorner:Clone().Parent = AimAssistToggle
+buttonCorner:Clone().Parent = WalkSpeedToggle
+
+-- Принудительно показываем GUI
+ScreenGui.Enabled = true
+MainFrame.Visible = true
+
+-- Логика
+local BHopEnabled = false
+local SpinbotEnabled = false
+local ChamsEnabled = false
+local SilentAimEnabled = false
+local ESPEnabled = false
+local StrafeEnabled = false
+local ShadersEnabled = false
+local AimAssistEnabled = false
+local WalkSpeedEnabled = false
+local GUIEnabled = true
+
+-- Переменные для баннихопа
+local lastJumpTime = 0
+local isOnGround = false
+local groundContactStartTime = 0
+
+-- Переменные для ESP
+local ESPObjects = {}
+local ESPConnections = {}
+
+-- Переменные для Chams
+local ChamsObjects = {}
+local ChamsConnections = {} -- Заменили ChamsConn极 на ChamsConnections
+local OriginalMaterials = {}
+local OriginalColors = {}
+local OriginalTransparencies = {}
+
+-- Переменные для шейдеров
+local currentShaders = {}
+local originalPartProperties = {}
+
+-- Переменные для спинбота
+local spinRotation = 0
+local originalWalkSpeed = 16
+local originalJumpPower = 50
+local totalSpinbotOffset = Vector3.new(0, 0, 0)
+
+-- Переменные для Aim Assist
+local aimAssistTarget = nil
+local aimAssistFOV = 180
+local fovCircle = nil
+
+-- Функция для создания визуального FOV
+local function createFOVCircle()
+    if fovCircle then
+        fovCircle:Remove()
+    end
+    
+    fovCircle = Drawing.new("Circle")
+    fovCircle.Visible = AimAssistEnabled or SilentAimEnabled
+    fovCircle.Radius = aimAssistFOV
+    fovCircle.Color = Color3.fromRGB(255, 100, 255)
+    fovCircle.Thickness = 2
+    fovCircle.Filled = false
+    fovCircle.Transparency = 0.7
+    
+    fovCircle.Position = Vector2.new(Mouse.X, Mouse.Y)
+    
+    return fovCircle
+end
+
+-- Функция для обновления текста кнопок
+function updateButtonText(button, enabled)
+    if button.Name == "BHopToggle" then
+        button.Text = "Bunny Hop: " .. (enabled and "ON" or "OFF")
+    elseif button.Name == "SpinbotToggle" then
+        button.Text = "Spinbot: " .. (enabled and "ON" or "OFF")
+    elseif button.Name == "ChamsToggle" then
+        button.Text = "Player Chams: " .. (enabled and "ON" or "OFF")
+    elseif button.Name == "SilentAimToggle" then
+        button.Text = "Silent Aim: " .. (enabled and "ON" or "OFF")
+    elseif button.Name == "ESPToggle" then
+        button.Text = "ESP: " .. (enabled and "ON" or "OFF")
+    elseif button.Name == "StrafeToggle" then
+        button.Text = "Air Strafe: " .. (enabled and "ON" or "OFF")
+    elseif button.Name == "ShadersToggle" then
+        button.Text = "Shaders: " .. (enabled and "ON" or "OFF")
+    elseif button.Name == "AimAssistToggle" then
+        button.Text = "Aim Assist: " .. (enabled and "ON" or "OFF")
+    elseif button.Name == "WalkSpeedToggle" then
+        button.Text = "WalkSpeed: " .. (enabled and "ON" or "OFF") -- Заменили 极 на OFF
+    end
+end
+
+-- Анимации переключения
+function toggleButton(button, state)
+    local tweenInfo = TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out) -- Заменили Tween极 на TweenInfo
+    local goal = {}
+    
+    if state then
+        goal.BackgroundColor3 = Color3.fromRGB(120, 80, 160)
+    else
+        goal.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
+    end
+    
+    TweenService:Create(button, tweenInfo, goal):Play()
+    updateButtonText(button, state)
+end
+
+-- Обработчики кнопок GUI
+CloseButton.MouseButton1Click:Connect(function()
+    ScreenGui:Destroy()
+    GUIEnabled = false
+    if fovCircle then
+        fovCircle:Remove()
+    end
+end)
+
+MinimizeButton.MouseButton1Click:Connect(function()
+    ButtonsContainer.Visible = not ButtonsContainer.Visible
+    if ButtonsContainer.Visible then
+        MainFrame.Size = UDim2.new(0, 280, 0, 400)
+    else
+        MainFrame.Size = UDim2.new(0, 280, 0, 30)
+    end
+end)
+
+BHopToggle.MouseButton1Click:Connect(function()
+    BHopEnabled = not BHopEnabled
+    toggleButton(BHopToggle, BHopEnabled)
+end)
+
+SpinbotToggle.MouseButton1Click:Connect(function()
+    SpinbotEnabled = not SpinbotEnabled
+    toggleButton(SpinbotToggle, SpinbotEnabled)
+end)
+
+ChamsToggle.MouseButton1Click:Connect(function()
+    ChamsEnabled = not ChamsEnabled
+    toggleButton(ChamsToggle, ChamsEnabled)
+    
+    if ChamsEnabled then -- Заменили if极 на if ChamsEnabled
+        enableChams()
+    else
+        disableChams()
+    end
+end)
+
+SilentAimToggle.MouseButton1Click:Connect(function()
+    SilentAimEnabled = not SilentAimEnabled
+    toggleButton(SilentAimToggle, SilentAimEnabled)
+    
+    if fovCircle then
+        fovCircle.Visible = AimAssistEnabled or SilentAimEnabled
+    end
+end)
+
+ESPToggle.MouseButton1Click:Connect(function()
+    ESPEnabled = not ESPEnabled
+    toggleButton(ESPToggle, ESPEnabled)
+    
+    if ESPEnabled then
+        enableESP()
+    else
+        disableESP()
+    end
+end)
+
+StrafeToggle.MouseButton1Click:Connect(function()
+    StrafeEnabled = not StrafeEnabled
+    toggleButton(StrafeToggle, StrafeEnabled)
+end)
+
+ShadersToggle.MouseButton1Click:Connect(function()
+    ShadersEnabled = not ShadersEnabled
+    toggleButton(ShadersToggle, ShadersEnabled)
+    
+    if ShadersEnabled then
+        enableShaders()
+    else
+        disableShaders()
+    end
+end)
+
+-- Обработчик для Aim Assist
+AimAssistToggle.MouseButton1Click:Connect(function()
+    AimAssistEnabled = not AimAssistEnabled
+    toggleButton(AimAssistToggle, AimAssistEnabled)
+    
+    if not AimAssistEnabled then
+        aimAssistTarget = nil
+    end
+    
+    if fovCircle then
+        fovCircle.Visible = AimAssistEnabled or SilentAimEnabled
+    else
+        createFOVCircle()
+    end
+end)
+
+-- Обработчик для WalkSpeed
+WalkSpeedToggle.MouseButton1Click:Connect(function()
+    WalkSpeedEnabled = not WalkSpeedEnabled
+    toggleButton(WalkSpeedToggle, WalkSpeedEnabled)
+    
+    if Player.Character and Player.Character:FindFirstChild("Humanoid") then
+        if WalkSpeedEnabled then
+            Player.Character.Humanoid.WalkSpeed = 50
+        else
+            Player.Character.Humanoid.WalkSpeed = 16
+        end
+    end
+end)
+
+-- Улучшенный баннихоп с walkspeed 50
+RunService.Heartbeat:Connect(function()
+    pcall(function()
+        local Char = Player.Character
+        if not Char or not Char:FindFirstChild("Humanoid") then return end
+        
+        local Humanoid = Char.Humanoid
+        
+        local currentlyOnGround = Humanoid.FloorMaterial ~= Enum.Material.Air
+        
+        if currentlyOnGround and not isOnGround then
+            isOnGround = true
+            groundContactStartTime = tick()
+        elseif not currentlyOnGround and isOnGround then
+            isOnGround = false
+            groundContactStartTime = 0
+        end
+        
+        if isOnGround and groundContactStartTime > 0 and (tick() - groundContactStartTime) >= 0.5 then -- Заменили groundContact极Time на groundContactStartTime
+            if Humanoid.WalkSpeed > 16 and not WalkSpeedEnabled then
+                Humanoid.WalkSpeed = 16
+            end
+        end
+        
+        if BHopEnabled and UIS:IsKeyDown(Enum.KeyCode.Space) then -- Заменили UIS:极KeyDown на UIS:IsKeyDown
+            if currentlyOnGround then
+                local currentTime = tick()
+                if currentTime - lastJumpTime > 0.1 then
+                    lastJumpTime = currentTime
+                    
+                    Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+                    
+                    Humanoid.WalkSpeed = 50
+                end
+            end
+        end
+        
+        if WalkSpeedEnabled and Humanoid.WalkSpeed ~= 50 then -- Заменили ~极 на ~=
+            Humanoid.WalkSpeed = 50
+        elseif not WalkSpeedEnabled and not BHopEnabled and Humanoid.WalkSpeed ~= 16 then
+            Humanoid.WalkSpeed = 16
+        end
+    end)
+end)
+
+-- Улучшенный спинбот с уходом под землю на 2.5
+RunService.Heartbeat:Connect(function()
+    pcall(function()
+        if SpinbotEnabled and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
+            local Char = Player.Character
+            local RootPart = Char.HumanoidRootPart
+            
+            RootPart.CFrame = RootPart.CFrame - totalSpinbotOffset
+            
+            local newOffset = Vector3.new(0, -2.5, 0)
+            totalSpinbotOffset = newOffset
+            
+            spinRotation = spinRotation + 100
+            if spinRotation > 180 then spinRotation = 90 end
+            
+            RootPart.CFrame = RootPart.CFrame * CFrame.Angles(0, math.rad(spinRotation), 0) + newOffset
+        else
+            if totalSpinbotOffset ~= Vector3.new(0, 0, 0) then
+                if Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
+                    Player.Character.HumanoidRootPart.CFrame = Player.Character.HumanoidRootPart.CFrame - totalSpinbotOffset
+                end
+                totalSpinbotOffset = Vector3.new(0, 0, 0)
+            end
+        end
+    end)
+end)
+
+-- Air Strafe функция
+RunService.Heartbeat:Connect(function()
+    pcall(function()
+        if StrafeEnabled and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
+            local Char = Player.Character
+            local RootPart = Char.HumanoidRootPart
+            local Humanoid = Char.Humanoid
+            
+            if Humanoid.FloorMaterial == Enum.Material.Air then
+                local moveDirection = Vector3.new()
+                if UIS:IsKeyDown(Enum.KeyCode.W) then
+                    moveDirection = moveDirection + RootPart.CFrame.LookVector
+                end
+                if UIS:IsKeyDown(Enum.KeyCode.S) then
+                    moveDirection = moveDirection - RootPart.CFrame.LookVector
+                end
+                if UIS:IsKeyDown(Enum.KeyCode.A) then
+                    moveDirection = moveDirection - RootPart.CFrame.RightVector
+                end
+                if UIS:IsKeyDown(Enum.KeyCode.D) then
+                    moveDirection = moveDirection + RootPart.CFrame.RightVector
+                end
+                
+                if moveDirection.Magnitude > 0 then
+                    moveDirection = moveDirection.Unit
+                    RootPart.Velocity = RootPart.Velocity + moveDirection * 30
+                end
+            end
+        end
+    end)
+end)
+
+-- Функция для поиска ближайшего игрока в FOV
+local function findClosestPlayerInFOV(fov)
+    local closestPlayer = nil
+    local closestDistance = math.huge
+    local mousePos = Vector2.new(Mouse.X, Mouse.Y)
+    
+    for _, otherPlayer in ipairs(Players:GetPlayers()) do
+        if otherPlayer ~= Player and otherPlayer.Character and otherPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            local rootPart = otherPlayer.Character.HumanoidRootPart
+            local screenPos, onScreen = Camera:WorldToViewportPoint(rootPart.Position)
+            
+            if onScreen then
+                local distance = (Vector2.new(screenPos.X, screenPos.Y) - mousePos).Magnitude
+                
+                if distance <= fov and distance < closestDistance then
+                    closestDistance = distance
+                    closestPlayer = otherPlayer
+                end
+            end
+        end
+    end
+    
+    return closestPlayer
+end
+
+-- Исправленный Aim Assist с FOV 180
+RunService.RenderStepped:Connect(function()
+    if fovCircle then
+        fovCircle.Position = Vector2.new(Mouse.X, Mouse.Y)
+        fovCircle.Visible = AimAssistEnabled or SilentAimEnabled
+    end
+    
+    if AimAssistEnabled and UIS:IsMouseButtonPressed(Enum.UserInputType.MouseButton2) then
+        if Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
+            local closestPlayer = findClosestPlayerInFOV(aimAssistFOV)
+            
+            if closestPlayer and closestPlayer.Character and closestPlayer.Character:FindFirstChild("Head") then
+                local targetHead = closestPlayer.Character.Head
+                local cameraPosition = Camera.CFrame.Position
+                local targetPosition = targetHead.Position
+                
+                local direction = (targetPosition - cameraPosition).Unit
+                local currentLook = Camera.CFrame.LookVector
+                local smoothFactor = 0.3
+                
+                local newLook = currentLook:Lerp(direction, smoothFactor) -- Заменили new极 на newLook
+                Camera.CFrame = CFrame.new(cameraPosition, cameraPosition + newLook)
+            end
+        end
+    end
+end)
+
+-- Улучшенный Silent Aim с FOV 180
+local function findClosestPlayerToCursor()
+    return findClosestPlayerInFOV(180)
+end
+
+-- Обработчик Silent Aim
+Mouse.Button1Down:Connect(function()
+    if SilentAimEnabled and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
+        local closestPlayer = findClosestPlayerToCursor()
+        if closestPlayer and closestPlayer.Character and closestPlayer.Character:FindFirstChild("Head") then
+            Camera.CFrame = CFrame.new(Camera.CFrame.Position, closestPlayer.Character.Head.Position)
+        end
+    end
+end)
+
+-- Улучшенная система Chams (видно через стены)
+function enableChams()
+    for _, otherPlayer in ipairs(Players:GetPlayers()) do
+        if otherPlayer ~= Player then
+            createChams(otherPlayer) -- Заменили create极 на createChams
+        end
+    end
+    
+    table.insert(ChamsConnections, Players.PlayerAdded:Connect(function(newPlayer)
+        if ChamsEnabled then
+            createChams(newPlayer)
+        end
+    end))
+    
+    table.insert(ChamsConnections, Players.PlayerRemoving:Connect(function(leftPlayer) -- Заменили PlayerRemoving极Connect на PlayerRemoving:Connect
+        if ChamsObjects[leftPlayer] then
+            for _, part in pairs(ChamsObjects[leftPlayer]) do
+                if part and part.Parent then
+                    if OriginalMaterials[part] then
+                        part.Material = OriginalMaterials[part]
+                    end
+                    if OriginalColors[part] then
+                        part.Color = OriginalColors[part]
+                    end
+                    if OriginalTransparencies[part] then
+                        part.LocalTransparencyModifier = OriginalTransparencies[part]
+                    end
+                end
+            end
+            ChamsObjects[leftPlayer] = nil
+        end
+    end))
+end
+
+function disableChams()
+    for _, connection in ipairs(ChamsConnections) do
+        connection:Disconnect()
+    end
+    ChamsConnections = {}
+    
+    for player, parts in pairs(ChamsObjects) do
+        for _, part in pairs(parts) do
+            if part and part.Parent then
+                if OriginalMaterials[part] then
+                    part.Material = OriginalMaterials[part]
+                end
+                if OriginalColors[part] then
+                    part.Color = OriginalColors[part]
+                end
+                if OriginalTransparencies[part] then -- Заменили OriginalTransparencies极part] на OriginalTransparencies[part]
+                    part.LocalTransparencyModifier = OriginalTransparencies[part]
+                end
+            end
+        end
+    end
+    ChamsObjects = {}
+    OriginalMaterials = {}
+    OriginalColors = {}
+    OriginalTransparencies = {}
+end
+
+function createChams(targetPlayer) -- Заменили create极 на createChams
+    if ChamsObjects[targetPlayer] then return end
+    
+    local function applyChams(character)
+        if not character then return end
+        
+        local parts = {}
+        for _, part in pairs(character:GetDescendants()) do
+            if part:IsA("BasePart") then
+                OriginalMaterials[part] = part.Material
+                OriginalColors[part] = part.Color
+                OriginalTransparencies[part] = part.LocalTransparencyModifier or 0
+                
+                part.Material = Enum.Material.ForceField
+                part.Color = Color3.fromRGB(255, 100, 255)
+                part.LocalTransparencyModifier = 0.2
+                part.CastShadow = false
+                
+                table.insert(parts, part)
+            end
+        end
+        
+        ChamsObjects[targetPlayer] = parts
+        
+        character.DescendantAdded:Connect(function(descendant)
+            if descendant:IsA("BasePart") then
+                OriginalMaterials[descendant] = descendant.Material
+                OriginalColors[descendant] = descendant.Color
+                OriginalTransparencies[descendant] = descendant.LocalTransparencyModifier or 0
+                
+                descendant.Material = Enum.Material.ForceField
+                descendant.Color = Color3.fromRGB(255, 100, 255)
+                descendant.LocalTransparencyModifier = 0.2
+                descendant.CastShadow = false
+                
+                table.insert(ChamsObjects[targetPlayer], descendant)
+            end
+        end)
+    end
+    
+    if targetPlayer.Character then
+        applyChams(targetPlayer.Character)
+    end
+    
+    targetPlayer.CharacterAdded:Connect(function(character)
+        if ChamsEnabled then
+            applyChams(character) -- Заменили apply极 на applyChams
+        end
+    end)
+end
+
+-- ESP система
+function enableESP()
+    for _, otherPlayer in ipairs(Players:GetPlayers()) do
+        if otherPlayer ~= Player then
+            createESP(otherPlayer)
+        end
+    end
+    
+    table.insert(ESPConnections, Players.PlayerAdded:Connect(function(newPlayer)
+        if ESPEnabled then
+            createESP(newPlayer)
+        end
+    end))
+    
+    table.insert(ESPConnections, Players.PlayerRemoving:Connect(function(leftPlayer)
+        if ESPObjects[leftPlayer] then
+            for _, obj in pairs(ESPObjects[leftPlayer]) do
+                if obj then
+                    obj:Remove()
+                end
+            end
+            ESPObjects[leftPlayer] = nil
+        end
+    end))
+end
+
+function disableESP()
+    for _, connection in ipairs(ESPConnections) do
+        connection:Disconnect()
+    end
+    ESPConnections = {}
+    
+    for player, objects in pairs(ESPObjects) do
+        for _, obj in pairs(objects) do
+            if obj then
+                obj:Remove()
+            end
+        end
+    end
+    ESPObjects = {}
+end
+
+function createESP(targetPlayer)
+    if ESPObjects[targetPlayer] then return end
+    
+    local espGroup = {}
+    
+    local box = Drawing.new("Square")
+    box.Visible = false
+    box.Color = Color3.fromRGB(255, 100, 255)
+    box.Thickness = 2
+    box.Filled = false
+    table.insert(espGroup, box)
+    
+    local tracer = Drawing.new("Line")
+    tracer.Visible = false
+    tracer.Color = Color3.fromRGB(180, 100, 255)
+    tracer.Thickness = 1
+    table.insert(espGroup, tracer)
+    
+    local name = Drawing.new("Text")
+    name.Visible = false
+    name.Color = Color3.fromRGB(220, 180, 255) -- Заменили 极 на 220
+    name.Size = 16
+    name.Center = true
+    name.Outline = true
+    table.insert(espGroup, name)
+    
+    ESPObjects[targetPlayer] = espGroup
+    
+    local espUpdate
+    espUpdate = RunService.RenderStepped:Connect(function() -- Заменили esp极 на espUpdate
+        if not ESPEnabled or not targetPlayer or not targetPlayer.Character or not targetPlayer.Character:FindFirstChild("HumanoidRootPart") then -- Заменили targetPlayer.极 на targetPlayer.Character
+            for _, obj in pairs(espGroup) do
+                obj.Visible = false
+            end
+            return
+        end
+        
+        local rootPart = targetPlayer.Character.HumanoidRootPart
+        local head = targetPlayer.Character:FindFirstChild("Head")
+        
+        if rootPart and head then
+            local rootPos, rootVisible = Camera:WorldToViewportPoint(rootPart.Position)
+            local headPos = Camera:WorldToViewportPoint(head.Position + Vector3.new(0, 1, 0))
+            
+            if rootVisible then
+                local height = (headPos.Y - rootPos.Y) * 2
+                local width = height / 2
+                
+                box.Size = Vector2.new(width, height)
+                box.Position = Vector2.new(rootPos.X - width/2, rootPos.Y - height/2)
+                box.Visible = true
+                
+                tracer.From = Vector2.new(Camera.ViewportSize.X/2, Camera.ViewportSize.Y) -- Заменили Camera.ViewportSize.X/极 на Camera.ViewportSize.X/2
+                tracer.To = Vector2.new(rootPos.X, rootPos.Y)
+                tracer.Visible = true
+                
+                name.Text = targetPlayer.Name
+                name.Position = Vector2.new(rootPos.X, rootPos.Y - height/2 - 20)
+                name.Visible = true
+            else
+                box.Visible = false
+                tracer.Visible = false
+                name.Visible = false
+            end
+        end
+    end)
+    
+    table.insert(ESPConnections, espUpdate)
+end
+
+-- Темные мрачные шейдеры
+function enableShaders()
+    local bloom = Instance.new("BloomEffect")
+    bloom.Name = "MoonBlossomBloom"
+    bloom.Intensity = 4
+    bloom.Size = 3
+    bloom.Threshold = 0.4
+    bloom.Parent = Lighting
+    
+    local colorCorrection = Instance.new("ColorCorrectionEffect")
+    colorCorrection.Name = "MoonBlossomColorCorrection"
+    colorCorrection.Brightness = -0.4
+    colorCorrection.Contrast = 0.5
+    colorCorrection.Saturation = -0.8
+    colorCorrection.TintColor = Color3.fromRGB(200, 200, 200)
+    colorCorrection.Parent = Lighting
+    
+    local atmosphere = Instance.new("Atmosphere")
+    atmosphere.Name = "MoonBlossomAtmosphere"
+    atmosphere.Density = 0.1
+    atmosphere.Offset = 0.4
+    atmosphere.Color = Color3.fromRGB(50, 50, 50)
+    atmosphere.Decay = Color3.fromRGB(30, 30, 30)
+    atmosphere.Glare = 7
+    atmosphere.Haze = 5
+    atmosphere.Parent = Lighting -- Заменили atmosphere.P极 на atmosphere.Parent
+    
+    local sunRays = Instance.new("SunRaysEffect")
+    sunRays.Name = "MoonBlossomSunRays"
+    sunRays.Intensity = 0.4 -- Заменили 0.极 на 0.05
+    sunRays.Spread = 3
+    sunRays.Parent = Lighting -- Заменили sun极.Parent на sunRays.Parent
+    
+    local dof = Instance.new("DepthOfFieldEffect")
+    dof.Name = "MoonBlossomDOF"
+    dof.FarIntensity = 0.1
+    dof.FocusDistance = 0.05
+    dof.InFocusRadius = 20
+    dof.NearIntensity = 0.2
+    dof.Parent = Lighting
+    
+    currentShaders = {bloom, colorCorrection, atmosphere, sunRays, dof}
+    
+    Lighting.Brightness = 0.5
+    Lighting.OutdoorAmbient = Color3.fromRGB(50, 50, 50)
+    Lighting.GlobalShadows = false
+    
+    local topLight = Instance.new("PointLight")
+    topLight.Name = "MoonBlossomTopLight" -- Заменили Name极 на Name
+    topLight.Brightness = 0.1
+    topLight.Range = 100
+    topLight.Color = Color3.fromRGB(50, 50, 50)
+    topLight.Position = Vector3.new(0, 100, 0)
+    topLight.Parent = Workspace.Terrain
+    
+    local frontLight = Instance.new("PointLight")
+    frontLight.Name = "MoonBlossomFrontLight"
+    frontLight.Brightness = 0.1
+    frontLight.Range = 80
+    frontLight.Color = Color3.fromRGB(50, 50, 50)
+    frontLight.Position = Vector3.new(0, 5, 50)
+    frontLight.Parent = Workspace.Terrain
+    
+    originalPartProperties = {}
+    
+    for _, part in pairs(Workspace:GetDescendants()) do
+        if part:IsA("Part") or part:IsA("MeshPart") or part:IsA("UnionOperation") then
+            originalPartProperties[part] = { -- Заменили originalPartProperties[极] на originalPartProperties[part]
+                Material = part.Material,
+                Reflectance = part.Reflectance,
+                Transparency = part.Transparency,
+                Color = part.Color
+            }
+            
+            if part.Name:lower():find("floor") or part.Name:lower():find("ground") or part.Name:lower():find("base") then
+                part.Reflectance = 0.9
+                part.Material = Enum.Material.Slate
+                part.Transparency = 0
+                part.Color = Color3.fromRGB(50, 50, 50)
+            end
+            
+            if part.Name:lower():find("wall") and part.Size.Y > 5 then
+                part.Reflectance = 0.9
+                part.Material = Enum.Material.SmoothPlastic
+                part.Color = Color3.fromRGB(50, 50, 50)
+            end
+        end
+    end
+end
+
+function disableShaders()
+    for _, shader in pairs(currentShaders) do
+        if shader and shader.Parent then
+            shader:Destroy()
+        end
+    end
+    currentShaders = {}
+    
+    if Workspace.Terrain:FindFirstChild("MoonBlossomTopLight") then
+        Workspace.Terrain.MoonBlossomTopLight:Destroy()
+    end
+    if Workspace.Terrain:FindFirstChild("MoonBlossomFrontLight") then
+        Workspace.Terrain.MoonBlossomFrontLight:Destroy()
+    end
+    
+    Lighting.Brightness = 1
+    Lighting.OutdoorAmbient = Color3.fromRGB(128, 128, 128)
+    Lighting.GlobalShadows = true
+    
+    for part, properties in pairs(originalPartProperties) do
+        if part and part.Parent then
+            part.Material = properties.Material
+            part.Reflectance = properties.Reflectance
+            part.Transparency = properties.Transparency
+            part.Color = properties.Color
+        end
+    end
+    originalPartProperties = {}
+end
+
+-- Делаем окно перетаскиваемым через TitleBar
+local dragging = false
+local dragInput, dragStart, startPos
+
+TitleBar.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = true
+        dragStart = input.Position
+        startPos = MainFrame.Position
+        
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                dragging = false
+            end
+        end)
+    end
+end)
+
+TitleBar.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement then
+        dragInput = input
+    end
+end)
+
+UIS.InputChanged:Connect(function(input)
+    if input == dragInput and dragging then -- Заменили input == drag极 на input == dragInput
+        local delta = input.Position - dragStart
+        MainFrame.Position = UDim2.new(
+            startPos.X.Scale, 
+            startPos.X.Offset + delta.X,
+            startPos.Y.Scale, 
+            startPos.Y.Offset + delta.Y
+        )
+    end
+end)
+
+-- Принудительно активируем видимость
+ScreenGui.Enabled = true
+MainFrame.Visible = true
+ButtonsContainer.Visible = true
+
+-- Создаем FOV круг при запуске
+createFOVCircle()
+
+-- Обновляем текст кнопок при запуске
+updateButtonText(BHopToggle, BHopEnabled)
+updateButtonText(SpinbotToggle, SpinbotEnabled)
+updateButtonText(ChamsToggle, ChamsEnabled)
+updateButtonText(SilentAimToggle, SilentAimEnabled)
+updateButtonText(ESPToggle, ESPEnabled)
+updateButtonText(StrafeToggle, StrafeEnabled)
+updateButtonText(ShadersToggle, ShadersEnabled)
+updateButtonText(AimAssistToggle, AimAssistEnabled) -- Заменили AimAss极Enabled на AimAssistEnabled
+updateButtonText(WalkSpeedToggle, WalkSpeedEnabled)
+
+-- Уведомление в чат
+game:GetService("StarterGui"):SetCore("ChatMakeSystemMessage", {
+    Text = "Moon Blossom v1.8 loaded! FOV 180 & fixed positioning",
+    Color = Color3.fromRGB(180, 100, 255),
+    Font = Enum.Font.GothamBold,
+    FontSize = Enum.FontSize.Size18
+})
+
+-- Автоматическое восстановление позиции при respawn
+Players.LocalPlayer.CharacterAdded:Connect(function()
+    if not GUIEnabled then return end
+    
+    wait(1)
+    
+    if not CoreGui:FindFirstChild("MoonBlossomGUI") then
+        local newScreenGui = ScreenGui:Clone()
+        newScreenGui.Parent = CoreGui
+        newScreenGui.Enabled = true
+        
+        createFOVCircle()
+    end
+end)
+
+-- Гарантируем отображение GUI
+wait(1)
+ScreenGui.Enabled = true
+for _, child in ipairs(ScreenGui:GetDescendants()) do
+    if child:IsA("GuiObject") then
+        child.Visible = true
+    end
+end
+
