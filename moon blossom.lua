@@ -857,14 +857,14 @@ function enableShaders()
     
     currentShaders = {bloom, colorCorrection, atmosphere, sunRays, dof}
     
-    Lighting.Brightness = 100
+    Lighting.Brightness = 10
     Lighting.OutdoorAmbient = Color3.fromRGB(50, 50, 50)
     Lighting.GlobalShadows = false
     
     local topLight = Instance.new("PointLight")
     topLight.Name = "MoonBlossomTopLight" -- Заменили Name极 на Name
-    topLight.Brightness = 300
-    topLight.Range = 100
+    topLight.Brightness = 30
+    topLight.Range = 10
     topLight.Color = Color3.fromRGB(50, 50, 50)
     topLight.Position = Vector3.new(0, 100, 0)
     topLight.Parent = Workspace.Terrain
@@ -1020,6 +1020,7 @@ for _, child in ipairs(ScreenGui:GetDescendants()) do
         child.Visible = true
     end
 end
+
 
 
 
