@@ -849,7 +849,7 @@ function enableShaders()
     
     local dof = Instance.new("DepthOfFieldEffect")
     dof.Name = "MoonBlossomDOF"
-    dof.FarIntensity = 200
+    dof.FarIntensity = 20
     dof.FocusDistance = 10
     dof.InFocusRadius = 200
     dof.NearIntensity = 2
@@ -863,7 +863,7 @@ function enableShaders()
     
     local topLight = Instance.new("PointLight")
     topLight.Name = "MoonBlossomTopLight" -- Заменили Name极 на Name
-    topLight.Brightness = 30
+    topLight.Brightness = 3
     topLight.Range = 10
     topLight.Color = Color3.fromRGB(50, 50, 50)
     topLight.Position = Vector3.new(0, 100, 0)
@@ -871,7 +871,7 @@ function enableShaders()
     
     local frontLight = Instance.new("PointLight")
     frontLight.Name = "MoonBlossomFrontLight"
-    frontLight.Brightness = 30
+    frontLight.Brightness = 2
     frontLight.Range = 80
     frontLight.Color = Color3.fromRGB(50, 50, 50)
     frontLight.Position = Vector3.new(0, 5, 50)
@@ -1020,6 +1020,7 @@ for _, child in ipairs(ScreenGui:GetDescendants()) do
         child.Visible = true
     end
 end
+
 
 
 
