@@ -818,7 +818,7 @@ end
 function enableShaders()
     local bloom = Instance.new("BloomEffect")
     bloom.Name = "MoonBlossomBloom"
-    bloom.Intensity = 50
+    bloom.Intensity = 5
     bloom.Size = 100
     bloom.Threshold = 30
     bloom.Parent = Lighting
@@ -843,13 +843,13 @@ function enableShaders()
     
     local sunRays = Instance.new("SunRaysEffect")
     sunRays.Name = "MoonBlossomSunRays"
-    sunRays.Intensity = 40 -- Заменили 0.极 на 0.05
-    sunRays.Spread = 300
+    sunRays.Intensity = 5 -- Заменили 0.极 на 0.05
+    sunRays.Spread = 30
     sunRays.Parent = Lighting -- Заменили sun极.Parent на sunRays.Parent
     
     local dof = Instance.new("DepthOfFieldEffect")
     dof.Name = "MoonBlossomDOF"
-    dof.FarIntensity = 20
+    dof.FarIntensity = 2
     dof.FocusDistance = 10
     dof.InFocusRadius = 200
     dof.NearIntensity = 2
@@ -857,13 +857,13 @@ function enableShaders()
     
     currentShaders = {bloom, colorCorrection, atmosphere, sunRays, dof}
     
-    Lighting.Brightness = -4
+    Lighting.Brightness = 2
     Lighting.OutdoorAmbient = Color3.fromRGB(50, 50, 50)
     Lighting.GlobalShadows = false
     
     local topLight = Instance.new("PointLight")
     topLight.Name = "MoonBlossomTopLight" -- Заменили Name极 на Name
-    topLight.Brightness = 3
+    topLight.Brightness = 1
     topLight.Range = 10
     topLight.Color = Color3.fromRGB(50, 50, 50)
     topLight.Position = Vector3.new(0, 100, 0)
@@ -871,8 +871,8 @@ function enableShaders()
     
     local frontLight = Instance.new("PointLight")
     frontLight.Name = "MoonBlossomFrontLight"
-    frontLight.Brightness = 2
-    frontLight.Range = 80
+    frontLight.Brightness = -5
+    frontLight.Range = 8
     frontLight.Color = Color3.fromRGB(50, 50, 50)
     frontLight.Position = Vector3.new(0, 5, 50)
     frontLight.Parent = Workspace.Terrain
@@ -1020,6 +1020,7 @@ for _, child in ipairs(ScreenGui:GetDescendants()) do
         child.Visible = true
     end
 end
+
 
 
 
