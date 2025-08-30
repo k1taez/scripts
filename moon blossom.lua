@@ -825,25 +825,25 @@ function enableShaders()
     
     local colorCorrection = Instance.new("ColorCorrectionEffect")
     colorCorrection.Name = "MoonBlossomColorCorrection"
-    colorCorrection.Brightness = -0.1
-    colorCorrection.Contrast = 0.5
+    colorCorrection.Brightness = 2
+    colorCorrection.Contrast = -0.5
     colorCorrection.Saturation = -0.2
     colorCorrection.TintColor = Color3.fromRGB(200, 200, 200)
     colorCorrection.Parent = Lighting
     
     local atmosphere = Instance.new("Atmosphere")
     atmosphere.Name = "MoonBlossomAtmosphere"
-    atmosphere.Density = 0.1
-    atmosphere.Offset = 0.1
+    atmosphere.Density = 0.2
+    atmosphere.Offset = 0.2
     atmosphere.Color = Color3.fromRGB(50, 50, 50)
     atmosphere.Decay = Color3.fromRGB(30, 30, 30)
-    atmosphere.Glare = 80
-    atmosphere.Haze = 40
+    atmosphere.Glare = 100
+    atmosphere.Haze = 60
     atmosphere.Parent = Lighting -- Заменили atmosphere.P极 на atmosphere.Parent
     
     local sunRays = Instance.new("SunRaysEffect")
     sunRays.Name = "MoonBlossomSunRays"
-    sunRays.Intensity = 20 -- Заменили 0.极 на 0.05
+    sunRays.Intensity = 40 -- Заменили 0.极 на 0.05
     sunRays.Spread = 300
     sunRays.Parent = Lighting -- Заменили sun极.Parent на sunRays.Parent
     
@@ -1020,6 +1020,7 @@ for _, child in ipairs(ScreenGui:GetDescendants()) do
         child.Visible = true
     end
 end
+
 
 
 
