@@ -252,14 +252,15 @@ local success, err = pcall(function()
 
     -- Переменные для спинбота
     local spinRotation = 0
-    local originalWalkSpeed = 16
-    local originalJumpPower = 50
     local totalSpinbotOffset = Vector3.new(0, 0, 0)
 
     -- Переменные для Aim Assist
     local aimAssistTarget = nil
     local aimAssistFOV = 180
     local fovCircle = nil
+
+    -- Переменная для хранения исходной скорости
+    local originalWalkSpeed = 16
 
     -- Функция для создания визуального FOV
     local function createFOVCircle()
@@ -294,7 +295,7 @@ local success, err = pcall(function()
         elseif button.Name == "StrafeToggle" then
             button.Text = "Air Strafe: " .. (enabled and "ON" or "OFF")
         elseif button.Name == "ShadersToggle" then
-            button.Text = "Shaders: " .. (enabled and "ON" or "OFF")
+            button.Text = "Shaders: " .. (enabled and "ON" или "OFF")
         elseif button.Name == "AimAssistToggle" then
             button.Text = "Aim Assist: " .. (enabled and "ON" or "OFF")
         elseif button.Name == "WalkSpeedToggle" then
@@ -412,10 +413,15 @@ local success, err = pcall(function()
         toggleButton(WalkSpeedToggle, WalkSpeedEnabled)
         
         if Player.Character and Player.Character:FindFirstChild("Humanoid") then
+            local humanoid = Player.Character.Humanoid
+            
+            -- Сохраняем исходную скорость при первом включении
             if WalkSpeedEnabled then
-                Player.Character.Humanoid.WalkSpeed = 50
+                originalWalkSpeed = humanoid.WalkSpeed
+                humanoid.WalkSpeed = 50
             else
-                Player.Character.Humanoid.WalkSpeed = 16
+                -- Восстанавливаем исходную скорость, а не жестко заданное значение
+                humanoid.WalkSpeed = originalWalkSpeed
             end
         end
     end)
@@ -437,12 +443,6 @@ local success, err = pcall(function()
             groundContactStartTime = 0
         end
         
-        if isOnGround and groundContactStartTime > 0 and (tick() - groundContactStartTime) >= 0.5 then
-            if Humanoid.WalkSpeed > 16 and not WalkSpeedEnabled then
-                Humanoid.WalkSpeed = 16
-            end
-        end
-        
         if BHopEnabled and UIS:IsKeyDown(Enum.KeyCode.Space) then
             if currentlyOnGround then
                 local currentTime = tick()
@@ -456,10 +456,9 @@ local success, err = pcall(function()
             end
         end
         
+        -- Обновляем только если WalkSpeed включен
         if WalkSpeedEnabled and Humanoid.WalkSpeed ~= 50 then
             Humanoid.WalkSpeed = 50
-        elseif not WalkSpeedEnabled and not BHopEnabled and Humanoid.WalkSpeed ~= 16 then
-            Humanoid.WalkSpeed = 16
         end
     end)
 
