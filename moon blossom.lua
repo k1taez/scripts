@@ -51,7 +51,7 @@ TitleBar.Parent = MainFrame
 
 local TitleCorner = Instance.new("UICorner")
 TitleCorner.CornerRadius = UDim.new(0, 8)
-TitleCorner.Parent = TitleBar
+TitleCorner.Parent =.**
 
 local Title = Instance.new("TextLabel")
 Title.Size = UDim2.new(0.7, 0, 1, 0)
@@ -60,7 +60,7 @@ Title.BackgroundTransparency = 1
 Title.Text = "Moon Blossom v1.8"
 Title.TextColor3 = Color3.fromRGB(220, 180, 255)
 Title.Font = Enum.Font.GothamBold
-Title.TextSize = 14 -- Заменили 极 на 14
+Title.TextSize = 14
 Title.Parent = TitleBar
 
 -- Кнопка закрытия
@@ -80,7 +80,7 @@ MinimizeButton.Size = UDim2.new(0, 30, 0, 30)
 MinimizeButton.Position = UDim2.new(0.8, 0, 0, 0)
 MinimizeButton.BackgroundTransparency = 1
 MinimizeButton.Text = "_"
-MinimizeButton.TextColor3 = Color3.fromRGB(200, 200, 200) -- Заменили TextColor极 на TextColor3
+MinimizeButton.TextColor3 = Color3.fromRGB(200, 200, 200)
 MinimizeButton.Font = Enum.Font.GothamBold
 MinimizeButton.TextSize = 16
 MinimizeButton.Parent = TitleBar
@@ -88,10 +88,10 @@ MinimizeButton.Parent = TitleBar
 -- Контейнер для кнопок (будет скрываться при сворачивании)
 local ButtonsContainer = Instance.new("Frame")
 ButtonsContainer.Name = "ButtonsContainer"
-ButtonsContainer.Size = UDim2.new(1, 0, 1, -30) -- Заменили 极 на 0
+ButtonsContainer.Size = UDim2.new(1, 0, 1, -30)
 ButtonsContainer.Position = UDim2.new(0, 0, 0, 30)
 ButtonsContainer.BackgroundTransparency = 1
-ButtonsContainer.Parent = MainFrame -- Заменили Buttons极.Parent на ButtonsContainer.Parent
+ButtonsContainer.Parent = MainFrame
 
 -- Кнопки переключателей (увеличили отступы между кнопками)
 local BHopToggle = Instance.new("TextButton")
@@ -106,7 +106,7 @@ BHopToggle.Parent = ButtonsContainer
 
 local SpinbotToggle = Instance.new("TextButton")
 SpinbotToggle.Name = "SpinbotToggle"
-SpinbotToggle.Size = UDim2.new(0, 260, 0, 30) -- Заменили UDim极 на UDim2
+SpinbotToggle.Size = UDim2.new(0, 260, 0, 30)
 SpinbotToggle.Position = UDim2.new(0.035, 0, 0.10, 0)
 SpinbotToggle.Text = "Spinbot: OFF"
 SpinbotToggle.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
@@ -134,7 +134,7 @@ SilentAimToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
 SilentAimToggle.Font = Enum.Font.Gotham
 SilentAimToggle.Parent = ButtonsContainer
 
-local ESPToggle = Instance.new("TextButton") -- Заменили 极Button на TextButton
+local ESPToggle = Instance.new("TextButton")
 ESPToggle.Name = "ESPToggle"
 ESPToggle.Size = UDim2.new(0, 260, 0, 30)
 ESPToggle.Position = UDim2.new(0.035, 0, 0.31, 0)
@@ -160,7 +160,7 @@ ShadersToggle.Size = UDim2.new(0, 260, 0, 30)
 ShadersToggle.Position = UDim2.new(0.035, 0, 0.45, 0)
 ShadersToggle.Text = "Shaders: OFF"
 ShadersToggle.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
-ShadersToggle.TextColor3 = Color3.fromRGB(220, 180, 255) -- Заменили 极 на 180
+ShadersToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
 ShadersToggle.Font = Enum.Font.Gotham
 ShadersToggle.Parent = ButtonsContainer
 
@@ -168,16 +168,16 @@ ShadersToggle.Parent = ButtonsContainer
 local AimAssistToggle = Instance.new("TextButton")
 AimAssistToggle.Name = "AimAssistToggle"
 AimAssistToggle.Size = UDim2.new(0, 260, 0, 30)
-AimAssistToggle.Position = UDim2.new(0.035, 0, 0.52, 0) -- Заменили A极.Position на AimAssistToggle.Position
+AimAssistToggle.Position = UDim2.new(0.035, 0, 0.52, 0)
 AimAssistToggle.Text = "Aim Assist: OFF"
 AimAssistToggle.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
-AimAssistToggle.TextColor3 = Color3.fromRGB(220, 180, 255) -- Заменили Text极3 на TextColor3
+AimAssistToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
 AimAssistToggle.Font = Enum.Font.Gotham
 AimAssistToggle.Parent = ButtonsContainer
 
 -- Новая кнопка WalkSpeed
 local WalkSpeedToggle = Instance.new("TextButton")
-WalkSpeedToggle.Name = "WalkSpeedToggle" -- Заменили Walk极Toggle на WalkSpeedToggle
+WalkSpeedToggle.Name = "WalkSpeedToggle"
 WalkSpeedToggle.Size = UDim2.new(0, 260, 0, 30)
 WalkSpeedToggle.Position = UDim2.new(0.035, 0, 0.59, 0)
 WalkSpeedToggle.Text = "WalkSpeed: OFF"
@@ -237,7 +237,7 @@ local ESPConnections = {}
 
 -- Переменные для Chams
 local ChamsObjects = {}
-local ChamsConnections = {} -- Заменили ChamsConn极 на ChamsConnections
+local ChamsConnections = {}
 local OriginalMaterials = {}
 local OriginalColors = {}
 local OriginalTransparencies = {}
@@ -295,13 +295,13 @@ function updateButtonText(button, enabled)
     elseif button.Name == "AimAssistToggle" then
         button.Text = "Aim Assist: " .. (enabled and "ON" or "OFF")
     elseif button.Name == "WalkSpeedToggle" then
-        button.Text = "WalkSpeed: " .. (enabled and "ON" or "OFF") -- Заменили 极 на OFF
+        button.Text = "WalkSpeed: " .. (enabled and "ON" or "OFF")
     end
 end
 
 -- Анимации переключения
 function toggleButton(button, state)
-    local tweenInfo = TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out) -- Заменили Tween极 на TweenInfo
+    local tweenInfo = TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
     local goal = {}
     
     if state then
@@ -346,7 +346,7 @@ ChamsToggle.MouseButton1Click:Connect(function()
     ChamsEnabled = not ChamsEnabled
     toggleButton(ChamsToggle, ChamsEnabled)
     
-    if ChamsEnabled then -- Заменили if极 на if ChamsEnabled
+    if ChamsEnabled then
         enableChams()
     else
         disableChams()
@@ -437,13 +437,13 @@ RunService.Heartbeat:Connect(function()
             groundContactStartTime = 0
         end
         
-        if isOnGround and groundContactStartTime > 0 and (tick() - groundContactStartTime) >= 0.5 then -- Заменили groundContact极Time на groundContactStartTime
+        if isOnGround and groundContactStartTime > 0 and (tick() - groundContactStartTime) >= 0.5 then
             if Humanoid.WalkSpeed > 16 and not WalkSpeedEnabled then
                 Humanoid.WalkSpeed = 16
             end
         end
         
-        if BHopEnabled and UIS:IsKeyDown(Enum.KeyCode.Space) then -- Заменили UIS:极KeyDown на UIS:IsKeyDown
+        if BHopEnabled and UIS:IsKeyDown(Enum.KeyCode.Space) then
             if currentlyOnGround then
                 local currentTime = tick()
                 if currentTime - lastJumpTime > 0.1 then
@@ -456,7 +456,7 @@ RunService.Heartbeat:Connect(function()
             end
         end
         
-        if WalkSpeedEnabled and Humanoid.WalkSpeed ~= 50 then -- Заменили ~极 на ~=
+        if WalkSpeedEnabled and Humanoid.WalkSpeed ~= 50 then
             Humanoid.WalkSpeed = 50
         elseif not WalkSpeedEnabled and not BHopEnabled and Humanoid.WalkSpeed ~= 16 then
             Humanoid.WalkSpeed = 16
@@ -555,7 +555,7 @@ RunService.RenderStepped:Connect(function()
         fovCircle.Visible = AimAssistEnabled or SilentAimEnabled
     end
     
-    if AimAssistEnabled and UIS:IsMouseButtonPressed(Enum.UserInputType.MouseButton2) then
+    if AimAssistEnabled and UIS:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) then
         if Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
             local closestPlayer = findClosestPlayerInFOV(aimAssistFOV)
             
@@ -568,7 +568,7 @@ RunService.RenderStepped:Connect(function()
                 local currentLook = Camera.CFrame.LookVector
                 local smoothFactor = 0.3
                 
-                local newLook = currentLook:Lerp(direction, smoothFactor) -- Заменили new极 на newLook
+                local newLook = currentLook:Lerp(direction, smoothFactor)
                 Camera.CFrame = CFrame.new(cameraPosition, cameraPosition + newLook)
             end
         end
@@ -594,7 +594,7 @@ end)
 function enableChams()
     for _, otherPlayer in ipairs(Players:GetPlayers()) do
         if otherPlayer ~= Player then
-            createChams(otherPlayer) -- Заменили create极 на createChams
+            createChams(otherPlayer)
         end
     end
     
@@ -604,7 +604,7 @@ function enableChams()
         end
     end))
     
-    table.insert(ChamsConnections, Players.PlayerRemoving:Connect(function(leftPlayer) -- Заменили PlayerRemoving极Connect на PlayerRemoving:Connect
+    table.insert(ChamsConnections, Players.PlayerRemoving:Connect(function(leftPlayer)
         if ChamsObjects[leftPlayer] then
             for _, part in pairs(ChamsObjects[leftPlayer]) do
                 if part and part.Parent then
@@ -639,7 +639,7 @@ function disableChams()
                 if OriginalColors[part] then
                     part.Color = OriginalColors[part]
                 end
-                if OriginalTransparencies[part] then -- Заменили OriginalTransparencies极part] на OriginalTransparencies[part]
+                if OriginalTransparencies[part] then
                     part.LocalTransparencyModifier = OriginalTransparencies[part]
                 end
             end
@@ -651,7 +651,7 @@ function disableChams()
     OriginalTransparencies = {}
 end
 
-function createChams(targetPlayer) -- Заменили create极 на createChams
+function createChams(targetPlayer)
     if ChamsObjects[targetPlayer] then return end
     
     local function applyChams(character)
@@ -697,7 +697,7 @@ function createChams(targetPlayer) -- Заменили create极 на createCham
     
     targetPlayer.CharacterAdded:Connect(function(character)
         if ChamsEnabled then
-            applyChams(character) -- Заменили apply极 на applyChams
+            applyChams(character)
         end
     end)
 end
@@ -764,7 +764,7 @@ function createESP(targetPlayer)
     
     local name = Drawing.new("Text")
     name.Visible = false
-    name.Color = Color3.fromRGB(220, 180, 255) -- Заменили 极 на 220
+    name.Color = Color3.fromRGB(220, 180, 255)
     name.Size = 16
     name.Center = true
     name.Outline = true
@@ -773,8 +773,8 @@ function createESP(targetPlayer)
     ESPObjects[targetPlayer] = espGroup
     
     local espUpdate
-    espUpdate = RunService.RenderStepped:Connect(function() -- Заменили esp极 на espUpdate
-        if not ESPEnabled or not targetPlayer or not targetPlayer.Character or not targetPlayer.Character:FindFirstChild("HumanoidRootPart") then -- Заменили targetPlayer.极 на targetPlayer.Character
+    espUpdate = RunService.RenderStepped:Connect(function()
+        if not ESPEnabled or not targetPlayer or not targetPlayer.Character or not targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
             for _, obj in pairs(espGroup) do
                 obj.Visible = false
             end
@@ -796,7 +796,7 @@ function createESP(targetPlayer)
                 box.Position = Vector2.new(rootPos.X - width/2, rootPos.Y - height/2)
                 box.Visible = true
                 
-                tracer.From = Vector2.new(Camera.ViewportSize.X/2, Camera.ViewportSize.Y) -- Заменили Camera.ViewportSize.X/极 на Camera.ViewportSize.X/2
+                tracer.From = Vector2.new(Camera.ViewportSize.X/2, Camera.ViewportSize.Y)
                 tracer.To = Vector2.new(rootPos.X, rootPos.Y)
                 tracer.Visible = true
                 
@@ -839,13 +839,13 @@ function enableShaders()
     atmosphere.Decay = Color3.fromRGB(30, 30, 30)
     atmosphere.Glare = 100
     atmosphere.Haze = 60
-    atmosphere.Parent = Lighting -- Заменили atmosphere.P极 на atmosphere.Parent
+    atmosphere.Parent = Lighting
     
     local sunRays = Instance.new("SunRaysEffect")
     sunRays.Name = "MoonBlossomSunRays"
-    sunRays.Intensity = 5 -- Заменили 0.极 на 0.05
+    sunRays.Intensity = 5
     sunRays.Spread = 30
-    sunRays.Parent = Lighting -- Заменили sun极.Parent на sunRays.Parent
+    sunRays.Parent = Lighting
     
     local dof = Instance.new("DepthOfFieldEffect")
     dof.Name = "MoonBlossomDOF"
@@ -862,7 +862,7 @@ function enableShaders()
     Lighting.GlobalShadows = false
     
     local topLight = Instance.new("PointLight")
-    topLight.Name = "MoonBlossomTopLight" -- Заменили Name极 на Name
+    topLight.Name = "MoonBlossomTopLight"
     topLight.Brightness = 1
     topLight.Range = 10
     topLight.Color = Color3.fromRGB(50, 50, 50)
@@ -881,7 +881,7 @@ function enableShaders()
     
     for _, part in pairs(Workspace:GetDescendants()) do
         if part:IsA("Part") or part:IsA("MeshPart") or part:IsA("UnionOperation") then
-            originalPartProperties[part] = { -- Заменили originalPartProperties[极] на originalPartProperties[part]
+            originalPartProperties[part] = {
                 Material = part.Material,
                 Reflectance = part.Reflectance,
                 Transparency = part.Transparency,
@@ -959,7 +959,7 @@ TitleBar.InputChanged:Connect(function(input)
 end)
 
 UIS.InputChanged:Connect(function(input)
-    if input == dragInput and dragging then -- Заменили input == drag极 на input == dragInput
+    if input == dragInput and dragging then
         local delta = input.Position - dragStart
         MainFrame.Position = UDim2.new(
             startPos.X.Scale, 
@@ -986,7 +986,7 @@ updateButtonText(SilentAimToggle, SilentAimEnabled)
 updateButtonText(ESPToggle, ESPEnabled)
 updateButtonText(StrafeToggle, StrafeEnabled)
 updateButtonText(ShadersToggle, ShadersEnabled)
-updateButtonText(AimAssistToggle, AimAssistEnabled) -- Заменили AimAss极Enabled на AimAssistEnabled
+updateButtonText(AimAssistToggle, AimAssistEnabled)
 updateButtonText(WalkSpeedToggle, WalkSpeedEnabled)
 
 -- Уведомление в чат
@@ -1020,17 +1020,3 @@ for _, child in ipairs(ScreenGui:GetDescendants()) do
         child.Visible = true
     end
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
