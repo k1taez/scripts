@@ -1,4 +1,3 @@
-```lua
 -- Сервисы Roblox
 local success, err = pcall(function()
     local Players = game:GetService("Players")
@@ -1122,4 +1121,3 @@ end)
 if not success then
     warn("[MoonBlossom] Initialization failed: ", err)
 end
-```
