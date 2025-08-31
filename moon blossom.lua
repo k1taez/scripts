@@ -295,7 +295,7 @@ local success, err = pcall(function()
         elseif button.Name == "StrafeToggle" then
             button.Text = "Air Strafe: " .. (enabled and "ON" or "OFF")
         elseif button.Name == "ShadersToggle" then
-            button.Text = "Shaders: " .. (enabled and "ON" или "OFF")
+            button.Text = "Shaders: " .. (enabled and "ON" or "OFF")
         elseif button.Name == "AimAssistToggle" then
             button.Text = "Aim Assist: " .. (enabled and "ON" or "OFF")
         elseif button.Name == "WalkSpeedToggle" then
