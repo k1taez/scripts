@@ -1,5 +1,5 @@
 -- Сервисы Roblox
-local success, err = pcall(function()
+    local success, err = pcall(function()
     local Players = game:GetService("Players")
     local UIS = game:GetService("UserInputService")
     local CoreGui = game:GetService("CoreGui")
@@ -29,7 +29,6 @@ local success, err = pcall(function()
     ScreenGui.ResetOnSpawn = false
 
     -- Основной фрейм
-   –
 
     local MainFrame = Instance.new("Frame")
     MainFrame.Name = "MainFrame"
@@ -1121,3 +1120,4 @@ end)
 if not success then
     warn("[MoonBlossom] Initialization failed: ", err)
 end
+
