@@ -1,5 +1,5 @@
--- Сервисы Roblox
-    local success, err = pcall(function()
+local success, err = pcall(function()
+    -- Сервисы Roblox
     local Players = game:GetService("Players")
     local UIS = game:GetService("UserInputService")
     local CoreGui = game:GetService("CoreGui")
@@ -8,7 +8,7 @@
     local Workspace = game:GetService("Workspace")
     local Camera = Workspace.CurrentCamera
     local Lighting = game:GetService("Lighting")
-    local ReplicatedStorage = game:GetService("ReplicatedStorage") -- Добавлено для избежания ошибок с репликацией
+    local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
     local Player = Players.LocalPlayer
     local Mouse = Player:GetMouse()
@@ -29,7 +29,6 @@
     ScreenGui.ResetOnSpawn = false
 
     -- Основной фрейм
-
     local MainFrame = Instance.new("Frame")
     MainFrame.Name = "MainFrame"
     MainFrame.Parent = ScreenGui
@@ -268,47 +267,38 @@
             fovCircle:Remove()
         end
         
-        local success, result = pcall(function()
-            fovCircle = Drawing.new("Circle")
-            fovCircle.Visible = AimAssistEnabled or SilentAimEnabled
-            fovCircle.Radius = aimAssistFOV
-            fovCircle.Color = Color3.fromRGB(255, 100, 255)
-            fovCircle.Thickness = 2
-            fovCircle.Filled = false
-            fovCircle.Transparency = 0.7
-            fovCircle.Position = Vector2.new(Mouse.X, Mouse.Y)
-        end)
-        if not success then
-            warn("[MoonBlossom] Failed to create FOV circle: ", result)
-        end
+        fovCircle = Drawing.new("Circle")
+        fovCircle.Visible = AimAssistEnabled or SilentAimEnabled
+        fovCircle.Radius = aimAssistFOV
+        fovCircle.Color = Color3.fromRGB(255, 100, 255)
+        fovCircle.Thickness = 2
+        fovCircle.Filled = false
+        fovCircle.Transparency = 0.7
+        fovCircle.Position = Vector2.new(Mouse.X, Mouse.Y)
+        
         return fovCircle
     end
 
     -- Функция для обновления текста кнопок
     local function updateButtonText(button, enabled)
-        local success, result = pcall(function()
-            if button.Name == "BHopToggle" then
-                button.Text = "Bunny Hop: " .. (enabled and "ON" or "OFF")
-            elseif button.Name == "SpinbotToggle" then
-                button.Text = "Spinbot: " .. (enabled and "ON" or "OFF")
-            elseif button.Name == "ChamsToggle" then
-                button.Text = "Player Chams: " .. (enabled and "ON" or "OFF")
-            elseif button.Name == "SilentAimToggle" then
-                button.Text = "Silent Aim: " .. (enabled and "ON" or "OFF")
-            elseif button.Name == "ESPToggle" then
-                button.Text = "ESP: " .. (enabled and "ON" or "OFF")
-            elseif button.Name == "StrafeToggle" then
-                button.Text = "Air Strafe: " .. (enabled and "ON" or "OFF")
-            elseif button.Name == "ShadersToggle" then
-                button.Text = "Shaders: " .. (enabled and "ON" or "OFF")
-            elseif button.Name == "AimAssistToggle" then
-                button.Text = "Aim Assist: " .. (enabled and "ON" or "OFF")
-            elseif button.Name == "WalkSpeedToggle" then
-                button.Text = "WalkSpeed: " .. (enabled and "ON" or "OFF")
-            end
-        end)
-        if not success then
-            warn("[MoonBlossom] Failed to update button text: ", result)
+        if button.Name == "BHopToggle" then
+            button.Text = "Bunny Hop: " .. (enabled and "ON" or "OFF")
+        elseif button.Name == "SpinbotToggle" then
+            button.Text = "Spinbot: " .. (enabled and "ON" or "OFF")
+        elseif button.Name == "ChamsToggle" then
+            button.Text = "Player Chams: " .. (enabled and "ON" or "OFF")
+        elseif button.Name == "SilentAimToggle" then
+            button.Text = "Silent Aim: " .. (enabled and "ON" or "OFF")
+        elseif button.Name == "ESPToggle" then
+            button.Text = "ESP: " .. (enabled and "ON" or "OFF")
+        elseif button.Name == "StrafeToggle" then
+            button.Text = "Air Strafe: " .. (enabled and "ON" or "OFF")
+        elseif button.Name == "ShadersToggle" then
+            button.Text = "Shaders: " .. (enabled and "ON" or "OFF")
+        elseif button.Name == "AimAssistToggle" then
+            button.Text = "Aim Assist: " .. (enabled and "ON" or "OFF")
+        elseif button.Name == "WalkSpeedToggle" then
+            button.Text = "WalkSpeed: " .. (enabled and "ON" or "OFF")
         end
     end
 
@@ -323,40 +313,25 @@
             goal.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
         end
         
-        local success, result = pcall(function()
-            TweenService:Create(button, tweenInfo, goal):Play()
-            updateButtonText(button, state)
-        end)
-        if not success then
-            warn("[MoonBlossom] Failed to toggle button: ", result)
-        end
+        TweenService:Create(button, tweenInfo, goal):Play()
+        updateButtonText(button, state)
     end
 
     -- Обработчики кнопок GUI
     CloseButton.MouseButton1Click:Connect(function()
-        local success, result = pcall(function()
-            ScreenGui:Destroy()
-            GUIEnabled = false
-            if fovCircle then
-                fovCircle:Remove()
-            end
-        end)
-        if not success then
-            warn("[MoonBlossom] Failed to close GUI: ", result)
+        ScreenGui:Destroy()
+        GUIEnabled = false
+        if fovCircle then
+            fovCircle:Remove()
         end
     end)
 
     MinimizeButton.MouseButton1Click:Connect(function()
-        local success, result = pcall(function()
-            ButtonsContainer.Visible = not ButtonsContainer.Visible
-            if ButtonsContainer.Visible then
-                MainFrame.Size = UDim2.new(0, 280, 0, 400)
-            else
-                MainFrame.Size = UDim2.new(0, 280, 0, 30)
-            end
-        end)
-        if not success then
-            warn("[MoonBlossom] Failed to minimize GUI: ", result)
+        ButtonsContainer.Visible = not ButtonsContainer.Visible
+        if ButtonsContainer.Visible then
+            MainFrame.Size = UDim2.new(0, 280, 0, 400)
+        else
+            MainFrame.Size = UDim2.new(0, 280, 0, 30)
         end
     end)
 
@@ -374,15 +349,10 @@
         ChamsEnabled = not ChamsEnabled
         toggleButton(ChamsToggle, ChamsEnabled)
         
-        local success, result = pcall(function()
-            if ChamsEnabled then
-                enableChams()
-            else
-                disableChams()
-            end
-        end)
-        if not success then
-            warn("[MoonBlossom] Failed to toggle Chams: ", result)
+        if ChamsEnabled then
+            enableChams()
+        else
+            disableChams()
         end
     end)
 
@@ -399,15 +369,10 @@
         ESPEnabled = not ESPEnabled
         toggleButton(ESPToggle, ESPEnabled)
         
-        local success, result = pcall(function()
-            if ESPEnabled then
-                enableESP()
-            else
-                disableESP()
-            end
-        end)
-        if not success then
-            warn("[MoonBlossom] Failed to toggle ESP: ", result)
+        if ESPEnabled then
+            enableESP()
+        else
+            disableESP()
         end
     end)
 
@@ -420,15 +385,10 @@
         ShadersEnabled = not ShadersEnabled
         toggleButton(ShadersToggle, ShadersEnabled)
         
-        local success, result = pcall(function()
-            if ShadersEnabled then
-                enableShaders()
-            else
-                disableShaders()
-            end
-        end)
-        if not success then
-            warn("[MoonBlossom] Failed to toggle Shaders: ", result)
+        if ShadersEnabled then
+            enableShaders()
+        else
+            disableShaders()
         end
     end)
 
@@ -436,19 +396,14 @@
         AimAssistEnabled = not AimAssistEnabled
         toggleButton(AimAssistToggle, AimAssistEnabled)
         
-        local success, result = pcall(function()
-            if not AimAssistEnabled then
-                aimAssistTarget = nil
-            end
-            
-            if fovCircle then
-                fovCircle.Visible = AimAssistEnabled or SilentAimEnabled
-            else
-                createFOVCircle()
-            end
-        end)
-        if not success then
-            warn("[MoonBlossom] Failed to toggle Aim Assist: ", result)
+        if not AimAssistEnabled then
+            aimAssistTarget = nil
+        end
+        
+        if fovCircle then
+            fovCircle.Visible = AimAssistEnabled or SilentAimEnabled
+        else
+            createFOVCircle()
         end
     end)
 
@@ -456,122 +411,111 @@
         WalkSpeedEnabled = not WalkSpeedEnabled
         toggleButton(WalkSpeedToggle, WalkSpeedEnabled)
         
-        local success, result = pcall(function()
-            if Player.Character and Player.Character:FindFirstChild("Humanoid") then
-                if WalkSpeedEnabled then
-                    Player.Character.Humanoid.WalkSpeed = 50
-                else
-                    Player.Character.Humanoid.WalkSpeed = 16
-                end
+        if Player.Character and Player.Character:FindFirstChild("Humanoid") then
+            if WalkSpeedEnabled then
+                Player.Character.Humanoid.WalkSpeed = 50
+            else
+                Player.Character.Humanoid.WalkSpeed = 16
             end
-        end)
-        if not success then
-            warn("[MoonBlossom] Failed to toggle WalkSpeed: ", result)
         end
     end)
 
     -- Улучшенный баннихоп с walkspeed 50
     RunService.Heartbeat:Connect(function()
-        pcall(function()
-            local Char = Player.Character
-            if not Char or not Char:FindFirstChild("Humanoid") then return end
-            
-            local Humanoid = Char.Humanoid
-            
-            local currentlyOnGround = Humanoid.FloorMaterial ~= Enum.Material.Air
-            
-            if currentlyOnGround and not isOnGround then
-                isOnGround = true
-                groundContactStartTime = tick()
-            elseif not currentlyOnGround and isOnGround then
-                isOnGround = false
-                groundContactStartTime = 0
-            end
-            
-            if isOnGround and groundContactStartTime > 0 and (tick() - groundContactStartTime) >= 0.5 then
-                if Humanoid.WalkSpeed > 16 and not WalkSpeedEnabled then
-                    Humanoid.WalkSpeed = 16
-                end
-            end
-            
-            if BHopEnabled and UIS:IsKeyDown(Enum.KeyCode.Space) then
-                if currentlyOnGround then
-                    local currentTime = tick()
-                    if currentTime - lastJumpTime > 0.1 then
-                        lastJumpTime = currentTime
-                        
-                        Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
-                        
-                        Humanoid.WalkSpeed = 50
-                    end
-                end
-            end
-            
-            if WalkSpeedEnabled and Humanoid.WalkSpeed ~= 50 then
-                Humanoid.WalkSpeed = 50
-            elseif not WalkSpeedEnabled and not BHopEnabled and Humanoid.WalkSpeed ~= 16 then
+        local Char = Player.Character
+        if not Char or not Char:FindFirstChild("Humanoid") then return end
+        
+        local Humanoid = Char.Humanoid
+        
+        local currentlyOnGround = Humanoid.FloorMaterial ~= Enum.Material.Air
+        
+        if currentlyOnGround and not isOnGround then
+            isOnGround = true
+            groundContactStartTime = tick()
+        elseif not currentlyOnGround and isOnGround then
+            isOnGround = false
+            groundContactStartTime = 0
+        end
+        
+        if isOnGround and groundContactStartTime > 0 and (tick() - groundContactStartTime) >= 0.5 then
+            if Humanoid.WalkSpeed > 16 and not WalkSpeedEnabled then
                 Humanoid.WalkSpeed = 16
             end
-        end)
+        end
+        
+        if BHopEnabled and UIS:IsKeyDown(Enum.KeyCode.Space) then
+            if currentlyOnGround then
+                local currentTime = tick()
+                if currentTime - lastJumpTime > 0.1 then
+                    lastJumpTime = currentTime
+                    
+                    Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+                    
+                    Humanoid.WalkSpeed = 50
+                end
+            end
+        end
+        
+        if WalkSpeedEnabled and Humanoid.WalkSpeed ~= 50 then
+            Humanoid.WalkSpeed = 50
+        elseif not WalkSpeedEnabled and not BHopEnabled and Humanoid.WalkSpeed ~= 16 then
+            Humanoid.WalkSpeed = 16
+        end
     end)
 
     -- Улучшенный спинбот с уходом под землю на 2.5
     RunService.Heartbeat:Connect(function()
-        pcall(function()
-            if SpinbotEnabled and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
-                local Char = Player.Character
-                local RootPart = Char.HumanoidRootPart
-                
-                RootPart.CFrame = RootPart.CFrame - totalSpinbotOffset
-                
-                local newOffset = Vector3.new(0, -2.5, 0)
-                totalSpinbotOffset = newOffset
-                
-                spinRotation = spinRotation + 100
-                if spinRotation > 180 then spinRotation = 90 end
-                
-                RootPart.CFrame = RootPart.CFrame * CFrame.Angles(0, math.rad(spinRotation), 0) + newOffset
-            else
-                if totalSpinbotOffset ~= Vector3.new(0, 0, 0) then
-                    if Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
-                        Player.Character.HumanoidRootPart.CFrame = Player.Character.HumanoidRootPart.CFrame - totalSpinbotOffset
-                    end
-                    totalSpinbotOffset = Vector3.new(0, 0, 0)
+        if SpinbotEnabled and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
+            local Char = Player.Character
+            local RootPart = Char.HumanoidRootPart
+            
+            RootPart.CFrame = RootPart.CFrame - totalSpinbotOffset
+            
+            local newOffset = Vector3.new(0, -2.5, 0)
+            totalSpinbotOffset = newOffset
+            
+            spinRotation = spinRotation + 100
+            if spinRotation > 180 then spinRotation = 90 end
+            
+            RootPart.CFrame = RootPart.CFrame * CFrame.Angles(0, math.rad(spinRotation), 0) + newOffset
+        else
+            if totalSpinbotOffset ~= Vector3.new(0, 0, 0) then
+                if Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
+                    Player.Character.HumanoidRootPart.CFrame = Player.Character.HumanoidRootPart.CFrame - totalSpinbotOffset
                 end
+                totalSpinbotOffset = Vector3.new(0, 0, 0)
             end
-        end)
+        end
     end)
 
     -- Air Strafe функция
     RunService.Heartbeat:Connect(function()
-        pcall(function()
-            if StrafeEnabled and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
-                local Char = Player.Character
-                local RootPart = Char.HumanoidRootPart
-                local Humanoid = Char.Humanoid
+        if StrafeEnabled and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
+            local Char = Player.Character
+            local RootPart = Char.HumanoidRootPart
+            local Humanoid = Char.Humanoid
+            
+            if Humanoid.FloorMaterial == Enum.Material.Air then
+                local moveDirection = Vector3.new()
+                if UIS:IsKeyDown(Enum.KeyCode.W) then
+                    moveDirection = moveDirection + RootPart.CFrame.LookVector
+                end
+                if UIS:IsKeyDown(Enum.KeyCode.S) then
+                    moveDirection = moveDirection - RootPart.CFrame.LookVector
+                end
+                if UIS:IsKeyDown(Enum.KeyCode.A) then
+                    moveDirection = moveDirection - RootPart.CFrame.RightVector
+                end
+                if UIS:IsKeyDown(Enum.KeyCode.D) then
+                    moveDirection = moveDirection + RootPart.CFrame.RightVector
+                end
                 
-                if Humanoid.FloorMaterial == Enum.Material.Air then
-                    local moveDirection = Vector3.new()
-                    if UIS:IsKeyDown(Enum.KeyCode.W) then
-                        moveDirection = moveDirection + RootPart.CFrame.LookVector
-                    end
-                    if UIS:IsKeyDown(Enum.KeyCode.S) then
-                        moveDirection = moveDirection - RootPart.CFrame.LookVector
-                    end
-                    if UIS:IsKeyDown(Enum.KeyCode.A) then
-                        moveDirection = moveDirection - RootPart.CFrame.RightVector
-                    end
-                    if UIS:IsKeyDown(Enum.KeyCode.D) then
-                        moveDirection = moveDirection + RootPart.CFrame.RightVector
-                    end
-                    
-                    if moveDirection.Magnitude > 0 then
-                        moveDirection = moveDirection.Unit
-                        RootPart.Velocity = RootPart.Velocity + moveDirection * 30
-                    end
+                if moveDirection.Magnitude > 0 then
+                    moveDirection = moveDirection.Unit
+                    RootPart.Velocity = RootPart.Velocity + moveDirection * 30
                 end
             end
-        end)
+        end
     end)
 
     -- Функция для поиска ближайшего игрока в FOV
@@ -601,31 +545,29 @@
 
     -- Исправленный Aim Assist с FOV 180 (на ЛКМ)
     RunService.RenderStepped:Connect(function()
-        pcall(function()
-            if fovCircle then
-                fovCircle.Position = Vector2.new(Mouse.X, Mouse.Y)
-                fovCircle.Visible = AimAssistEnabled or SilentAimEnabled
-            end
-            
-            if AimAssistEnabled and UIS:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) then
-                if Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
-                    local closestPlayer = findClosestPlayerInFOV(aimAssistFOV)
+        if fovCircle then
+            fovCircle.Position = Vector2.new(Mouse.X, Mouse.Y)
+            fovCircle.Visible = AimAssistEnabled or SilentAimEnabled
+        end
+        
+        if AimAssistEnabled and UIS:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) then
+            if Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
+                local closestPlayer = findClosestPlayerInFOV(aimAssistFOV)
+                
+                if closestPlayer and closestPlayer.Character and closestPlayer.Character:FindFirstChild("Head") then
+                    local targetHead = closestPlayer.Character.Head
+                    local cameraPosition = Camera.CFrame.Position
+                    local targetPosition = targetHead.Position
                     
-                    if closestPlayer and closestPlayer.Character and closestPlayer.Character:FindFirstChild("Head") then
-                        local targetHead = closestPlayer.Character.Head
-                        local cameraPosition = Camera.CFrame.Position
-                        local targetPosition = targetHead.Position
-                        
-                        local direction = (targetPosition - cameraPosition).Unit
-                        local currentLook = Camera.CFrame.LookVector
-                        local smoothFactor = 0.3
-                        
-                        local newLook = currentLook:Lerp(direction, smoothFactor)
-                        Camera.CFrame = CFrame.new(cameraPosition, cameraPosition + newLook)
-                    end
+                    local direction = (targetPosition - cameraPosition).Unit
+                    local currentLook = Camera.CFrame.LookVector
+                    local smoothFactor = 0.3
+                    
+                    local newLook = currentLook:Lerp(direction, smoothFactor)
+                    Camera.CFrame = CFrame.new(cameraPosition, cameraPosition + newLook)
                 end
             end
-        end)
+        end
     end)
 
     -- Улучшенный Silent Aim с FOV 180
@@ -635,61 +577,31 @@
 
     -- Обработчик Silent Aim
     Mouse.Button1Down:Connect(function()
-        pcall(function()
-            if SilentAimEnabled and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
-                local closestPlayer = findClosestPlayerToCursor()
-                if closestPlayer and closestPlayer.Character and closestPlayer.Character:FindFirstChild("Head") then
-                    Camera.CFrame = CFrame.new(Camera.CFrame.Position, closestPlayer.Character.Head.Position)
-                end
+        if SilentAimEnabled and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
+            local closestPlayer = findClosestPlayerToCursor()
+            if closestPlayer and closestPlayer.Character and closestPlayer.Character:FindFirstChild("Head") then
+                Camera.CFrame = CFrame.new(Camera.CFrame.Position, closestPlayer.Character.Head.Position)
             end
-        end)
+        end
     end)
 
     -- Улучшенная система Chams
     function enableChams()
-        pcall(function()
-            for _, otherPlayer in ipairs(Players:GetPlayers()) do
-                if otherPlayer ~= Player then
-                    createChams(otherPlayer)
-                end
+        for _, otherPlayer in ipairs(Players:GetPlayers()) do
+            if otherPlayer ~= Player then
+                createChams(otherPlayer)
             end
-            
-            table.insert(ChamsConnections, Players.PlayerAdded:Connect(function(newPlayer)
-                if ChamsEnabled then
-                    createChams(newPlayer)
-                end
-            end))
-            
-            table.insert(ChamsConnections, Players.PlayerRemoving:Connect(function(leftPlayer)
-                if ChamsObjects[leftPlayer] then
-                    for _, part in pairs(ChamsObjects[leftPlayer]) do
-                        if part and part.Parent then
-                            if OriginalMaterials[part] then
-                                part.Material = OriginalMaterials[part]
-                            end
-                            if OriginalColors[part] then
-                                part.Color = OriginalColors[part]
-                            end
-                            if OriginalTransparencies[part] then
-                                part.LocalTransparencyModifier = OriginalTransparencies[part]
-                            end
-                        end
-                    end
-                    ChamsObjects[leftPlayer] = nil
-                end
-            end))
-        end)
-    end
-
-    function disableChams()
-        pcall(function()
-            for _, connection in ipairs(ChamsConnections) do
-                connection:Disconnect()
+        end
+        
+        table.insert(ChamsConnections, Players.PlayerAdded:Connect(function(newPlayer)
+            if ChamsEnabled then
+                createChams(newPlayer)
             end
-            ChamsConnections = {}
-            
-            for player, parts in pairs(ChamsObjects) do
-                for _, part in pairs(parts) do
+        end))
+        
+        table.insert(ChamsConnections, Players.PlayerRemoving:Connect(function(leftPlayer)
+            if ChamsObjects[leftPlayer] then
+                for _, part in pairs(ChamsObjects[leftPlayer]) do
                     if part and part.Parent then
                         if OriginalMaterials[part] then
                             part.Material = OriginalMaterials[part]
@@ -702,12 +614,36 @@
                         end
                     end
                 end
+                ChamsObjects[leftPlayer] = nil
             end
-            ChamsObjects = {}
-            OriginalMaterials = {}
-            OriginalColors = {}
-            OriginalTransparencies = {}
-        end)
+        end))
+    end
+
+    function disableChams()
+        for _, connection in ipairs(ChamsConnections) do
+            connection:Disconnect()
+        end
+        ChamsConnections = {}
+        
+        for player, parts in pairs(ChamsObjects) do
+            for _, part in pairs(parts) do
+                if part and part.Parent then
+                    if OriginalMaterials[part] then
+                        part.Material = OriginalMaterials[part]
+                    end
+                    if OriginalColors[part] then
+                        part.Color = OriginalColors[part]
+                    end
+                    if OriginalTransparencies[part] then
+                        part.LocalTransparencyModifier = OriginalTransparencies[part]
+                    end
+                end
+            end
+        end
+        ChamsObjects = {}
+        OriginalMaterials = {}
+        OriginalColors = {}
+        OriginalTransparencies = {}
     end
 
     function createChams(targetPlayer)
@@ -763,48 +699,44 @@
 
     -- ESP система
     function enableESP()
-        pcall(function()
-            for _, otherPlayer in ipairs(Players:GetPlayers()) do
-                if otherPlayer ~= Player then
-                    createESP(otherPlayer)
-                end
+        for _, otherPlayer in ipairs(Players:GetPlayers()) do
+            if otherPlayer ~= Player then
+                createESP(otherPlayer)
             end
-            
-            table.insert(ESPConnections, Players.PlayerAdded:Connect(function(newPlayer)
-                if ESPEnabled then
-                    createESP(newPlayer)
-                end
-            end))
-            
-            table.insert(ESPConnections, Players.PlayerRemoving:Connect(function(leftPlayer)
-                if ESPObjects[leftPlayer] then
-                    for _, obj in pairs(ESPObjects[leftPlayer]) do
-                        if obj then
-                            obj:Remove()
-                        end
-                    end
-                    ESPObjects[leftPlayer] = nil
-                end
-            end))
-        end)
-    end
-
-    function disableESP()
-        pcall(function()
-            for _, connection in ipairs(ESPConnections) do
-                connection:Disconnect()
+        end
+        
+        table.insert(ESPConnections, Players.PlayerAdded:Connect(function(newPlayer)
+            if ESPEnabled then
+                createESP(newPlayer)
             end
-            ESPConnections = {}
-            
-            for player, objects in pairs(ESPObjects) do
-                for _, obj in pairs(objects) do
+        end))
+        
+        table.insert(ESPConnections, Players.PlayerRemoving:Connect(function(leftPlayer)
+            if ESPObjects[leftPlayer] then
+                for _, obj in pairs(ESPObjects[leftPlayer]) do
                     if obj then
                         obj:Remove()
                     end
                 end
+                ESPObjects[leftPlayer] = nil
             end
-            ESPObjects = {}
-        end)
+        end))
+    end
+
+    function disableESP()
+        for _, connection in ipairs(ESPConnections) do
+            connection:Disconnect()
+        end
+        ESPConnections = {}
+        
+        for player, objects in pairs(ESPObjects) do
+            for _, obj in pairs(objects) do
+                if obj then
+                    obj:Remove()
+                end
+            end
+        end
+        ESPObjects = {}
     end
 
     function createESP(targetPlayer)
@@ -837,43 +769,41 @@
         
         local espUpdate
         espUpdate = RunService.RenderStepped:Connect(function()
-            pcall(function()
-                if not ESPEnabled or not targetPlayer or not targetPlayer.Character or not targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                    for _, obj in pairs(espGroup) do
-                        obj.Visible = false
-                    end
-                    return
+            if not ESPEnabled or not targetPlayer or not targetPlayer.Character or not targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                for _, obj in pairs(espGroup) do
+                    obj.Visible = false
                 end
+                return
+            end
+            
+            local rootPart = targetPlayer.Character.HumanoidRootPart
+            local head = targetPlayer.Character:FindFirstChild("Head")
+            
+            if rootPart and head then
+                local rootPos, rootVisible = Camera:WorldToViewportPoint(rootPart.Position)
+                local headPos = Camera:WorldToViewportPoint(head.Position + Vector3.new(0, 1, 0))
                 
-                local rootPart = targetPlayer.Character.HumanoidRootPart
-                local head = targetPlayer.Character:FindFirstChild("Head")
-                
-                if rootPart and head then
-                    local rootPos, rootVisible = Camera:WorldToViewportPoint(rootPart.Position)
-                    local headPos = Camera:WorldToViewportPoint(head.Position + Vector3.new(0, 1, 0))
+                if rootVisible then
+                    local height = (headPos.Y - rootPos.Y) * 2
+                    local width = height / 2
                     
-                    if rootVisible then
-                        local height = (headPos.Y - rootPos.Y) * 2
-                        local width = height / 2
-                        
-                        box.Size = Vector2.new(width, height)
-                        box.Position = Vector2.new(rootPos.X - width/2, rootPos.Y - height/2)
-                        box.Visible = true
-                        
-                        tracer.From = Vector2.new(Camera.ViewportSize.X/2, Camera.ViewportSize.Y)
-                        tracer.To = Vector2.new(rootPos.X, rootPos.Y)
-                        tracer.Visible = true
-                        
-                        name.Text = targetPlayer.Name
-                        name.Position = Vector2.new(rootPos.X, rootPos.Y - height/2 - 20)
-                        name.Visible = true
-                    else
-                        box.Visible = false
-                        tracer.Visible = false
-                        name.Visible = false
-                    end
+                    box.Size = Vector2.new(width, height)
+                    box.Position = Vector2.new(rootPos.X - width/2, rootPos.Y - height/2)
+                    box.Visible = true
+                    
+                    tracer.From = Vector2.new(Camera.ViewportSize.X/2, Camera.ViewportSize.Y)
+                    tracer.To = Vector2.new(rootPos.X, rootPos.Y)
+                    tracer.Visible = true
+                    
+                    name.Text = targetPlayer.Name
+                    name.Position = Vector2.new(rootPos.X, rootPos.Y - height/2 - 20)
+                    name.Visible = true
+                else
+                    box.Visible = false
+                    tracer.Visible = false
+                    name.Visible = false
                 end
-            end)
+            end
         end)
         
         table.insert(ESPConnections, espUpdate)
@@ -881,126 +811,122 @@
 
     -- Темные мрачные шейдеры
     function enableShaders()
-        pcall(function()
-            local bloom = Instance.new("BloomEffect")
-            bloom.Name = "MoonBlossomBloom"
-            bloom.Intensity = 0.5 -- Уменьшено для оптимизации
-            bloom.Size = 10
-            bloom.Threshold = 0.8
-            bloom.Parent = Lighting
-            
-            local colorCorrection = Instance.new("ColorCorrectionEffect")
-            colorCorrection.Name = "MoonBlossomColorCorrection"
-            colorCorrection.Brightness = 0.1
-            colorCorrection.Contrast = -0.2
-            colorCorrection.Saturation = -0.1
-            colorCorrection.TintColor = Color3.fromRGB(200, 200, 200)
-            colorCorrection.Parent = Lighting
-            
-            local atmosphere = Instance.new("Atmosphere")
-            atmosphere.Name = "MoonBlossomAtmosphere"
-            atmosphere.Density = 0.1
-            atmosphere.Offset = 0.1
-            atmosphere.Color = Color3.fromRGB(50, 50, 50)
-            atmosphere.Decay = Color3.fromRGB(30, 30, 30)
-            atmosphere.Glare = 0.5
-            atmosphere.Haze = 0.3
-            atmosphere.Parent = Lighting
-            
-            local sunRays = Instance.new("SunRaysEffect")
-            sunRays.Name = "MoonBlossomSunRays"
-            sunRays.Intensity = 0.05
-            sunRays.Spread = 0.3
-            sunRays.Parent = Lighting
-            
-            local dof = Instance.new("DepthOfFieldEffect")
-            dof.Name = "MoonBlossomDOF"
-            dof.FarIntensity = 0.2
-            dof.FocusDistance = 10
-            dof.InFocusRadius = 20
-            dof.NearIntensity = 0.2
-            dof.Parent = Lighting
-            
-            currentShaders = {bloom, colorCorrection, atmosphere, sunRays, dof}
-            
-            Lighting.Brightness = 1.5
-            Lighting.OutdoorAmbient = Color3.fromRGB(50, 50, 50)
-            Lighting.GlobalShadows = false
-            
-            local topLight = Instance.new("PointLight")
-            topLight.Name = "MoonBlossomTopLight"
-            topLight.Brightness = 0.5
-            topLight.Range = 10
-            topLight.Color = Color3.fromRGB(50, 50, 50)
-            topLight.Position = Vector3.new(0, 100, 0)
-            topLight.Parent = Workspace.Terrain
-            
-            local frontLight = Instance.new("PointLight")
-            frontLight.Name = "MoonBlossomFrontLight"
-            frontLight.Brightness = 0.5
-            frontLight.Range = 8
-            frontLight.Color = Color3.fromRGB(50, 50, 50)
-            frontLight.Position = Vector3.new(0, 5, 50)
-            frontLight.Parent = Workspace.Terrain
-            
-            originalPartProperties = {}
-            
-            for _, part in pairs(Workspace:GetDescendants()) do
-                if part:IsA("Part") or part:IsA("MeshPart") or part:IsA("UnionOperation") then
-                    originalPartProperties[part] = {
-                        Material = part.Material,
-                        Reflectance = part.Reflectance,
-                        Transparency = part.Transparency,
-                        Color = part.Color
-                    }
-                    
-                    if part.Name:lower():find("floor") or part.Name:lower():find("ground") or part.Name:lower():find("base") then
-                        part.Reflectance = 0.3
-                        part.Material = Enum.Material.Slate
-                        part.Transparency = 0
-                        part.Color = Color3.fromRGB(50, 50, 50)
-                    end
-                    
-                    if part.Name:lower():find("wall") and part.Size.Y > 5 then
-                        part.Reflectance = 0.6
-                        part.Material = Enum.Material.SmoothPlastic
-                        part.Color = Color3.fromRGB(50, 50, 50)
-                    end
+        local bloom = Instance.new("BloomEffect")
+        bloom.Name = "MoonBlossomBloom"
+        bloom.Intensity = 0.5
+        bloom.Size = 10
+        bloom.Threshold = 0.8
+        bloom.Parent = Lighting
+        
+        local colorCorrection = Instance.new("ColorCorrectionEffect")
+        colorCorrection.Name = "MoonBlossomColorCorrection"
+        colorCorrection.Brightness = 0.1
+        colorCorrection.Contrast = -0.2
+        colorCorrection.Saturation = -0.1
+        colorCorrection.TintColor = Color3.fromRGB(200, 200, 200)
+        colorCorrection.Parent = Lighting
+        
+        local atmosphere = Instance.new("Atmosphere")
+        atmosphere.Name = "MoonBlossomAtmosphere"
+        atmosphere.Density = 0.1
+        atmosphere.Offset = 0.1
+        atmosphere.Color = Color3.fromRGB(50, 50, 50)
+        atmosphere.Decay = Color3.fromRGB(30, 30, 30)
+        atmosphere.Glare = 0.5
+        atmosphere.Haze = 0.3
+        atmosphere.Parent = Lighting
+        
+        local sunRays = Instance.new("SunRaysEffect")
+        sunRays.Name = "MoonBlossomSunRays"
+        sunRays.Intensity = 0.05
+        sunRays.Spread = 0.3
+        sunRays.Parent = Lighting
+        
+        local dof = Instance.new("DepthOfFieldEffect")
+        dof.Name = "MoonBlossomDOF"
+        dof.FarIntensity = 0.2
+        dof.FocusDistance = 10
+        dof.InFocusRadius = 20
+        dof.NearIntensity = 0.2
+        dof.Parent = Lighting
+        
+        currentShaders = {bloom, colorCorrection, atmosphere, sunRays, dof}
+        
+        Lighting.Brightness = 1.5
+        Lighting.OutdoorAmbient = Color3.fromRGB(50, 50, 50)
+        Lighting.GlobalShadows = false
+        
+        local topLight = Instance.new("PointLight")
+        topLight.Name = "MoonBlossomTopLight"
+        topLight.Brightness = 0.5
+        topLight.Range = 10
+        topLight.Color = Color3.fromRGB(50, 50, 50)
+        topLight.Position = Vector3.new(0, 100, 0)
+        topLight.Parent = Workspace.Terrain
+        
+        local frontLight = Instance.new("PointLight")
+        frontLight.Name = "MoonBlossomFrontLight"
+        frontLight.Brightness = 0.5
+        frontLight.Range = 8
+        frontLight.Color = Color3.fromRGB(50, 50, 50)
+        frontLight.Position = Vector3.new(0, 5, 50)
+        frontLight.Parent = Workspace.Terrain
+        
+        originalPartProperties = {}
+        
+        for _, part in pairs(Workspace:GetDescendants()) do
+            if part:IsA("Part") or part:IsA("MeshPart") or part:IsA("UnionOperation") then
+                originalPartProperties[part] = {
+                    Material = part.Material,
+                    Reflectance = part.Reflectance,
+                    Transparency = part.Transparency,
+                    Color = part.Color
+                }
+                
+                if part.Name:lower():find("floor") or part.Name:lower():find("ground") or part.Name:lower():find("base") then
+                    part.Reflectance = 0.3
+                    part.Material = Enum.Material.Slate
+                    part.Transparency = 0
+                    part.Color = Color3.fromRGB(50, 50, 50)
+                end
+                
+                if part.Name:lower():find("wall") and part.Size.Y > 5 then
+                    part.Reflectance = 0.6
+                    part.Material = Enum.Material.SmoothPlastic
+                    part.Color = Color3.fromRGB(50, 50, 50)
                 end
             end
-        end)
+        end
     end
 
     function disableShaders()
-        pcall(function()
-            for _, shader in pairs(currentShaders) do
-                if shader and shader.Parent then
-                    shader:Destroy()
-                end
+        for _, shader in pairs(currentShaders) do
+            if shader and shader.Parent then
+                shader:Destroy()
             end
-            currentShaders = {}
-            
-            if Workspace.Terrain:FindFirstChild("MoonBlossomTopLight") then
-                Workspace.Terrain.MoonBlossomTopLight:Destroy()
+        end
+        currentShaders = {}
+        
+        if Workspace.Terrain:FindFirstChild("MoonBlossomTopLight") then
+            Workspace.Terrain.MoonBlossomTopLight:Destroy()
+        end
+        if Workspace.Terrain:FindFirstChild("MoonBlossomFrontLight") then
+            Workspace.Terrain.MoonBlossomFrontLight:Destroy()
+        end
+        
+        Lighting.Brightness = 1
+        Lighting.OutdoorAmbient = Color3.fromRGB(128, 128, 128)
+        Lighting.GlobalShadows = true
+        
+        for part, properties in pairs(originalPartProperties) do
+            if part and part.Parent then
+                part.Material = properties.Material
+                part.Reflectance = properties.Reflectance
+                part.Transparency = properties.Transparency
+                part.Color = properties.Color
             end
-            if Workspace.Terrain:FindFirstChild("MoonBlossomFrontLight") then
-                Workspace.Terrain.MoonBlossomFrontLight:Destroy()
-            end
-            
-            Lighting.Brightness = 1
-            Lighting.OutdoorAmbient = Color3.fromRGB(128, 128, 128)
-            Lighting.GlobalShadows = true
-            
-            for part, properties in pairs(originalPartProperties) do
-                if part and part.Parent then
-                    part.Material = properties.Material
-                    part.Reflectance = properties.Reflectance
-                    part.Transparency = properties.Transparency
-                    part.Color = properties.Color
-                end
-            end
-            originalPartProperties = {}
-        end)
+        end
+        originalPartProperties = {}
     end
 
     -- Делаем окно перетаскиваемым через TitleBar
@@ -1008,41 +934,35 @@
     local dragInput, dragStart, startPos
 
     TitleBar.InputBegan:Connect(function(input)
-        pcall(function()
-            if input.UserInputType == Enum.UserInputType.MouseButton1 then
-                dragging = true
-                dragStart = input.Position
-                startPos = MainFrame.Position
-                
-                input.Changed:Connect(function()
-                    if input.UserInputState == Enum.UserInputState.End then
-                        dragging = false
-                    end
-                end)
-            end
-        end)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+            dragging = true
+            dragStart = input.Position
+            startPos = MainFrame.Position
+            
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    dragging = false
+                end
+            end)
+        end
     end)
 
     TitleBar.InputChanged:Connect(function(input)
-        pcall(function()
-            if input.UserInputType == Enum.UserInputType.MouseMovement then
-                dragInput = input
-            end
-        end)
+        if input.UserInputType == Enum.UserInputType.MouseMovement then
+            dragInput = input
+        end
     end)
 
     UIS.InputChanged:Connect(function(input)
-        pcall(function()
-            if input == dragInput and dragging then
-                local delta = input.Position - dragStart
-                MainFrame.Position = UDim2.new(
-                    startPos.X.Scale, 
-                    startPos.X.Offset + delta.X,
-                    startPos.Y.Scale, 
-                    startPos.Y.Offset + delta.Y
-                )
-            end
-        end)
+        if input == dragInput and dragging then
+            local delta = input.Position - dragStart
+            MainFrame.Position = UDim2.new(
+                startPos.X.Scale, 
+                startPos.X.Offset + delta.X,
+                startPos.Y.Scale, 
+                startPos.Y.Offset + delta.Y
+            )
+        end
     end)
 
     -- Принудительно активируем видимость
@@ -1065,61 +985,38 @@
     updateButtonText(WalkSpeedToggle, WalkSpeedEnabled)
 
     -- Уведомление в чат
-    pcall(function()
-        game:GetService("StarterGui"):SetCore("ChatMakeSystemMessage", {
-            Text = "Moon Blossom v1.8 loaded! FOV 180 & fixed positioning",
-            Color = Color3.fromRGB(180, 100, 255),
-            Font = Enum.Font.GothamBold,
-            FontSize = Enum.FontSize.Size18
-        })
-    end)
+    game:GetService("StarterGui"):SetCore("ChatMakeSystemMessage", {
+        Text = "Moon Blossom v1.8 loaded! FOV 180 & fixed positioning",
+        Color = Color3.fromRGB(180, 100, 255),
+        Font = Enum.Font.GothamBold,
+        FontSize = Enum.FontSize.Size18
+    })
 
     -- Автоматическое восстановление позиции при respawn
     Players.LocalPlayer.CharacterAdded:Connect(function()
-        pcall(function()
-            if not GUIEnabled then return end
+        if not GUIEnabled then return end
+        
+        wait(1)
+        
+        if not CoreGui:FindFirstChild("MoonBlossomGUI") then
+            local newScreenGui = ScreenGui:Clone()
+            newScreenGui.Parent = CoreGui
+            newScreenGui.Enabled = true
             
-            wait(1)
-            
-            if not CoreGui:FindFirstChild("MoonBlossomGUI") then
-                local newScreenGui = ScreenGui:Clone()
-                newScreenGui.Parent = CoreGui
-                newScreenGui.Enabled = true
-                
-                createFOVCircle()
-            end
-        end)
+            createFOVCircle()
+        end
     end)
 
     -- Гарантируем отображение GUI
     wait(1)
-    pcall(function()
-        ScreenGui.Enabled = true
-        for _, child in ipairs(ScreenGui:GetDescendants()) do
-            if child:IsA("GuiObject") then
-                child.Visible = true
-            end
+    ScreenGui.Enabled = true
+    for _, child in ipairs(ScreenGui:GetDescendants()) do
+        if child:IsA("GuiObject") then
+            child.Visible = true
         end
-    end)
-
-    -- Если используется ReplicaService (для сетевой синхронизации)
-    --[[
-    local success, ReplicaService = pcall(function()
-        return require(ReplicatedStorage:WaitForChild("ReplicaService"))
-    end)
-    if not success then
-        warn("[MoonBlossom] Failed to load ReplicaService: ", ReplicaService)
-    else
-        print("[MoonBlossom] ReplicaService loaded successfully")
-        -- Добавьте здесь код для работы с ReplicaService, если нужно
     end
-    --]]
-
 end)
 
 if not success then
     warn("[MoonBlossom] Initialization failed: ", err)
 end
-
-
-
