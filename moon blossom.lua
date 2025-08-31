@@ -1,5 +1,5 @@
 -- Сервисы Roblox
-local success, err = pcall(function()
+    local success, err = pcall(function()
     local Players = game:GetService("Players")
     local UIS = game:GetService("UserInputService")
     local CoreGui = game:GetService("CoreGui")
@@ -1120,5 +1120,6 @@ end)
 if not success then
     warn("[MoonBlossom] Initialization failed: ", err)
 end
+
 
 
