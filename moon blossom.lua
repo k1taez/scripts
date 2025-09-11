@@ -9,6 +9,7 @@ local success, err = pcall(function()
     local Camera = Workspace.CurrentCamera
     local Lighting = game:GetService("Lighting")
     local ReplicatedStorage = game:GetService("ReplicatedStorage")
+    local VirtualUser = game:GetService("VirtualUser")
 
     local Player = Players.LocalPlayer
     local Mouse = Player:GetMouse()
@@ -28,13 +29,13 @@ local success, err = pcall(function()
     ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
     ScreenGui.ResetOnSpawn = false
 
-    -- Основной фрейм
+    -- Основной фрейм (увеличенный размер, серый тон)
     local MainFrame = Instance.new("Frame")
     MainFrame.Name = "MainFrame"
     MainFrame.Parent = ScreenGui
-    MainFrame.Size = UDim2.new(0, 280, 0, 400)
+    MainFrame.Size = UDim2.new(0, 350, 0, 500)
     MainFrame.Position = UDim2.new(0.7, 0, 0.2, 0)
-    MainFrame.BackgroundColor3 = Color3.fromRGB(40, 30, 50)
+    MainFrame.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
     MainFrame.BorderSizePixel = 0
     MainFrame.Active = true
     MainFrame.Draggable = true
@@ -47,11 +48,11 @@ local success, err = pcall(function()
     Corner.CornerRadius = UDim.new(0, 8)
     Corner.Parent = MainFrame
 
-    -- TitleBar для перетаскивания
+    -- TitleBar для перетаскивания (серый тон)
     local TitleBar = Instance.new("Frame")
     TitleBar.Size = UDim2.new(1, 0, 0, 30)
     TitleBar.Position = UDim2.new(0, 0, 0, 0)
-    TitleBar.BackgroundColor3 = Color3.fromRGB(60, 40, 80)
+    TitleBar.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
     TitleBar.BorderSizePixel = 0
     TitleBar.Parent = MainFrame
 
@@ -63,7 +64,7 @@ local success, err = pcall(function()
     Title.Size = UDim2.new(0.7, 0, 1, 0)
     Title.Position = UDim2.new(0.05, 0, 0, 0)
     Title.BackgroundTransparency = 1
-    Title.Text = "Moon Blossom v1.8"
+    Title.Text = "Moon Blossom v3.2"
     Title.TextColor3 = Color3.fromRGB(220, 180, 255)
     Title.Font = Enum.Font.GothamBold
     Title.TextSize = 14
@@ -99,96 +100,127 @@ local success, err = pcall(function()
     ButtonsContainer.BackgroundTransparency = 1
     ButtonsContainer.Parent = MainFrame
 
-    -- Кнопки переключателей
+    -- Кнопки переключателей (серый тон)
     local BHopToggle = Instance.new("TextButton")
     BHopToggle.Name = "BHopToggle"
-    BHopToggle.Size = UDim2.new(0, 260, 0, 30)
+    BHopToggle.Size = UDim2.new(0, 330, 0, 35)
     BHopToggle.Position = UDim2.new(0.035, 0, 0.03, 0)
     BHopToggle.Text = "Bunny Hop: OFF"
-    BHopToggle.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
+    BHopToggle.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
     BHopToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
     BHopToggle.Font = Enum.Font.Gotham
+    BHopToggle.TextSize = 14
     BHopToggle.Parent = ButtonsContainer
 
     local SpinbotToggle = Instance.new("TextButton")
     SpinbotToggle.Name = "SpinbotToggle"
-    SpinbotToggle.Size = UDim2.new(0, 260, 0, 30)
+    SpinbotToggle.Size = UDim2.new(0, 330, 0, 35)
     SpinbotToggle.Position = UDim2.new(0.035, 0, 0.10, 0)
     SpinbotToggle.Text = "Spinbot: OFF"
-    SpinbotToggle.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
+    SpinbotToggle.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
     SpinbotToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
     SpinbotToggle.Font = Enum.Font.Gotham
+    SpinbotToggle.TextSize = 14
     SpinbotToggle.Parent = ButtonsContainer
 
     local ChamsToggle = Instance.new("TextButton")
     ChamsToggle.Name = "ChamsToggle"
-    ChamsToggle.Size = UDim2.new(0, 260, 0, 30)
+    ChamsToggle.Size = UDim2.new(0, 330, 0, 35)
     ChamsToggle.Position = UDim2.new(0.035, 0, 0.17, 0)
     ChamsToggle.Text = "Player Chams: OFF"
-    ChamsToggle.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
+    ChamsToggle.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
     ChamsToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
     ChamsToggle.Font = Enum.Font.Gotham
+    ChamsToggle.TextSize = 14
     ChamsToggle.Parent = ButtonsContainer
 
     local SilentAimToggle = Instance.new("TextButton")
     SilentAimToggle.Name = "SilentAimToggle"
-    SilentAimToggle.Size = UDim2.new(0, 260, 0, 30)
+    SilentAimToggle.Size = UDim2.new(0, 330, 0, 35)
     SilentAimToggle.Position = UDim2.new(0.035, 0, 0.24, 0)
     SilentAimToggle.Text = "Silent Aim: OFF"
-    SilentAimToggle.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
+    SilentAimToggle.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
     SilentAimToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
     SilentAimToggle.Font = Enum.Font.Gotham
+    SilentAimToggle.TextSize = 14
     SilentAimToggle.Parent = ButtonsContainer
 
     local ESPToggle = Instance.new("TextButton")
     ESPToggle.Name = "ESPToggle"
-    ESPToggle.Size = UDim2.new(0, 260, 0, 30)
+    ESPToggle.Size = UDim2.new(0, 330, 0, 35)
     ESPToggle.Position = UDim2.new(0.035, 0, 0.31, 0)
     ESPToggle.Text = "ESP: OFF"
-    ESPToggle.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
+    ESPToggle.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
     ESPToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
     ESPToggle.Font = Enum.Font.Gotham
+    ESPToggle.TextSize = 14
     ESPToggle.Parent = ButtonsContainer
 
     local StrafeToggle = Instance.new("TextButton")
     StrafeToggle.Name = "StrafeToggle"
-    StrafeToggle.Size = UDim2.new(0, 260, 0, 30)
+    StrafeToggle.Size = UDim2.new(0, 330, 0, 35)
     StrafeToggle.Position = UDim2.new(0.035, 0, 0.38, 0)
     StrafeToggle.Text = "Air Strafe: OFF"
-    StrafeToggle.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
+    StrafeToggle.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
     StrafeToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
     StrafeToggle.Font = Enum.Font.Gotham
+    StrafeToggle.TextSize = 14
     StrafeToggle.Parent = ButtonsContainer
 
     local ShadersToggle = Instance.new("TextButton")
     ShadersToggle.Name = "ShadersToggle"
-    ShadersToggle.Size = UDim2.new(0, 260, 0, 30)
+    ShadersToggle.Size = UDim2.new(0, 330, 0, 35)
     ShadersToggle.Position = UDim2.new(0.035, 0, 0.45, 0)
     ShadersToggle.Text = "Shaders: OFF"
-    ShadersToggle.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
+    ShadersToggle.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
     ShadersToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
     ShadersToggle.Font = Enum.Font.Gotham
+    ShadersToggle.TextSize = 14
     ShadersToggle.Parent = ButtonsContainer
 
     local AimAssistToggle = Instance.new("TextButton")
     AimAssistToggle.Name = "AimAssistToggle"
-    AimAssistToggle.Size = UDim2.new(0, 260, 0, 30)
+    AimAssistToggle.Size = UDim2.new(0, 330, 0, 35)
     AimAssistToggle.Position = UDim2.new(0.035, 0, 0.52, 0)
-    AimAssistToggle.Text = "Aim Assist: OFF"
-    AimAssistToggle.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
+    AimAssistToggle.Text = "Aim Assist: OFF (Toggle: K)"
+    AimAssistToggle.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
     AimAssistToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
     AimAssistToggle.Font = Enum.Font.Gotham
+    AimAssistToggle.TextSize = 14
     AimAssistToggle.Parent = ButtonsContainer
 
     local WalkSpeedToggle = Instance.new("TextButton")
     WalkSpeedToggle.Name = "WalkSpeedToggle"
-    WalkSpeedToggle.Size = UDim2.new(0, 260, 0, 30)
+    WalkSpeedToggle.Size = UDim2.new(0, 330, 0, 35)
     WalkSpeedToggle.Position = UDim2.new(0.035, 0, 0.59, 0)
     WalkSpeedToggle.Text = "WalkSpeed: OFF"
-    WalkSpeedToggle.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
+    WalkSpeedToggle.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
     WalkSpeedToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
     WalkSpeedToggle.Font = Enum.Font.Gotham
+    WalkSpeedToggle.TextSize = 14
     WalkSpeedToggle.Parent = ButtonsContainer
+
+    local RagebotToggle = Instance.new("TextButton")
+    RagebotToggle.Name = "RagebotToggle"
+    RagebotToggle.Size = UDim2.new(0, 330, 0, 35)
+    RagebotToggle.Position = UDim2.new(0.035, 0, 0.66, 0)
+    RagebotToggle.Text = "Ragebot: OFF"
+    RagebotToggle.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
+    RagebotToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
+    RagebotToggle.Font = Enum.Font.Gotham
+    RagebotToggle.TextSize = 14
+    RagebotToggle.Parent = ButtonsContainer
+
+    local TriggerbotToggle = Instance.new("TextButton")
+    TriggerbotToggle.Name = "TriggerbotToggle"
+    TriggerbotToggle.Size = UDim2.new(0, 330, 0, 35)
+    TriggerbotToggle.Position = UDim2.new(0.035, 0, 0.73, 0)
+    TriggerbotToggle.Text = "Triggerbot: OFF (Toggle: L)"
+    TriggerbotToggle.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
+    TriggerbotToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
+    TriggerbotToggle.Font = Enum.Font.Gotham
+    TriggerbotToggle.TextSize = 14
+    TriggerbotToggle.Parent = ButtonsContainer
 
     -- Статус
     local StatusLabel = Instance.new("TextLabel")
@@ -213,6 +245,8 @@ local success, err = pcall(function()
     buttonCorner:Clone().Parent = ShadersToggle
     buttonCorner:Clone().Parent = AimAssistToggle
     buttonCorner:Clone().Parent = WalkSpeedToggle
+    buttonCorner:Clone().Parent = RagebotToggle
+    buttonCorner:Clone().Parent = TriggerbotToggle
 
     -- Принудительно показываем GUI
     ScreenGui.Enabled = true
@@ -228,6 +262,8 @@ local success, err = pcall(function()
     local ShadersEnabled = false
     local AimAssistEnabled = false
     local WalkSpeedEnabled = false
+    local RagebotEnabled = false
+    local TriggerbotEnabled = false
     local GUIEnabled = true
 
     -- Переменные для баннихопа
@@ -262,6 +298,13 @@ local success, err = pcall(function()
     -- Переменная для хранения исходной скорости
     local originalWalkSpeed = 16
 
+    -- Переменные для Ragebot
+    local ragebotOffset = Vector3.new(0, -500, 0)
+    local ragebotApplied = false
+
+    -- Максимальная дистанция для Aim Assist, Silent Aim и Triggerbot
+    local maxDistance = 400
+
     -- Функция для создания визуального FOV
     local function createFOVCircle()
         if fovCircle then
@@ -269,7 +312,7 @@ local success, err = pcall(function()
         end
         
         fovCircle = Drawing.new("Circle")
-        fovCircle.Visible = AimAssistEnabled or SilentAimEnabled
+        fovCircle.Visible = AimAssistEnabled or SilentAimEnabled or TriggerbotEnabled
         fovCircle.Radius = aimAssistFOV
         fovCircle.Color = Color3.fromRGB(255, 100, 255)
         fovCircle.Thickness = 2
@@ -278,6 +321,31 @@ local success, err = pcall(function()
         fovCircle.Position = Vector2.new(Mouse.X, Mouse.Y)
         
         return fovCircle
+    end
+
+    -- Функция проверки стены с помощью Raycast
+    local function isTargetVisible(targetPos)
+        if not Player.Character or not Player.Character:FindFirstChild("HumanoidRootPart") then 
+            print("[MoonBlossom] Triggerbot: No character or HumanoidRootPart")
+            return false 
+        end
+        local origin = Camera.CFrame.Position
+        local direction = (targetPos - origin).Unit * 1000
+        local raycastParams = RaycastParams.new()
+        raycastParams.FilterDescendantsInstances = {Player.Character}
+        raycastParams.FilterType = Enum.RaycastFilterType.Blacklist
+        local result = Workspace:Raycast(origin, direction, raycastParams)
+        if result then
+            local hitPart = result.Instance
+            if hitPart and hitPart:IsDescendantOf(Workspace) and not hitPart:IsDescendantOf(Player.Character) then
+                local hitCharacter = hitPart:FindFirstAncestorOfClass("Model")
+                if hitCharacter and hitCharacter:IsA("Model") and Players:GetPlayerFromCharacter(hitCharacter) then
+                    return true
+                end
+                return false
+            end
+        end
+        return true
     end
 
     -- Функция для обновления текста кнопок
@@ -297,9 +365,13 @@ local success, err = pcall(function()
         elseif button.Name == "ShadersToggle" then
             button.Text = "Shaders: " .. (enabled and "ON" or "OFF")
         elseif button.Name == "AimAssistToggle" then
-            button.Text = "Aim Assist: " .. (enabled and "ON" or "OFF")
+            button.Text = "Aim Assist: " .. (enabled and "ON" or "OFF") .. " (Toggle: K)"
         elseif button.Name == "WalkSpeedToggle" then
             button.Text = "WalkSpeed: " .. (enabled and "ON" or "OFF")
+        elseif button.Name == "RagebotToggle" then
+            button.Text = "Ragebot: " .. (enabled and "ON" or "OFF")
+        elseif button.Name == "TriggerbotToggle" then
+            button.Text = "Triggerbot: " .. (enabled and "ON" or "OFF") .. " (Toggle: L)"
         end
     end
 
@@ -309,9 +381,9 @@ local success, err = pcall(function()
         local goal = {}
         
         if state then
-            goal.BackgroundColor3 = Color3.fromRGB(120, 80, 160)
+            goal.BackgroundColor3 = Color3.fromRGB(120, 120, 120)
         else
-            goal.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
+            goal.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
         end
         
         TweenService:Create(button, tweenInfo, goal):Play()
@@ -325,14 +397,21 @@ local success, err = pcall(function()
         if fovCircle then
             fovCircle:Remove()
         end
+        Camera.CameraType = Enum.CameraType.Custom
+        -- Восстанавливаем позицию при закрытии, если Ragebot был активен
+        if ragebotApplied and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
+            local rootPart = Player.Character.HumanoidRootPart
+            rootPart.CFrame = rootPart.CFrame - ragebotOffset
+            ragebotApplied = false
+        end
     end)
 
     MinimizeButton.MouseButton1Click:Connect(function()
         ButtonsContainer.Visible = not ButtonsContainer.Visible
         if ButtonsContainer.Visible then
-            MainFrame.Size = UDim2.new(0, 280, 0, 400)
+            MainFrame.Size = UDim2.new(0, 350, 0, 500)
         else
-            MainFrame.Size = UDim2.new(0, 280, 0, 30)
+            MainFrame.Size = UDim2.new(0, 350, 0, 30)
         end
     end)
 
@@ -362,7 +441,10 @@ local success, err = pcall(function()
         toggleButton(SilentAimToggle, SilentAimEnabled)
         
         if fovCircle then
-            fovCircle.Visible = AimAssistEnabled or SilentAimEnabled
+            fovCircle.Visible = AimAssistEnabled or SilentAimEnabled or TriggerbotEnabled
+        end
+        if not SilentAimEnabled then
+            Camera.CameraType = Enum.CameraType.Custom
         end
     end)
 
@@ -394,18 +476,7 @@ local success, err = pcall(function()
     end)
 
     AimAssistToggle.MouseButton1Click:Connect(function()
-        AimAssistEnabled = not AimAssistEnabled
-        toggleButton(AimAssistToggle, AimAssistEnabled)
-        
-        if not AimAssistEnabled then
-            aimAssistTarget = nil
-        end
-        
-        if fovCircle then
-            fovCircle.Visible = AimAssistEnabled or SilentAimEnabled
-        else
-            createFOVCircle()
-        end
+        -- Кнопка в GUI отключена, переключение только через K
     end)
 
     WalkSpeedToggle.MouseButton1Click:Connect(function()
@@ -415,13 +486,67 @@ local success, err = pcall(function()
         if Player.Character and Player.Character:FindFirstChild("Humanoid") then
             local humanoid = Player.Character.Humanoid
             
-            -- Сохраняем исходную скорость при первом включении
             if WalkSpeedEnabled then
                 originalWalkSpeed = humanoid.WalkSpeed
                 humanoid.WalkSpeed = 50
             else
-                -- Восстанавливаем исходную скорость, а не жестко заданное значение
                 humanoid.WalkSpeed = originalWalkSpeed
+            end
+        end
+    end)
+
+    RagebotToggle.MouseButton1Click:Connect(function()
+        RagebotEnabled = not RagebotEnabled
+        toggleButton(RagebotToggle, RagebotEnabled)
+        
+        if Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
+            local rootPart = Player.Character.HumanoidRootPart
+            if RagebotEnabled then
+                -- Применяем смещение один раз
+                if not ragebotApplied then
+                    rootPart.CFrame = rootPart.CFrame + ragebotOffset
+                    ragebotApplied = true
+                end
+            else
+                -- Восстанавливаем позицию
+                if ragebotApplied then
+                    rootPart.CFrame = rootPart.CFrame - ragebotOffset
+                    ragebotApplied = false
+                end
+                Camera.CameraType = Enum.CameraType.Custom
+            end
+        end
+    end)
+
+    TriggerbotToggle.MouseButton1Click:Connect(function()
+        -- Кнопка в GUI отключена, переключение только через L
+    end)
+
+    -- Бинд Aim Assist на клавишу K, Triggerbot на L
+    UIS.InputBegan:Connect(function(input, gameProcessedEvent)
+        if input.KeyCode == Enum.KeyCode.K and not gameProcessedEvent then
+            AimAssistEnabled = not AimAssistEnabled
+            toggleButton(AimAssistToggle, AimAssistEnabled)
+            
+            if not AimAssistEnabled then
+                aimAssistTarget = nil
+                Camera.CameraType = Enum.CameraType.Custom
+            end
+            
+            if fovCircle then
+                fovCircle.Visible = AimAssistEnabled or SilentAimEnabled or TriggerbotEnabled
+            else
+                createFOVCircle()
+            end
+        elseif input.KeyCode == Enum.KeyCode.L and not gameProcessedEvent then
+            TriggerbotEnabled = not TriggerbotEnabled
+            toggleButton(TriggerbotToggle, TriggerbotEnabled)
+            print("[MoonBlossom] Triggerbot toggled: " .. (TriggerbotEnabled and "ON" or "OFF"))
+            
+            if fovCircle then
+                fovCircle.Visible = AimAssistEnabled or SilentAimEnabled or TriggerbotEnabled
+            else
+                createFOVCircle()
             end
         end
     end)
@@ -456,7 +581,6 @@ local success, err = pcall(function()
             end
         end
         
-        -- Обновляем только если WalkSpeed включен
         if WalkSpeedEnabled and Humanoid.WalkSpeed ~= 50 then
             Humanoid.WalkSpeed = 50
         end
@@ -487,7 +611,7 @@ local success, err = pcall(function()
         end
     end)
 
-    -- Air Strafe функция
+    -- Air Strafe функция (перенаправление текущей скорости без ускорения)
     RunService.Heartbeat:Connect(function()
         if StrafeEnabled and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
             local Char = Player.Character
@@ -511,13 +635,15 @@ local success, err = pcall(function()
                 
                 if moveDirection.Magnitude > 0 then
                     moveDirection = moveDirection.Unit
-                    RootPart.Velocity = RootPart.Velocity + moveDirection * 30
+                    local currentVelocity = RootPart.Velocity
+                    local currentSpeed = Vector3.new(currentVelocity.X, 0, currentVelocity.Z).Magnitude
+                    RootPart.Velocity = Vector3.new(moveDirection.X * currentSpeed, currentVelocity.Y, moveDirection.Z * currentSpeed)
                 end
             end
         end
     end)
 
-    -- Функция для поиска ближайшего игрока в FOV
+    -- Функция для поиска ближайшего игрока в FOV с проверкой дистанции
     local function findClosestPlayerInFOV(fov)
         local closestPlayer = nil
         local closestDistance = math.huge
@@ -526,14 +652,20 @@ local success, err = pcall(function()
         for _, otherPlayer in ipairs(Players:GetPlayers()) do
             if otherPlayer ~= Player and otherPlayer.Character and otherPlayer.Character:FindFirstChild("HumanoidRootPart") then
                 local rootPart = otherPlayer.Character.HumanoidRootPart
-                local screenPos, onScreen = Camera:WorldToViewportPoint(rootPart.Position)
+                local distanceToPlayer = (Player.Character.HumanoidRootPart.Position - rootPart.Position).Magnitude
                 
-                if onScreen then
-                    local distance = (Vector2.new(screenPos.X, screenPos.Y) - mousePos).Magnitude
+                if distanceToPlayer <= maxDistance then
+                    local screenPos, onScreen = Camera:WorldToViewportPoint(rootPart.Position)
                     
-                    if distance <= fov and distance < closestDistance then
-                        closestDistance = distance
-                        closestPlayer = otherPlayer
+                    if onScreen then
+                        local distance = (Vector2.new(screenPos.X, screenPos.Y) - mousePos).Magnitude
+                        
+                        if distance <= fov and distance < closestDistance then
+                            if isTargetVisible(rootPart.Position) then
+                                closestDistance = distance
+                                closestPlayer = otherPlayer
+                            end
+                        end
                     end
                 end
             end
@@ -542,36 +674,141 @@ local success, err = pcall(function()
         return closestPlayer
     end
 
-    -- Исправленный Aim Assist с FOV 180 (на ЛКМ)
-    RunService.RenderStepped:Connect(function()
-        if fovCircle then
-            fovCircle.Position = Vector2.new(Mouse.X, Mouse.Y)
-            fovCircle.Visible = AimAssistEnabled or SilentAimEnabled
-        end
-        
-        if AimAssistEnabled and UIS:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) then
-            if Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
-                local closestPlayer = findClosestPlayerInFOV(aimAssistFOV)
+    -- Aim Assist с лёгкой плавностью (FOV 180, автоматический, макс. дистанция 400)
+    local function handleAimAssist()
+        if AimAssistEnabled and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
+            local closestPlayer = findClosestPlayerInFOV(aimAssistFOV)
+            
+            if closestPlayer and closestPlayer.Character and closestPlayer.Character:FindFirstChild("Head") then
+                local targetHead = closestPlayer.Character.Head
+                local cameraPosition = Camera.CFrame.Position
+                local targetPosition = targetHead.Position
                 
-                if closestPlayer and closestPlayer.Character and closestPlayer.Character:FindFirstChild("Head") then
-                    local targetHead = closestPlayer.Character.Head
-                    local cameraPosition = Camera.CFrame.Position
-                    local targetPosition = targetHead.Position
-                    
+                if isTargetVisible(targetPosition) then
                     local direction = (targetPosition - cameraPosition).Unit
                     local currentLook = Camera.CFrame.LookVector
-                    local smoothFactor = 0.3
-                    
+                    local smoothFactor = 0.85 -- Чуть более плавное наведение
                     local newLook = currentLook:Lerp(direction, smoothFactor)
                     Camera.CFrame = CFrame.new(cameraPosition, cameraPosition + newLook)
                 end
             end
         end
+    end
+
+    -- Triggerbot, использующий Silent Aim (без физического наведения)
+    local function handleTriggerbot()
+        if TriggerbotEnabled and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
+            local closestPlayer = findClosestPlayerToCursor()
+            if closestPlayer and closestPlayer.Character and closestPlayer.Character:FindFirstChild("Head") then
+                local targetHead = closestPlayer.Character.Head
+                if isTargetVisible(targetHead.Position) then
+                    print("[MoonBlossom] Triggerbot: Target found - " .. closestPlayer.Name)
+                    local weapon = Player.Character:FindFirstChildOfClass("Tool")
+                    if weapon then
+                        print("[MoonBlossom] Triggerbot: Weapon found - " .. weapon.Name)
+                        -- Проверяем наличие RemoteEvent или RemoteFunction
+                        local possibleEventNames = {"Fire", "Shoot", "FireServer", "Bullet", "GunFire", "FireBullet", "ShootRemote", "Hit"}
+                        local shootEvent = nil
+                        for _, eventName in ipairs(possibleEventNames) do
+                            shootEvent = weapon:FindFirstChild(eventName) or ReplicatedStorage:FindFirstChild(eventName) or Workspace:FindFirstChild(eventName)
+                            if shootEvent and (shootEvent:IsA("RemoteEvent") or shootEvent:IsA("RemoteFunction")) then
+                                print("[MoonBlossom] Triggerbot: Using Remote - " .. eventName)
+                                break
+                            end
+                        end
+                        if shootEvent then
+                            local args = {
+                                [1] = targetHead.Position,
+                                [2] = targetHead,
+                                [3] = (targetHead.Position - Camera.CFrame.Position).Unit -- Направление выстрела
+                            }
+                            if shootEvent:IsA("RemoteEvent") then
+                                shootEvent:FireServer(unpack(args))
+                                print("[MoonBlossom] Triggerbot: Fired RemoteEvent at " .. tostring(targetHead.Position))
+                            elseif shootEvent:IsA("RemoteFunction") then
+                                shootEvent:InvokeServer(unpack(args))
+                                print("[MoonBlossom] Triggerbot: Invoked RemoteFunction at " .. tostring(targetHead.Position))
+                            end
+                        else
+                            print("[MoonBlossom] Triggerbot: No RemoteEvent/Function found")
+                            -- Проверяем поддержку VirtualUser
+                            if VirtualUser and typeof(VirtualUser.ClickButton1) == "function" then
+                                print("[MoonBlossom] Triggerbot: Using VirtualUser.ClickButton1")
+                                VirtualUser:ClickButton1(Enum.UserInputState.Begin)
+                                wait(0.05)
+                                VirtualUser:ClickButton1(Enum.UserInputState.End)
+                            else
+                                print("[MoonBlossom] Triggerbot: VirtualUser not supported, using mouse1click")
+                                mouse1click()
+                            end
+                        end
+                    else
+                        print("[MoonBlossom] Triggerbot: No weapon equipped")
+                        -- Резервный вариант для игр без RemoteEvent
+                        if VirtualUser and typeof(VirtualUser.ClickButton1) == "function" then
+                            print("[MoonBlossom] Triggerbot: Using VirtualUser.ClickButton1 (no weapon)")
+                            VirtualUser:ClickButton1(Enum.UserInputState.Begin)
+                            wait(0.05)
+                            VirtualUser:ClickButton1(Enum.UserInputState.End)
+                        else
+                            print("[MoonBlossom] Triggerbot: Using mouse1click (no weapon)")
+                            mouse1click()
+                        end
+                    end
+                    wait(0.1) -- Задержка для предотвращения спама
+                else
+                    print("[MoonBlossom] Triggerbot: Target not visible")
+                end
+            else
+                print("[MoonBlossom] Triggerbot: No valid target found")
+            end
+        end
+    end
+
+    -- Обновление FOV круга, Aim Assist и Triggerbot
+    RunService.RenderStepped:Connect(function()
+        if fovCircle then
+            fovCircle.Position = Vector2.new(Mouse.X, Mouse.Y)
+            fovCircle.Visible = AimAssistEnabled or SilentAimEnabled or TriggerbotEnabled
+        end
+        
+        if not AimAssistEnabled and not SilentAimEnabled and not RagebotEnabled then
+            Camera.CameraType = Enum.CameraType.Custom
+        end
+        
+        handleAimAssist()
+        handleTriggerbot()
     end)
 
-    -- Улучшенный Silent Aim с FOV 180
+    -- Улучшенный Silent Aim с FOV 180 и проверкой дистанции 400
     local function findClosestPlayerToCursor()
-        return findClosestPlayerInFOV(180)
+        local closestPlayer = nil
+        local closestDistance = math.huge
+        local mousePos = Vector2.new(Mouse.X, Mouse.Y)
+        
+        for _, otherPlayer in ipairs(Players:GetPlayers()) do
+            if otherPlayer ~= Player and otherPlayer.Character and otherPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                local rootPart = otherPlayer.Character.HumanoidRootPart
+                local distanceToPlayer = (Player.Character.HumanoidRootPart.Position - rootPart.Position).Magnitude
+                
+                if distanceToPlayer <= maxDistance then
+                    local screenPos, onScreen = Camera:WorldToViewportPoint(rootPart.Position)
+                    
+                    if onScreen then
+                        local distance = (Vector2.new(screenPos.X, screenPos.Y) - mousePos).Magnitude
+                        
+                        if distance <= 180 and distance < closestDistance then
+                            if isTargetVisible(rootPart.Position) then
+                                closestDistance = distance
+                                closestPlayer = otherPlayer
+                            end
+                        end
+                    end
+                end
+            end
+        end
+        
+        return closestPlayer
     end
 
     -- Обработчик Silent Aim
@@ -579,7 +816,10 @@ local success, err = pcall(function()
         if SilentAimEnabled and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
             local closestPlayer = findClosestPlayerToCursor()
             if closestPlayer and closestPlayer.Character and closestPlayer.Character:FindFirstChild("Head") then
-                Camera.CFrame = CFrame.new(Camera.CFrame.Position, closestPlayer.Character.Head.Position)
+                local targetHead = closestPlayer.Character.Head
+                if isTargetVisible(targetHead.Position) then
+                    Camera.CFrame = CFrame.new(Camera.CFrame.Position, targetHead.Position)
+                end
             end
         end
     end)
@@ -696,7 +936,7 @@ local success, err = pcall(function()
         end)
     end
 
-    -- ESP система
+    -- ESP система с боксами, трассерами, именами и дистанцией
     function enableESP()
         for _, otherPlayer in ipairs(Players:GetPlayers()) do
             if otherPlayer ~= Player then
@@ -764,6 +1004,14 @@ local success, err = pcall(function()
         name.Outline = true
         table.insert(espGroup, name)
         
+        local distance = Drawing.new("Text")
+        distance.Visible = false
+        distance.Color = Color3.fromRGB(220, 180, 255)
+        distance.Size = 14
+        distance.Center = true
+        distance.Outline = true
+        table.insert(espGroup, distance)
+        
         ESPObjects[targetPlayer] = espGroup
         
         local espUpdate
@@ -797,10 +1045,16 @@ local success, err = pcall(function()
                     name.Text = targetPlayer.Name
                     name.Position = Vector2.new(rootPos.X, rootPos.Y - height/2 - 20)
                     name.Visible = true
+                    
+                    local distanceValue = math.floor((Player.Character.HumanoidRootPart.Position - rootPart.Position).Magnitude)
+                    distance.Text = distanceValue .. "m"
+                    distance.Position = Vector2.new(rootPos.X, rootPos.Y - height/2 - 40)
+                    distance.Visible = true
                 else
                     box.Visible = false
                     tracer.Visible = false
                     name.Visible = false
+                    distance.Visible = false
                 end
             end
         end)
@@ -982,10 +1236,12 @@ local success, err = pcall(function()
     updateButtonText(ShadersToggle, ShadersEnabled)
     updateButtonText(AimAssistToggle, AimAssistEnabled)
     updateButtonText(WalkSpeedToggle, WalkSpeedEnabled)
+    updateButtonText(RagebotToggle, RagebotEnabled)
+    updateButtonText(TriggerbotToggle, TriggerbotEnabled)
 
     -- Уведомление в чат
     game:GetService("StarterGui"):SetCore("ChatMakeSystemMessage", {
-        Text = "Moon Blossom v1.8 loaded! FOV 180 & fixed positioning",
+        Text = "Moon Blossom v3.2 loaded! Aim Assist on K, Triggerbot on L uses Silent Aim, max distance 400, Air Strafe redirects velocity, larger grey GUI, Ragebot under map",
         Color = Color3.fromRGB(180, 100, 255),
         Font = Enum.Font.GothamBold,
         FontSize = Enum.FontSize.Size18
@@ -1003,6 +1259,13 @@ local success, err = pcall(function()
             newScreenGui.Enabled = true
             
             createFOVCircle()
+        end
+        Camera.CameraType = Enum.CameraType.Custom
+        -- Сбрасываем смещение Ragebot при респавне
+        if ragebotApplied and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
+            local rootPart = Player.Character.HumanoidRootPart
+            rootPart.CFrame = rootPart.CFrame - ragebotOffset
+            ragebotApplied = false
         end
     end)
 
