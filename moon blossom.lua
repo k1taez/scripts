@@ -63,7 +63,7 @@ local success, err = pcall(function()
     Title.Size = UDim2.new(0.7, 0, 1, 0)
     Title.Position = UDim2.new(0.05, 0, 0, 0)
     Title.BackgroundTransparency = 1
-    Title.Text = "Moon Blossom v3.5"
+    Title.Text = "Moon Blossom v3.7"
     Title.TextColor3 = Color3.fromRGB(220, 180, 255)
     Title.Font = Enum.Font.GothamBold
     Title.TextSize = 14
@@ -289,9 +289,10 @@ local success, err = pcall(function()
     local spinRotation = 0
     local totalSpinbotOffset = Vector3.new(0, 0, 0)
 
-    -- Переменные для Aim Assist
+    -- Переменные для Aim Assist и Silent Aim
     local aimAssistTarget = nil
-    local aimAssistFOV = 30 -- Уменьшенный FOV для точности
+    local aimAssistFOV = 180 -- Широкий FOV для Aim Assist и Silent Aim
+    local triggerbotFOV = 10 -- Узкий FOV для Triggerbot
     local fovCircle = nil
 
     -- Переменная для хранения исходной скорости
@@ -312,7 +313,7 @@ local success, err = pcall(function()
         
         fovCircle = Drawing.new("Circle")
         fovCircle.Visible = AimAssistEnabled or SilentAimEnabled or TriggerbotEnabled
-        fovCircle.Radius = aimAssistFOV
+        fovCircle.Radius = math.max(aimAssistFOV, triggerbotFOV)
         fovCircle.Color = Color3.fromRGB(255, 100, 255)
         fovCircle.Thickness = 2
         fovCircle.Filled = false
@@ -676,7 +677,7 @@ local success, err = pcall(function()
         return closestPlayer
     end
 
-    -- Aim Assist с лёгкой плавностью (FOV 30, автоматический, макс. дистанция 400)
+    -- Aim Assist с лёгкой плавностью (FOV 180, автоматический, макс. дистанция 400)
     local function handleAimAssist()
         if AimAssistEnabled and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
             local closestPlayer = findClosestPlayerInFOV(aimAssistFOV)
@@ -687,22 +688,27 @@ local success, err = pcall(function()
                 local targetPosition = targetHead.Position
                 
                 if isTargetVisible(targetPosition) then
+                    print("[MoonBlossom] AimAssist: Targeting " .. closestPlayer.Name)
                     local direction = (targetPosition - cameraPosition).Unit
                     local currentLook = Camera.CFrame.LookVector
                     local smoothFactor = 0.85 -- Чуть более плавное наведение
                     local newLook = currentLook:Lerp(direction, smoothFactor)
                     Camera.CFrame = CFrame.new(cameraPosition, cameraPosition + newLook)
+                else
+                    print("[MoonBlossom] AimAssist: Target not visible - " .. closestPlayer.Name)
                 end
+            else
+                print("[MoonBlossom] AimAssist: No valid target found")
             end
         end
     end
 
-    -- Triggerbot, стреляющий только при наведении на цель
+    -- Triggerbot, стреляющий только при наведении на цель (FOV 10)
     local function handleTriggerbot()
         if TriggerbotEnabled and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
             -- Проверяем, не нажата ли ЛКМ, чтобы избежать конфликтов
             if not UIS:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) then
-                local closestPlayer = findClosestPlayerInFOV(aimAssistFOV)
+                local closestPlayer = findClosestPlayerInFOV(triggerbotFOV)
                 if closestPlayer and closestPlayer.Character and closestPlayer.Character:FindFirstChild("Head") then
                     local targetHead = closestPlayer.Character.Head
                     local screenPos, onScreen = Camera:WorldToViewportPoint(targetHead.Position)
@@ -768,6 +774,7 @@ local success, err = pcall(function()
     RunService.RenderStepped:Connect(function()
         if fovCircle then
             fovCircle.Position = Vector2.new(Mouse.X, Mouse.Y)
+            fovCircle.Radius = math.max(aimAssistFOV, triggerbotFOV)
             fovCircle.Visible = AimAssistEnabled or SilentAimEnabled or TriggerbotEnabled
         end
         
@@ -779,7 +786,7 @@ local success, err = pcall(function()
         handleTriggerbot()
     end)
 
-    -- Улучшенный Silent Aim с FOV 30 и проверкой дистанции 400
+    -- Улучшенный Silent Aim с FOV 180 и проверкой дистанции 400
     local function findClosestPlayerToCursor()
         local closestPlayer = nil
         local closestDistance = math.huge
@@ -796,7 +803,7 @@ local success, err = pcall(function()
                     if onScreen then
                         local distance = (Vector2.new(screenPos.X, screenPos.Y) - mousePos).Magnitude
                         
-                        if distance <= 30 and distance < closestDistance then
+                        if distance <= aimAssistFOV and distance < closestDistance then
                             if isTargetVisible(head.Position) then
                                 closestDistance = distance
                                 closestPlayer = otherPlayer
@@ -817,8 +824,13 @@ local success, err = pcall(function()
             if closestPlayer and closestPlayer.Character and closestPlayer.Character:FindFirstChild("Head") then
                 local targetHead = closestPlayer.Character.Head
                 if isTargetVisible(targetHead.Position) then
+                    print("[MoonBlossom] SilentAim: Targeting " .. closestPlayer.Name)
                     Camera.CFrame = CFrame.new(Camera.CFrame.Position, targetHead.Position)
+                else
+                    print("[MoonBlossom] SilentAim: Target not visible - " .. closestPlayer.Name)
                 end
+            else
+                print("[MoonBlossom] SilentAim: No valid target found")
             end
         end
     end)
@@ -1240,7 +1252,7 @@ local success, err = pcall(function()
 
     -- Уведомление в чат
     game:GetService("StarterGui"):SetCore("ChatMakeSystemMessage", {
-        Text = "Moon Blossom v3.5 loaded! Aim Assist on K, Triggerbot on L shoots when aim on target (FOV 30), max distance 400, Air Strafe redirects velocity, larger grey GUI, Ragebot under map",
+        Text = "Moon Blossom v3.7 loaded! Aim Assist (FOV 180) on K, Triggerbot (FOV 10) on L shoots when aim on target, max distance 400, Air Strafe redirects velocity, larger grey GUI, Ragebot under map",
         Color = Color3.fromRGB(180, 100, 255),
         Font = Enum.Font.GothamBold,
         FontSize = Enum.FontSize.Size18
