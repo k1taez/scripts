@@ -8,7 +8,6 @@ local success, err = pcall(function()
     local Workspace = game:GetService("Workspace")
     local Camera = Workspace.CurrentCamera
     local Lighting = game:GetService("Lighting")
-    local VirtualUser = game:GetService("VirtualUser")
 
     local Player = Players.LocalPlayer
     local Mouse = Player:GetMouse()
@@ -63,7 +62,7 @@ local success, err = pcall(function()
     Title.Size = UDim2.new(0.7, 0, 1, 0)
     Title.Position = UDim2.new(0.05, 0, 0, 0)
     Title.BackgroundTransparency = 1
-    Title.Text = "Moon Blossom v3.8"
+    Title.Text = "Moon Blossom v3.9"
     Title.TextColor3 = Color3.fromRGB(220, 180, 255)
     Title.Font = Enum.Font.GothamBold
     Title.TextSize = 14
@@ -287,7 +286,7 @@ local success, err = pcall(function()
 
     -- Переменные для спинбота
     local spinRotation = 0
-    local totalSpinbotOffset = Vector3.new(0, 0, 0)
+    local originalBodyScales = {}
 
     -- Переменные для Aim Assist и Silent Aim
     local aimAssistTarget = nil
@@ -318,7 +317,7 @@ local success, err = pcall(function()
         fovCircle.Thickness = 2
         fovCircle.Filled = false
         fovCircle.Transparency = 0.7
-        fovCircle.Position = Vector2.new(Mouse.X, Mouse.Y)
+        fovCircle.Position = Vector2.new(Mouse.X, Mouse.Y + 50) -- Смещение круга вниз на 50 пикселей
         
         return fovCircle
     end
@@ -407,6 +406,15 @@ local success, err = pcall(function()
             rootPart.CFrame = rootPart.CFrame - ragebotOffset
             ragebotApplied = false
         end
+        -- Восстанавливаем масштаб тела при закрытии, если Spinbot был активен
+        if SpinbotEnabled and Player.Character and Player.Character:FindFirstChild("Humanoid") then
+            local humanoid = Player.Character.Humanoid
+            for _, property in pairs({"BodyWidthScale", "BodyDepthScale", "HeadScale", "BodyHeightScale"}) do
+                if originalBodyScales[property] then
+                    humanoid[property].Value = originalBodyScales[property]
+                end
+            end
+        end
     end)
 
     MinimizeButton.MouseButton1Click:Connect(function()
@@ -426,6 +434,30 @@ local success, err = pcall(function()
     SpinbotToggle.MouseButton1Click:Connect(function()
         SpinbotEnabled = not SpinbotEnabled
         toggleButton(SpinbotToggle, SpinbotEnabled)
+        
+        if Player.Character and Player.Character:FindFirstChild("Humanoid") then
+            local humanoid = Player.Character.Humanoid
+            if SpinbotEnabled then
+                -- Сохраняем исходные масштабы
+                originalBodyScales.BodyWidthScale = humanoid.BodyWidthScale.Value
+                originalBodyScales.BodyDepthScale = humanoid.BodyDepthScale.Value
+                originalBodyScales.HeadScale = humanoid.HeadScale.Value
+                originalBodyScales.BodyHeightScale = humanoid.BodyHeightScale.Value
+                -- Уменьшаем масштаб тела (визуальный эффект)
+                humanoid.BodyWidthScale.Value = 0.5
+                humanoid.BodyDepthScale.Value = 0.5
+                humanoid.HeadScale.Value = 0.5
+                humanoid.BodyHeightScale.Value = 0.5
+                print("[MoonBlossom] Spinbot: Body scale reduced to 0.5")
+            else
+                -- Восстанавливаем масштаб
+                humanoid.BodyWidthScale.Value = originalBodyScales.BodyWidthScale or 1
+                humanoid.BodyDepthScale.Value = originalBodyScales.BodyDepthScale or 1
+                humanoid.HeadScale.Value = originalBodyScales.HeadScale or 1
+                humanoid.BodyHeightScale.Value = originalBodyScales.BodyHeightScale or 1
+                print("[MoonBlossom] Spinbot: Body scale restored")
+            end
+        end
     end)
 
     ChamsToggle.MouseButton1Click:Connect(function()
@@ -589,27 +621,23 @@ local success, err = pcall(function()
         end
     end)
 
-    -- Улучшенный спинбот с уходом под землю на 2.5
+    -- Визуальный спинбот (вращение камеры + уменьшение хитбокса)
     RunService.Heartbeat:Connect(function()
         if SpinbotEnabled and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
-            local Char = Player.Character
-            local RootPart = Char.HumanoidRootPart
-            
-            RootPart.CFrame = RootPart.CFrame - totalSpinbotOffset
-            
-            local newOffset = Vector3.new(0, -2.5, 0)
-            totalSpinbotOffset = newOffset
-            
-            spinRotation = spinRotation + 100
-            if spinRotation > 180 then spinRotation = 90 end
-            
-            RootPart.CFrame = RootPart.CFrame * CFrame.Angles(0, math.rad(spinRotation), 0) + newOffset
+            spinRotation = spinRotation + 100 * RunService.Heartbeat:Wait()
+            if spinRotation > 360 then spinRotation = spinRotation - 360 end
+            Camera.CFrame = CFrame.new(Camera.CFrame.Position) * CFrame.Angles(0, math.rad(spinRotation), 0)
+            print("[MoonBlossom] Spinbot: Camera rotation updated to " .. math.floor(spinRotation) .. " degrees")
         else
-            if totalSpinbotOffset ~= Vector3.new(0, 0, 0) then
-                if Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
-                    Player.Character.HumanoidRootPart.CFrame = Player.Character.HumanoidRootPart.CFrame - totalSpinbotOffset
+            if Player.Character and Player.Character:FindFirstChild("Humanoid") then
+                local humanoid = Player.Character.Humanoid
+                if originalBodyScales.BodyWidthScale then
+                    humanoid.BodyWidthScale.Value = originalBodyScales.BodyWidthScale
+                    humanoid.BodyDepthScale.Value = originalBodyScales.BodyDepthScale
+                    humanoid.HeadScale.Value = originalBodyScales.HeadScale
+                    humanoid.BodyHeightScale.Value = originalBodyScales.BodyHeightScale
+                    print("[MoonBlossom] Spinbot: Body scale restored")
                 end
-                totalSpinbotOffset = Vector3.new(0, 0, 0)
             end
         end
     end)
@@ -655,18 +683,21 @@ local success, err = pcall(function()
         for _, otherPlayer in ipairs(Players:GetPlayers()) do
             if otherPlayer ~= Player and otherPlayer.Character and otherPlayer.Character:FindFirstChild("Head") then
                 local head = otherPlayer.Character.Head
-                local distanceToPlayer = (Player.Character.HumanoidRootPart.Position - head.Position).Magnitude
-                
-                if distanceToPlayer <= maxDistance then
-                    local screenPos, onScreen = Camera:WorldToViewportPoint(head.Position)
+                local humanoid = otherPlayer.Character:FindFirstChild("Humanoid")
+                if humanoid and humanoid.Health > 0 then
+                    local distanceToPlayer = (Player.Character.HumanoidRootPart.Position - head.Position).Magnitude
                     
-                    if onScreen then
-                        local distance = (Vector2.new(screenPos.X, screenPos.Y) - mousePos).Magnitude
+                    if distanceToPlayer <= maxDistance then
+                        local screenPos, onScreen = Camera:WorldToViewportPoint(head.Position)
                         
-                        if distance <= fov and distance < closestDistance then
-                            if isTargetVisible(head.Position) then
-                                closestDistance = distance
-                                closestPlayer = otherPlayer
+                        if onScreen then
+                            local distance = (Vector2.new(screenPos.X, screenPos.Y) - mousePos).Magnitude
+                            
+                            if distance <= fov and distance < closestDistance then
+                                if isTargetVisible(head.Position) then
+                                    closestDistance = distance
+                                    closestPlayer = otherPlayer
+                                end
                             end
                         end
                     end
@@ -703,30 +734,39 @@ local success, err = pcall(function()
         end
     end
 
-    -- Triggerbot, упрощённая версия (FOV 10, без проверки ЛКМ, только mouse1click)
+    -- Triggerbot, упрощённая версия с дополнительными проверками
     local function handleTriggerbot()
         if TriggerbotEnabled and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
+            if not Player.Character:FindFirstChildOfClass("Tool") then
+                print("[MoonBlossom] Triggerbot: No weapon equipped")
+                return
+            end
             local closestPlayer = findClosestPlayerInFOV(triggerbotFOV)
             if closestPlayer and closestPlayer.Character and closestPlayer.Character:FindFirstChild("Head") then
                 local targetHead = closestPlayer.Character.Head
-                local screenPos, onScreen = Camera:WorldToViewportPoint(targetHead.Position)
-                
-                if onScreen then
-                    local mousePos = Vector2.new(Mouse.X, Mouse.Y)
-                    local distance = (Vector2.new(screenPos.X, screenPos.Y) - mousePos).Magnitude
+                local humanoid = closestPlayer.Character:FindFirstChild("Humanoid")
+                if humanoid and humanoid.Health > 0 then
+                    local screenPos, onScreen = Camera:WorldToViewportPoint(targetHead.Position)
                     
-                    -- Проверяем, находится ли курсор на голове (в пределах 10 пикселей для точности)
-                    if distance <= 10 and isTargetVisible(targetHead.Position) then
-                        print("[MoonBlossom] Triggerbot: Firing at " .. closestPlayer.Name .. " (distance: " .. math.floor(distance) .. " pixels)")
-                        pcall(function()
-                            mouse1click()
-                        end)
-                        wait(0.1) -- Задержка для предотвращения спама
+                    if onScreen then
+                        local mousePos = Vector2.new(Mouse.X, Mouse.Y)
+                        local distance = (Vector2.new(screenPos.X, screenPos.Y) - mousePos).Magnitude
+                        
+                        -- Проверяем, находится ли курсор на голове (в пределах 10 пикселей для точности)
+                        if distance <= 10 and isTargetVisible(targetHead.Position) then
+                            print("[MoonBlossom] Triggerbot: Firing at " .. closestPlayer.Name .. " (distance: " .. math.floor(distance) .. " pixels)")
+                            pcall(function()
+                                mouse1click()
+                            end)
+                            wait(0.1) -- Задержка для предотвращения спама
+                        else
+                            print("[MoonBlossom] Triggerbot: Target not on crosshair - " .. closestPlayer.Name .. " (distance: " .. math.floor(distance) .. " pixels)")
+                        end
                     else
-                        print("[MoonBlossom] Triggerbot: Target not on crosshair - " .. closestPlayer.Name .. " (distance: " .. math.floor(distance) .. " pixels)")
+                        print("[MoonBlossom] Triggerbot: Target not visible - " .. closestPlayer.Name)
                     end
                 else
-                    print("[MoonBlossom] Triggerbot: Target not visible - " .. closestPlayer.Name)
+                    print("[MoonBlossom] Triggerbot: Target is dead - " .. closestPlayer.Name)
                 end
             else
                 print("[MoonBlossom] Triggerbot: No valid target found")
@@ -739,7 +779,7 @@ local success, err = pcall(function()
     -- Обновление FOV круга, Aim Assist и Triggerbot
     RunService.RenderStepped:Connect(function()
         if fovCircle then
-            fovCircle.Position = Vector2.new(Mouse.X, Mouse.Y)
+            fovCircle.Position = Vector2.new(Mouse.X, Mouse.Y + 50) -- Смещение круга вниз на 50 пикселей
             fovCircle.Radius = math.max(aimAssistFOV, triggerbotFOV)
             fovCircle.Visible = AimAssistEnabled or SilentAimEnabled or TriggerbotEnabled
         end
@@ -761,18 +801,21 @@ local success, err = pcall(function()
         for _, otherPlayer in ipairs(Players:GetPlayers()) do
             if otherPlayer ~= Player and otherPlayer.Character and otherPlayer.Character:FindFirstChild("Head") then
                 local head = otherPlayer.Character.Head
-                local distanceToPlayer = (Player.Character.HumanoidRootPart.Position - head.Position).Magnitude
-                
-                if distanceToPlayer <= maxDistance then
-                    local screenPos, onScreen = Camera:WorldToViewportPoint(head.Position)
+                local humanoid = otherPlayer.Character:FindFirstChild("Humanoid")
+                if humanoid and humanoid.Health > 0 then
+                    local distanceToPlayer = (Player.Character.HumanoidRootPart.Position - head.Position).Magnitude
                     
-                    if onScreen then
-                        local distance = (Vector2.new(screenPos.X, screenPos.Y) - mousePos).Magnitude
+                    if distanceToPlayer <= maxDistance then
+                        local screenPos, onScreen = Camera:WorldToViewportPoint(head.Position)
                         
-                        if distance <= aimAssistFOV and distance < closestDistance then
-                            if isTargetVisible(head.Position) then
-                                closestDistance = distance
-                                closestPlayer = otherPlayer
+                        if onScreen then
+                            local distance = (Vector2.new(screenPos.X, screenPos.Y) - mousePos).Magnitude
+                            
+                            if distance <= aimAssistFOV and distance < closestDistance then
+                                if isTargetVisible(head.Position) then
+                                    closestDistance = distance
+                                    closestPlayer = otherPlayer
+                                end
                             end
                         end
                     end
@@ -1218,7 +1261,7 @@ local success, err = pcall(function()
 
     -- Уведомление в чат
     game:GetService("StarterGui"):SetCore("ChatMakeSystemMessage", {
-        Text = "Moon Blossom v3.8 loaded! Aim Assist (FOV 180) on K, Triggerbot (FOV 10) on L shoots when aim on target, max distance 400, Air Strafe redirects velocity, larger grey GUI, Ragebot under map",
+        Text = "Moon Blossom v3.9 loaded! Aim Assist (FOV 180) on K, Triggerbot (FOV 10) on L, Spinbot visual with smaller hitbox, FOV circle lowered, max distance 400, Air Strafe redirects velocity, larger grey GUI, Ragebot under map",
         Color = Color3.fromRGB(180, 100, 255),
         Font = Enum.Font.GothamBold,
         FontSize = Enum.FontSize.Size18
@@ -1243,6 +1286,15 @@ local success, err = pcall(function()
             local rootPart = Player.Character.HumanoidRootPart
             rootPart.CFrame = rootPart.CFrame - ragebotOffset
             ragebotApplied = false
+        end
+        -- Восстанавливаем масштаб тела при респавне
+        if SpinbotEnabled and Player.Character and Player.Character:FindFirstChild("Humanoid") then
+            local humanoid = Player.Character.Humanoid
+            humanoid.BodyWidthScale.Value = 0.5
+            humanoid.BodyDepthScale.Value = 0.5
+            humanoid.HeadScale.Value = 0.5
+            humanoid.BodyHeightScale.Value = 0.5
+            print("[MoonBlossom] Spinbot: Body scale reapplied to 0.5 on respawn")
         end
     end)
 
