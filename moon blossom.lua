@@ -63,7 +63,7 @@ local success, err = pcall(function()
     Title.Size = UDim2.new(0.7, 0, 1, 0)
     Title.Position = UDim2.new(0.05, 0, 0, 0)
     Title.BackgroundTransparency = 1
-    Title.Text = "Moon Blossom v3.3"
+    Title.Text = "Moon Blossom v3.5"
     Title.TextColor3 = Color3.fromRGB(220, 180, 255)
     Title.Font = Enum.Font.GothamBold
     Title.TextSize = 14
@@ -291,7 +291,7 @@ local success, err = pcall(function()
 
     -- Переменные для Aim Assist
     local aimAssistTarget = nil
-    local aimAssistFOV = 180
+    local aimAssistFOV = 30 -- Уменьшенный FOV для точности
     local fovCircle = nil
 
     -- Переменная для хранения исходной скорости
@@ -329,7 +329,7 @@ local success, err = pcall(function()
             return false 
         end
         local origin = Camera.CFrame.Position
-        local direction = (targetPos - origin).Unit * 1000
+        local direction = (targetPos - origin).Unit * maxDistance
         local raycastParams = RaycastParams.new()
         raycastParams.FilterDescendantsInstances = {Player.Character}
         raycastParams.FilterType = Enum.RaycastFilterType.Blacklist
@@ -339,11 +339,14 @@ local success, err = pcall(function()
             if hitPart and hitPart:IsDescendantOf(Workspace) and not hitPart:IsDescendantOf(Player.Character) then
                 local hitCharacter = hitPart:FindFirstAncestorOfClass("Model")
                 if hitCharacter and hitCharacter:IsA("Model") and Players:GetPlayerFromCharacter(hitCharacter) then
+                    print("[MoonBlossom] Triggerbot: Target visible - Raycast hit player")
                     return true
                 end
+                print("[MoonBlossom] Triggerbot: Target blocked - Raycast hit " .. tostring(hitPart))
                 return false
             end
         end
+        print("[MoonBlossom] Triggerbot: Target visible - No raycast collision")
         return true
     end
 
@@ -673,7 +676,7 @@ local success, err = pcall(function()
         return closestPlayer
     end
 
-    -- Aim Assist с лёгкой плавностью (FOV 180, автоматический, макс. дистанция 400)
+    -- Aim Assist с лёгкой плавностью (FOV 30, автоматический, макс. дистанция 400)
     local function handleAimAssist()
         if AimAssistEnabled and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
             local closestPlayer = findClosestPlayerInFOV(aimAssistFOV)
@@ -697,52 +700,67 @@ local success, err = pcall(function()
     -- Triggerbot, стреляющий только при наведении на цель
     local function handleTriggerbot()
         if TriggerbotEnabled and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
-            local closestPlayer = findClosestPlayerInFOV(aimAssistFOV)
-            if closestPlayer and closestPlayer.Character and closestPlayer.Character:FindFirstChild("Head") then
-                local targetHead = closestPlayer.Character.Head
-                local screenPos, onScreen = Camera:WorldToViewportPoint(targetHead.Position)
-                
-                if onScreen then
-                    local mousePos = Vector2.new(Mouse.X, Mouse.Y)
-                    local distance = (Vector2.new(screenPos.X, screenPos.Y) - mousePos).Magnitude
+            -- Проверяем, не нажата ли ЛКМ, чтобы избежать конфликтов
+            if not UIS:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) then
+                local closestPlayer = findClosestPlayerInFOV(aimAssistFOV)
+                if closestPlayer and closestPlayer.Character and closestPlayer.Character:FindFirstChild("Head") then
+                    local targetHead = closestPlayer.Character.Head
+                    local screenPos, onScreen = Camera:WorldToViewportPoint(targetHead.Position)
                     
-                    -- Проверяем, находится ли курсор на голове (в пределах 5 пикселей для точности)
-                    if distance <= 5 and isTargetVisible(targetHead.Position) then
-                        print("[MoonBlossom] Triggerbot: Target on crosshair - " .. closestPlayer.Name)
-                        local weapon = Player.Character:FindFirstChildOfClass("Tool")
-                        if weapon then
-                            print("[MoonBlossom] Triggerbot: Weapon found - " .. weapon.Name)
-                            if VirtualUser and typeof(VirtualUser.ClickButton1) == "function" then
-                                print("[MoonBlossom] Triggerbot: Using VirtualUser.ClickButton1")
-                                VirtualUser:ClickButton1(Enum.UserInputState.Begin)
-                                wait(0.05)
-                                VirtualUser:ClickButton1(Enum.UserInputState.End)
+                    if onScreen then
+                        local mousePos = Vector2.new(Mouse.X, Mouse.Y)
+                        local distance = (Vector2.new(screenPos.X, screenPos.Y) - mousePos).Magnitude
+                        
+                        -- Проверяем, находится ли курсор на голове (в пределах 10 пикселей для точности)
+                        if distance <= 10 and isTargetVisible(targetHead.Position) then
+                            print("[MoonBlossom] Triggerbot: Target on crosshair - " .. closestPlayer.Name .. " (distance: " .. math.floor(distance) .. " pixels)")
+                            local weapon = Player.Character:FindFirstChildOfClass("Tool")
+                            if weapon then
+                                print("[MoonBlossom] Triggerbot: Weapon found - " .. weapon.Name)
+                                if VirtualUser and typeof(VirtualUser.ClickButton1) == "function" then
+                                    print("[MoonBlossom] Triggerbot: Using VirtualUser.ClickButton1")
+                                    pcall(function()
+                                        VirtualUser:ClickButton1(Enum.UserInputState.Begin)
+                                        wait(0.05)
+                                        VirtualUser:ClickButton1(Enum.UserInputState.End)
+                                    end)
+                                else
+                                    print("[MoonBlossom] Triggerbot: VirtualUser not supported, using mouse1click")
+                                    pcall(function()
+                                        mouse1click()
+                                    end)
+                                end
                             else
-                                print("[MoonBlossom] Triggerbot: VirtualUser not supported, using mouse1click")
-                                mouse1click()
+                                print("[MoonBlossom] Triggerbot: No weapon equipped")
+                                if VirtualUser and typeof(VirtualUser.ClickButton1) == "function" then
+                                    print("[MoonBlossom] Triggerbot: Using VirtualUser.ClickButton1 (no weapon)")
+                                    pcall(function()
+                                        VirtualUser:ClickButton1(Enum.UserInputState.Begin)
+                                        wait(0.05)
+                                        VirtualUser:ClickButton1(Enum.UserInputState.End)
+                                    end)
+                                else
+                                    print("[MoonBlossom] Triggerbot: Using mouse1click (no weapon)")
+                                    pcall(function()
+                                        mouse1click()
+                                    end)
+                                end
                             end
+                            wait(0.1) -- Задержка для предотвращения спама
                         else
-                            print("[MoonBlossom] Triggerbot: No weapon equipped")
-                            if VirtualUser and typeof(VirtualUser.ClickButton1) == "function" then
-                                print("[MoonBlossom] Triggerbot: Using VirtualUser.ClickButton1 (no weapon)")
-                                VirtualUser:ClickButton1(Enum.UserInputState.Begin)
-                                wait(0.05)
-                                VirtualUser:ClickButton1(Enum.UserInputState.End)
-                            else
-                                print("[MoonBlossom] Triggerbot: Using mouse1click (no weapon)")
-                                mouse1click()
-                            end
+                            print("[MoonBlossom] Triggerbot: Target not on crosshair - " .. closestPlayer.Name .. " (distance: " .. math.floor(distance) .. " pixels)")
                         end
-                        wait(0.1) -- Задержка для предотвращения спама
                     else
-                        print("[MoonBlossom] Triggerbot: Target not on crosshair (distance: " .. math.floor(distance) .. " pixels)")
+                        print("[MoonBlossom] Triggerbot: Target not visible - " .. closestPlayer.Name)
                     end
                 else
-                    print("[MoonBlossom] Triggerbot: Target not visible")
+                    print("[MoonBlossom] Triggerbot: No valid target found")
                 end
             else
-                print("[MoonBlossom] Triggerbot: No valid target found")
+                print("[MoonBlossom] Triggerbot: Mouse button pressed, skipping")
             end
+        else
+            print("[MoonBlossom] Triggerbot: Player character or HumanoidRootPart missing")
         end
     end
 
@@ -761,7 +779,7 @@ local success, err = pcall(function()
         handleTriggerbot()
     end)
 
-    -- Улучшенный Silent Aim с FOV 180 и проверкой дистанции 400
+    -- Улучшенный Silent Aim с FOV 30 и проверкой дистанции 400
     local function findClosestPlayerToCursor()
         local closestPlayer = nil
         local closestDistance = math.huge
@@ -778,7 +796,7 @@ local success, err = pcall(function()
                     if onScreen then
                         local distance = (Vector2.new(screenPos.X, screenPos.Y) - mousePos).Magnitude
                         
-                        if distance <= 180 and distance < closestDistance then
+                        if distance <= 30 and distance < closestDistance then
                             if isTargetVisible(head.Position) then
                                 closestDistance = distance
                                 closestPlayer = otherPlayer
@@ -1222,7 +1240,7 @@ local success, err = pcall(function()
 
     -- Уведомление в чат
     game:GetService("StarterGui"):SetCore("ChatMakeSystemMessage", {
-        Text = "Moon Blossom v3.3 loaded! Aim Assist on K, Triggerbot on L shoots when aim on target, max distance 400, Air Strafe redirects velocity, larger grey GUI, Ragebot under map",
+        Text = "Moon Blossom v3.5 loaded! Aim Assist on K, Triggerbot on L shoots when aim on target (FOV 30), max distance 400, Air Strafe redirects velocity, larger grey GUI, Ragebot under map",
         Color = Color3.fromRGB(180, 100, 255),
         Font = Enum.Font.GothamBold,
         FontSize = Enum.FontSize.Size18
