@@ -62,7 +62,7 @@ local success, err = pcall(function()
     Title.Size = UDim2.new(0.7, 0, 1, 0)
     Title.Position = UDim2.new(0.05, 0, 0, 0)
     Title.BackgroundTransparency = 1
-    Title.Text = "Moon Blossom v3.9"
+    Title.Text = "Moon Blossom v4.0"
     Title.TextColor3 = Color3.fromRGB(220, 180, 255)
     Title.Font = Enum.Font.GothamBold
     Title.TextSize = 14
@@ -198,21 +198,10 @@ local success, err = pcall(function()
     WalkSpeedToggle.TextSize = 14
     WalkSpeedToggle.Parent = ButtonsContainer
 
-    local RagebotToggle = Instance.new("TextButton")
-    RagebotToggle.Name = "RagebotToggle"
-    RagebotToggle.Size = UDim2.new(0, 330, 0, 35)
-    RagebotToggle.Position = UDim2.new(0.035, 0, 0.66, 0)
-    RagebotToggle.Text = "Ragebot: OFF"
-    RagebotToggle.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
-    RagebotToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
-    RagebotToggle.Font = Enum.Font.Gotham
-    RagebotToggle.TextSize = 14
-    RagebotToggle.Parent = ButtonsContainer
-
     local TriggerbotToggle = Instance.new("TextButton")
     TriggerbotToggle.Name = "TriggerbotToggle"
     TriggerbotToggle.Size = UDim2.new(0, 330, 0, 35)
-    TriggerbotToggle.Position = UDim2.new(0.035, 0, 0.73, 0)
+    TriggerbotToggle.Position = UDim2.new(0.035, 0, 0.66, 0)
     TriggerbotToggle.Text = "Triggerbot: OFF (Toggle: L)"
     TriggerbotToggle.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
     TriggerbotToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
@@ -243,7 +232,6 @@ local success, err = pcall(function()
     buttonCorner:Clone().Parent = ShadersToggle
     buttonCorner:Clone().Parent = AimAssistToggle
     buttonCorner:Clone().Parent = WalkSpeedToggle
-    buttonCorner:Clone().Parent = RagebotToggle
     buttonCorner:Clone().Parent = TriggerbotToggle
 
     -- Принудительно показываем GUI
@@ -260,7 +248,6 @@ local success, err = pcall(function()
     local ShadersEnabled = false
     local AimAssistEnabled = false
     local WalkSpeedEnabled = false
-    local RagebotEnabled = false
     local TriggerbotEnabled = false
     local GUIEnabled = true
 
@@ -296,10 +283,6 @@ local success, err = pcall(function()
 
     -- Переменная для хранения исходной скорости
     local originalWalkSpeed = 16
-
-    -- Переменные для Ragebot
-    local ragebotOffset = Vector3.new(0, -500, 0)
-    local ragebotApplied = false
 
     -- Максимальная дистанция для Aim Assist, Silent Aim и Triggerbot
     local maxDistance = 400
@@ -370,8 +353,6 @@ local success, err = pcall(function()
             button.Text = "Aim Assist: " .. (enabled and "ON" or "OFF") .. " (Toggle: K)"
         elseif button.Name == "WalkSpeedToggle" then
             button.Text = "WalkSpeed: " .. (enabled and "ON" or "OFF")
-        elseif button.Name == "RagebotToggle" then
-            button.Text = "Ragebot: " .. (enabled and "ON" or "OFF")
         elseif button.Name == "TriggerbotToggle" then
             button.Text = "Triggerbot: " .. (enabled and "ON" or "OFF") .. " (Toggle: L)"
         end
@@ -400,12 +381,6 @@ local success, err = pcall(function()
             fovCircle:Remove()
         end
         Camera.CameraType = Enum.CameraType.Custom
-        -- Восстанавливаем позицию при закрытии, если Ragebot был активен
-        if ragebotApplied and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
-            local rootPart = Player.Character.HumanoidRootPart
-            rootPart.CFrame = rootPart.CFrame - ragebotOffset
-            ragebotApplied = false
-        end
         -- Восстанавливаем масштаб тела при закрытии, если Spinbot был активен
         if SpinbotEnabled and Player.Character and Player.Character:FindFirstChild("Humanoid") then
             local humanoid = Player.Character.Humanoid
@@ -530,29 +505,6 @@ local success, err = pcall(function()
         end
     end)
 
-    RagebotToggle.MouseButton1Click:Connect(function()
-        RagebotEnabled = not RagebotEnabled
-        toggleButton(RagebotToggle, RagebotEnabled)
-        
-        if Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
-            local rootPart = Player.Character.HumanoidRootPart
-            if RagebotEnabled then
-                -- Применяем смещение один раз
-                if not ragebotApplied then
-                    rootPart.CFrame = rootPart.CFrame + ragebotOffset
-                    ragebotApplied = true
-                end
-            else
-                -- Восстанавливаем позицию
-                if ragebotApplied then
-                    rootPart.CFrame = rootPart.CFrame - ragebotOffset
-                    ragebotApplied = false
-                end
-                Camera.CameraType = Enum.CameraType.Custom
-            end
-        end
-    end)
-
     TriggerbotToggle.MouseButton1Click:Connect(function()
         -- Кнопка в GUI отключена, переключение только через L
     end)
@@ -621,13 +573,14 @@ local success, err = pcall(function()
         end
     end)
 
-    -- Визуальный спинбот (вращение камеры + уменьшение хитбокса)
+    -- Спинбот с вращением персонажа и уменьшением хитбокса
     RunService.Heartbeat:Connect(function()
         if SpinbotEnabled and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
+            local rootPart = Player.Character.HumanoidRootPart
             spinRotation = spinRotation + 100 * RunService.Heartbeat:Wait()
             if spinRotation > 360 then spinRotation = spinRotation - 360 end
-            Camera.CFrame = CFrame.new(Camera.CFrame.Position) * CFrame.Angles(0, math.rad(spinRotation), 0)
-            print("[MoonBlossom] Spinbot: Camera rotation updated to " .. math.floor(spinRotation) .. " degrees")
+            rootPart.CFrame = CFrame.new(rootPart.Position) * CFrame.Angles(0, math.rad(spinRotation), 0)
+            print("[MoonBlossom] Spinbot: Character rotation updated to " .. math.floor(spinRotation) .. " degrees")
         else
             if Player.Character and Player.Character:FindFirstChild("Humanoid") then
                 local humanoid = Player.Character.Humanoid
@@ -734,7 +687,7 @@ local success, err = pcall(function()
         end
     end
 
-    -- Triggerbot, упрощённая версия с дополнительными проверками
+    -- Triggerbot с fallback на mouse1press/mouse1release
     local function handleTriggerbot()
         if TriggerbotEnabled and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
             if not Player.Character:FindFirstChildOfClass("Tool") then
@@ -752,11 +705,17 @@ local success, err = pcall(function()
                         local mousePos = Vector2.new(Mouse.X, Mouse.Y)
                         local distance = (Vector2.new(screenPos.X, screenPos.Y) - mousePos).Magnitude
                         
-                        -- Проверяем, находится ли курсор на голове (в пределах 10 пикселей для точности)
+                        -- Проверяем, находится ли курсор на голове (в пределах 10 пикселей)
                         if distance <= 10 and isTargetVisible(targetHead.Position) then
                             print("[MoonBlossom] Triggerbot: Firing at " .. closestPlayer.Name .. " (distance: " .. math.floor(distance) .. " pixels)")
                             pcall(function()
-                                mouse1click()
+                                if _G.mouse1click then
+                                    _G.mouse1click()
+                                else
+                                    mouse1press()
+                                    wait(0.05)
+                                    mouse1release()
+                                end
                             end)
                             wait(0.1) -- Задержка для предотвращения спама
                         else
@@ -784,7 +743,7 @@ local success, err = pcall(function()
             fovCircle.Visible = AimAssistEnabled or SilentAimEnabled or TriggerbotEnabled
         end
         
-        if not AimAssistEnabled and not SilentAimEnabled and not RagebotEnabled then
+        if not AimAssistEnabled and not SilentAimEnabled then
             Camera.CameraType = Enum.CameraType.Custom
         end
         
@@ -1256,12 +1215,11 @@ local success, err = pcall(function()
     updateButtonText(ShadersToggle, ShadersEnabled)
     updateButtonText(AimAssistToggle, AimAssistEnabled)
     updateButtonText(WalkSpeedToggle, WalkSpeedEnabled)
-    updateButtonText(RagebotToggle, RagebotEnabled)
     updateButtonText(TriggerbotToggle, TriggerbotEnabled)
 
     -- Уведомление в чат
     game:GetService("StarterGui"):SetCore("ChatMakeSystemMessage", {
-        Text = "Moon Blossom v3.9 loaded! Aim Assist (FOV 180) on K, Triggerbot (FOV 10) on L, Spinbot visual with smaller hitbox, FOV circle lowered, max distance 400, Air Strafe redirects velocity, larger grey GUI, Ragebot under map",
+        Text = "Moon Blossom v4.0 loaded! Aim Assist (FOV 180) on K, Triggerbot (FOV 10) on L, Spinbot rotates character with smaller hitbox, FOV circle lowered by 50px, max distance 400, Air Strafe redirects velocity, larger grey GUI",
         Color = Color3.fromRGB(180, 100, 255),
         Font = Enum.Font.GothamBold,
         FontSize = Enum.FontSize.Size18
@@ -1281,12 +1239,6 @@ local success, err = pcall(function()
             createFOVCircle()
         end
         Camera.CameraType = Enum.CameraType.Custom
-        -- Сбрасываем смещение Ragebot при респавне
-        if ragebotApplied and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
-            local rootPart = Player.Character.HumanoidRootPart
-            rootPart.CFrame = rootPart.CFrame - ragebotOffset
-            ragebotApplied = false
-        end
         -- Восстанавливаем масштаб тела при респавне
         if SpinbotEnabled and Player.Character and Player.Character:FindFirstChild("Humanoid") then
             local humanoid = Player.Character.Humanoid
