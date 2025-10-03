@@ -27,218 +27,269 @@ local success, err = pcall(function()
     ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
     ScreenGui.ResetOnSpawn = false
 
-    -- Основной фрейм (увеличенный размер, серый тон)
+    -- Основной фрейм (градиентный фон)
     local MainFrame = Instance.new("Frame")
     MainFrame.Name = "MainFrame"
     MainFrame.Parent = ScreenGui
     MainFrame.Size = UDim2.new(0, 350, 0, 500)
     MainFrame.Position = UDim2.new(0.7, 0, 0.2, 0)
-    MainFrame.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+    MainFrame.BackgroundColor3 = Color3.fromRGB(40, 20, 60)
     MainFrame.BorderSizePixel = 0
     MainFrame.Active = true
     MainFrame.Draggable = true
     MainFrame.Selectable = true
     MainFrame.ClipsDescendants = true
-    MainFrame.Visible = true
+    MainFrame.Visible = false  -- Начально скрыт для анимации
+
+    -- Градиент для MainFrame
+    local MainGradient = Instance.new("UIGradient")
+    MainGradient.Color = ColorSequence.new{
+        ColorSequenceKeypoint.new(0, Color3.fromRGB(60, 30, 90)),
+        ColorSequenceKeypoint.new(1, Color3.fromRGB(30, 10, 50))
+    }
+    MainGradient.Rotation = 45
+    MainGradient.Parent = MainFrame
+
+    -- UIStroke для свечения
+    local MainStroke = Instance.new("UIStroke")
+    MainStroke.Color = Color3.fromRGB(180, 100, 255)
+    MainStroke.Thickness = 2
+    MainStroke.Transparency = 0.5
+    MainStroke.Parent = MainFrame
 
     -- Добавляем округление углов
     local Corner = Instance.new("UICorner")
-    Corner.CornerRadius = UDim.new(0, 8)
+    Corner.CornerRadius = UDim.new(0, 12)
     Corner.Parent = MainFrame
 
-    -- TitleBar для перетаскивания (серый тон)
+    -- Анимация входа
+    local function animateEntrance()
+        MainFrame.Size = UDim2.new(0, 0, 0, 0)
+        MainFrame.Position = UDim2.new(0.7, 0, 0.5, 0)
+        MainFrame.Visible = true
+        MainFrame.BackgroundTransparency = 1
+        MainGradient.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0, 1), NumberSequenceKeypoint.new(1, 0)}
+        MainStroke.Transparency = 1
+        
+        local tweenIn = TweenService:Create(MainFrame, TweenInfo.new(0.5, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+            Size = UDim2.new(0, 350, 0, 500),
+            Position = UDim2.new(0.7, 0, 0.2, 0),
+            BackgroundTransparency = 0
+        })
+        local tweenGradient = TweenService:Create(MainGradient, TweenInfo.new(0.5), {Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0, 0), NumberSequenceKeypoint.new(1, 0)}})
+        local tweenStroke = TweenService:Create(MainStroke, TweenInfo.new(0.5), {Transparency = 0.5})
+        
+        tweenIn:Play()
+        tweenGradient:Play()
+        tweenStroke:Play()
+    end
+
+    -- TitleBar для перетаскивания (градиент)
     local TitleBar = Instance.new("Frame")
-    TitleBar.Size = UDim2.new(1, 0, 0, 30)
+    TitleBar.Size = UDim2.new(1, 0, 0, 35)
     TitleBar.Position = UDim2.new(0, 0, 0, 0)
-    TitleBar.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+    TitleBar.BackgroundColor3 = Color3.fromRGB(70, 40, 100)
     TitleBar.BorderSizePixel = 0
     TitleBar.Parent = MainFrame
 
+    local TitleGradient = Instance.new("UIGradient")
+    TitleGradient.Color = ColorSequence.new{
+        ColorSequenceKeypoint.new(0, Color3.fromRGB(90, 50, 120)),
+        ColorSequenceKeypoint.new(1, Color3.fromRGB(60, 30, 90))
+    }
+    TitleGradient.Rotation = 90
+    TitleGradient.Parent = TitleBar
+
     local TitleCorner = Instance.new("UICorner")
-    TitleCorner.CornerRadius = UDim.new(0, 8)
+    TitleCorner.CornerRadius = UDim.new(0, 12)
     TitleCorner.Parent = TitleBar
+
+    local TitleStroke = Instance.new("UIStroke")
+    TitleStroke.Color = Color3.fromRGB(220, 180, 255)
+    TitleStroke.Thickness = 1
+    TitleStroke.Transparency = 0.3
+    TitleStroke.Parent = TitleBar
 
     local Title = Instance.new("TextLabel")
     Title.Size = UDim2.new(0.7, 0, 1, 0)
     Title.Position = UDim2.new(0.05, 0, 0, 0)
     Title.BackgroundTransparency = 1
-    Title.Text = "Moon Blossom v4.0 (Fixed Triggerbot)"
-    Title.TextColor3 = Color3.fromRGB(220, 180, 255)
+    Title.Text = "Moon Blossom v4.0 Premium"
+    Title.TextColor3 = Color3.fromRGB(255, 255, 255)
     Title.Font = Enum.Font.GothamBold
-    Title.TextSize = 14
+    Title.TextSize = 15
     Title.Parent = TitleBar
 
-    -- Кнопка закрытия
+    -- Анимация титла (пульсация)
+    local titlePulse = TweenService:Create(Title, TweenInfo.new(2, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {
+        TextTransparency = 0.2
+    })
+    titlePulse:Play()
+
+    -- Кнопка закрытия с анимацией
     local CloseButton = Instance.new("TextButton")
-    CloseButton.Size = UDim2.new(0, 30, 0, 30)
-    CloseButton.Position = UDim2.new(0.9, 0, 0, 0)
-    CloseButton.BackgroundTransparency = 1
-    CloseButton.Text = "X"
-    CloseButton.TextColor3 = Color3.fromRGB(255, 100, 100)
+    CloseButton.Size = UDim2.new(0, 35, 0, 35)
+    CloseButton.Position = UDim2.new(0.9, -5, 0, 0)
+    CloseButton.BackgroundColor3 = Color3.fromRGB(255, 80, 80)
+    CloseButton.Text = "✕"
+    CloseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
     CloseButton.Font = Enum.Font.GothamBold
-    CloseButton.TextSize = 16
+    CloseButton.TextSize = 18
     CloseButton.Parent = TitleBar
 
-    -- Кнопка сворачивания
+    local CloseCorner = Instance.new("UICorner")
+    CloseCorner.CornerRadius = UDim.new(0, 6)
+    CloseCorner.Parent = CloseButton
+
+    local CloseStroke = Instance.new("UIStroke")
+    CloseStroke.Color = Color3.fromRGB(255, 255, 255)
+    CloseStroke.Thickness = 1
+    CloseStroke.Parent = CloseButton
+
+    -- Hover эффект для CloseButton
+    CloseButton.MouseEnter:Connect(function()
+        TweenService:Create(CloseButton, TweenInfo.new(0.2), {Size = UDim2.new(0, 40, 0, 40)}):Play()
+        TweenService:Create(CloseButton, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(255, 50, 50)}):Play()
+    end)
+    CloseButton.MouseLeave:Connect(function()
+        TweenService:Create(CloseButton, TweenInfo.new(0.2), {Size = UDim2.new(0, 35, 0, 35)}):Play()
+        TweenService:Create(CloseButton, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(255, 80, 80)}):Play()
+    end)
+
+    -- Кнопка сворачивания с анимацией
     local MinimizeButton = Instance.new("TextButton")
-    MinimizeButton.Size = UDim2.new(0, 30, 0, 30)
-    MinimizeButton.Position = UDim2.new(0.8, 0, 0, 0)
-    MinimizeButton.BackgroundTransparency = 1
-    MinimizeButton.Text = "_"
-    MinimizeButton.TextColor3 = Color3.fromRGB(200, 200, 200)
+    MinimizeButton.Size = UDim2.new(0, 35, 0, 35)
+    MinimizeButton.Position = UDim2.new(0.8, -5, 0, 0)
+    MinimizeButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+    MinimizeButton.Text = "−"
+    MinimizeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
     MinimizeButton.Font = Enum.Font.GothamBold
-    MinimizeButton.TextSize = 16
+    MinimizeButton.TextSize = 18
     MinimizeButton.Parent = TitleBar
+
+    local MinCorner = Instance.new("UICorner")
+    MinCorner.CornerRadius = UDim.new(0, 6)
+    MinCorner.Parent = MinimizeButton
+
+    local MinStroke = Instance.new("UIStroke")
+    MinStroke.Color = Color3.fromRGB(255, 255, 255)
+    MinStroke.Thickness = 1
+    MinStroke.Parent = MinimizeButton
+
+    -- Hover эффект для MinimizeButton
+    MinimizeButton.MouseEnter:Connect(function()
+        TweenService:Create(MinimizeButton, TweenInfo.new(0.2), {Size = UDim2.new(0, 40, 0, 40)}):Play()
+        TweenService:Create(MinimizeButton, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(80, 80, 80)}):Play()
+    end)
+    MinimizeButton.MouseLeave:Connect(function()
+        TweenService:Create(MinimizeButton, TweenInfo.new(0.2), {Size = UDim2.new(0, 35, 0, 35)}):Play()
+        TweenService:Create(MinimizeButton, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(100, 100, 100)}):Play()
+    end)
 
     -- Контейнер для кнопок
     local ButtonsContainer = Instance.new("Frame")
     ButtonsContainer.Name = "ButtonsContainer"
-    ButtonsContainer.Size = UDim2.new(1, 0, 1, -30)
-    ButtonsContainer.Position = UDim2.new(0, 0, 0, 30)
+    ButtonsContainer.Size = UDim2.new(1, 0, 1, -35)
+    ButtonsContainer.Position = UDim2.new(0, 0, 0, 35)
     ButtonsContainer.BackgroundTransparency = 1
     ButtonsContainer.Parent = MainFrame
 
-    -- Кнопки переключателей (серый тон)
-    local BHopToggle = Instance.new("TextButton")
-    BHopToggle.Name = "BHopToggle"
-    BHopToggle.Size = UDim2.new(0, 330, 0, 35)
-    BHopToggle.Position = UDim2.new(0.035, 0, 0.03, 0)
-    BHopToggle.Text = "Bunny Hop: OFF"
-    BHopToggle.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
-    BHopToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
-    BHopToggle.Font = Enum.Font.Gotham
-    BHopToggle.TextSize = 14
-    BHopToggle.Parent = ButtonsContainer
-
-    local SpinbotToggle = Instance.new("TextButton")
-    SpinbotToggle.Name = "SpinbotToggle"
-    SpinbotToggle.Size = UDim2.new(0, 330, 0, 35)
-    SpinbotToggle.Position = UDim2.new(0.035, 0, 0.10, 0)
-    SpinbotToggle.Text = "Spinbot: OFF"
-    SpinbotToggle.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
-    SpinbotToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
-    SpinbotToggle.Font = Enum.Font.Gotham
-    SpinbotToggle.TextSize = 14
-    SpinbotToggle.Parent = ButtonsContainer
-
-    local ChamsToggle = Instance.new("TextButton")
-    ChamsToggle.Name = "ChamsToggle"
-    ChamsToggle.Size = UDim2.new(0, 330, 0, 35)
-    ChamsToggle.Position = UDim2.new(0.035, 0, 0.17, 0)
-    ChamsToggle.Text = "Player Chams: OFF"
-    ChamsToggle.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
-    ChamsToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
-    ChamsToggle.Font = Enum.Font.Gotham
-    ChamsToggle.TextSize = 14
-    ChamsToggle.Parent = ButtonsContainer
-
-    local SilentAimToggle = Instance.new("TextButton")
-    SilentAimToggle.Name = "SilentAimToggle"
-    SilentAimToggle.Size = UDim2.new(0, 330, 0, 35)
-    SilentAimToggle.Position = UDim2.new(0.035, 0, 0.24, 0)
-    SilentAimToggle.Text = "Silent Aim: OFF"
-    SilentAimToggle.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
-    SilentAimToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
-    SilentAimToggle.Font = Enum.Font.Gotham
-    SilentAimToggle.TextSize = 14
-    SilentAimToggle.Parent = ButtonsContainer
-
-    local ESPToggle = Instance.new("TextButton")
-    ESPToggle.Name = "ESPToggle"
-    ESPToggle.Size = UDim2.new(0, 330, 0, 35)
-    ESPToggle.Position = UDim2.new(0.035, 0, 0.31, 0)
-    ESPToggle.Text = "ESP: OFF"
-    ESPToggle.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
-    ESPToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
-    ESPToggle.Font = Enum.Font.Gotham
-    ESPToggle.TextSize = 14
-    ESPToggle.Parent = ButtonsContainer
-
-    local StrafeToggle = Instance.new("TextButton")
-    StrafeToggle.Name = "StrafeToggle"
-    StrafeToggle.Size = UDim2.new(0, 330, 0, 35)
-    StrafeToggle.Position = UDim2.new(0.035, 0, 0.38, 0)
-    StrafeToggle.Text = "Air Strafe: OFF"
-    StrafeToggle.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
-    StrafeToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
-    StrafeToggle.Font = Enum.Font.Gotham
-    StrafeToggle.TextSize = 14
-    StrafeToggle.Parent = ButtonsContainer
-
-    local ShadersToggle = Instance.new("TextButton")
-    ShadersToggle.Name = "ShadersToggle"
-    ShadersToggle.Size = UDim2.new(0, 330, 0, 35)
-    ShadersToggle.Position = UDim2.new(0.035, 0, 0.45, 0)
-    ShadersToggle.Text = "Shaders: OFF"
-    ShadersToggle.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
-    ShadersToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
-    ShadersToggle.Font = Enum.Font.Gotham
-    ShadersToggle.TextSize = 14
-    ShadersToggle.Parent = ButtonsContainer
-
-    local AimAssistToggle = Instance.new("TextButton")
-    AimAssistToggle.Name = "AimAssistToggle"
-    AimAssistToggle.Size = UDim2.new(0, 330, 0, 35)
-    AimAssistToggle.Position = UDim2.new(0.035, 0, 0.52, 0)
-    AimAssistToggle.Text = "Aim Assist: OFF (Toggle: K)"
-    AimAssistToggle.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
-    AimAssistToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
-    AimAssistToggle.Font = Enum.Font.Gotham
-    AimAssistToggle.TextSize = 14
-    AimAssistToggle.Parent = ButtonsContainer
-
-    local WalkSpeedToggle = Instance.new("TextButton")
-    WalkSpeedToggle.Name = "WalkSpeedToggle"
-    WalkSpeedToggle.Size = UDim2.new(0, 330, 0, 35)
-    WalkSpeedToggle.Position = UDim2.new(0.035, 0, 0.59, 0)
-    WalkSpeedToggle.Text = "WalkSpeed: OFF"
-    WalkSpeedToggle.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
-    WalkSpeedToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
-    WalkSpeedToggle.Font = Enum.Font.Gotham
-    WalkSpeedToggle.TextSize = 14
-    WalkSpeedToggle.Parent = ButtonsContainer
-
-    local TriggerbotToggle = Instance.new("TextButton")
-    TriggerbotToggle.Name = "TriggerbotToggle"
-    TriggerbotToggle.Size = UDim2.new(0, 330, 0, 35)
-    TriggerbotToggle.Position = UDim2.new(0.035, 0, 0.66, 0)
-    TriggerbotToggle.Text = "Triggerbot: OFF (Toggle: L)"
-    TriggerbotToggle.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
-    TriggerbotToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
-    TriggerbotToggle.Font = Enum.Font.Gotham
-    TriggerbotToggle.TextSize = 14
-    TriggerbotToggle.Parent = ButtonsContainer
-
-    -- Статус
+    -- Статус с rainbow анимацией
     local StatusLabel = Instance.new("TextLabel")
-    StatusLabel.Size = UDim2.new(1, 0, 0, 20)
+    StatusLabel.Size = UDim2.new(1, 0, 0, 25)
     StatusLabel.Position = UDim2.new(0, 0, 0.95, 0)
     StatusLabel.BackgroundTransparency = 1
-    StatusLabel.Text = "Status: Active (Triggerbot Fixed)"
+    StatusLabel.Text = "Status: Active & Pulsing ✨"
     StatusLabel.TextColor3 = Color3.fromRGB(180, 150, 200)
     StatusLabel.Font = Enum.Font.Gotham
-    StatusLabel.TextSize = 12
+    StatusLabel.TextSize = 13
     StatusLabel.Parent = ButtonsContainer
 
-    -- Стилизация кнопок
-    local buttonCorner = Instance.new("UICorner")
-    buttonCorner.CornerRadius = UDim.new(0, 6)
-    buttonCorner.Parent = BHopToggle
-    buttonCorner:Clone().Parent = SpinbotToggle
-    buttonCorner:Clone().Parent = ChamsToggle
-    buttonCorner:Clone().Parent = SilentAimToggle
-    buttonCorner:Clone().Parent = ESPToggle
-    buttonCorner:Clone().Parent = StrafeToggle
-    buttonCorner:Clone().Parent = ShadersToggle
-    buttonCorner:Clone().Parent = AimAssistToggle
-    buttonCorner:Clone().Parent = WalkSpeedToggle
-    buttonCorner:Clone().Parent = TriggerbotToggle
+    -- Rainbow анимация для статуса
+    local statusHue = 0
+    RunService.Heartbeat:Connect(function()
+        statusHue = statusHue + 0.01
+        if statusHue > 1 then statusHue = 0 end
+        local rainbowColor = Color3.fromHSV(statusHue, 1, 1)
+        StatusLabel.TextColor3 = rainbowColor
+    end)
 
-    -- Принудительно показываем GUI
-    ScreenGui.Enabled = true
-    MainFrame.Visible = true
+    -- Функция создания анимированной кнопки
+    local function createAnimatedButton(name, text, posY, parent)
+        local button = Instance.new("TextButton")
+        button.Name = name
+        button.Size = UDim2.new(0, 330, 0, 40)
+        button.Position = UDim2.new(0.01, 0, posY, 0)
+        button.Text = text
+        button.BackgroundColor3 = Color3.fromRGB(50, 30, 70)
+        button.TextColor3 = Color3.fromRGB(220, 180, 255)
+        button.Font = Enum.Font.Gotham
+        button.TextSize = 14
+        button.Parent = parent
 
-    -- Логика
+        -- Градиент для кнопки
+        local btnGradient = Instance.new("UIGradient")
+        btnGradient.Color = ColorSequence.new{
+            ColorSequenceKeypoint.new(0, Color3.fromRGB(70, 50, 90)),
+            ColorSequenceKeypoint.new(1, Color3.fromRGB(40, 20, 60))
+        }
+        btnGradient.Rotation = 90
+        btnGradient.Parent = button
+
+        -- Округление и stroke
+        local btnCorner = Instance.new("UICorner")
+        btnCorner.CornerRadius = UDim.new(0, 8)
+        btnCorner.Parent = button
+
+        local btnStroke = Instance.new("UIStroke")
+        btnStroke.Color = Color3.fromRGB(180, 100, 255)
+        btnStroke.Thickness = 1
+        btnStroke.Transparency = 0.7
+        btnStroke.Parent = button
+
+        -- Hover анимация
+        button.MouseEnter:Connect(function()
+            TweenService:Create(button, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {
+                Size = UDim2.new(0, 340, 0, 42),
+                BackgroundColor3 = Color3.fromRGB(70, 50, 90)
+            }):Play()
+            TweenService:Create(btnStroke, TweenInfo.new(0.2), {Transparency = 0}):Play()
+        end)
+        button.MouseLeave:Connect(function()
+            TweenService:Create(button, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {
+                Size = UDim2.new(0, 330, 0, 40),
+                BackgroundColor3 = Color3.fromRGB(50, 30, 70)
+            }):Play()
+            TweenService:Create(btnStroke, TweenInfo.new(0.2), {Transparency = 0.7}):Play()
+        end)
+
+        return button
+    end
+
+    -- Создаём кнопки
+    local BHopToggle = createAnimatedButton("BHopToggle", "Bunny Hop: OFF", 0.02, ButtonsContainer)
+    local SpinbotToggle = createAnimatedButton("SpinbotToggle", "Spinbot: OFF", 0.09, ButtonsContainer)
+    local ChamsToggle = createAnimatedButton("ChamsToggle", "Player Chams: OFF", 0.16, ButtonsContainer)
+    local SilentAimToggle = createAnimatedButton("SilentAimToggle", "Silent Aim: OFF", 0.23, ButtonsContainer)
+    local ESPToggle = createAnimatedButton("ESPToggle", "ESP: OFF", 0.30, ButtonsContainer)
+    local StrafeToggle = createAnimatedButton("StrafeToggle", "Air Strafe: OFF", 0.37, ButtonsContainer)
+    local ShadersToggle = createAnimatedButton("ShadersToggle", "Shaders: OFF", 0.44, ButtonsContainer)
+    local AimAssistToggle = createAnimatedButton("AimAssistToggle", "Aim Assist: OFF (Toggle: K)", 0.51, ButtonsContainer)
+    local WalkSpeedToggle = createAnimatedButton("WalkSpeedToggle", "WalkSpeed: OFF", 0.58, ButtonsContainer)
+    local TriggerbotToggle = createAnimatedButton("TriggerbotToggle", "Triggerbot: OFF (Toggle: L)", 0.65, ButtonsContainer)
+
+    -- Анимация появления кнопок (поочерёдно)
+    local function animateButtons(delay)
+        for i, button in ipairs({BHopToggle, SpinbotToggle, ChamsToggle, SilentAimToggle, ESPToggle, StrafeToggle, ShadersToggle, AimAssistToggle, WalkSpeedToggle, TriggerbotToggle}) do
+            TweenService:Create(button, TweenInfo.new(0.3, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+                Position = UDim2.new(0.01, 0, button.Position.Y.Scale, 0),
+                BackgroundTransparency = 0
+            }):Play()
+            wait(delay)
+        end
+    end
+
+    -- Логика (переменные)
     local BHopEnabled = false
     local SpinbotEnabled = false
     local ChamsEnabled = false
@@ -277,14 +328,14 @@ local success, err = pcall(function()
 
     -- Переменные для Aim Assist и Silent Aim
     local aimAssistTarget = nil
-    local aimAssistFOV = 180 -- Широкий FOV для Aim Assist и Silent Aim
-    local triggerbotFOV = 10 -- Узкий FOV для Triggerbot
+    local aimAssistFOV = 180
+    local triggerbotFOV = 10
     local fovCircle = nil
 
     -- Переменная для хранения исходной скорости
     local originalWalkSpeed = 16
 
-    -- Максимальная дистанция для Aim Assist, Silent Aim и Triggerbot
+    -- Максимальная дистанция
     local maxDistance = 400
 
     -- Функция для создания визуального FOV
@@ -300,7 +351,7 @@ local success, err = pcall(function()
         fovCircle.Thickness = 2
         fovCircle.Filled = false
         fovCircle.Transparency = 0.7
-        fovCircle.Position = Vector2.new(Mouse.X, Mouse.Y + 50) -- Смещение круга вниз на 50 пикселей
+        fovCircle.Position = Vector2.new(Mouse.X, Mouse.Y + 50)
         
         return fovCircle
     end
@@ -308,7 +359,6 @@ local success, err = pcall(function()
     -- Функция проверки стены с помощью Raycast
     local function isTargetVisible(targetPos)
         if not Player.Character or not Player.Character:FindFirstChild("HumanoidRootPart") then 
-            print("[MoonBlossom] Triggerbot: No character or HumanoidRootPart")
             return false 
         end
         local origin = Camera.CFrame.Position
@@ -322,14 +372,11 @@ local success, err = pcall(function()
             if hitPart and hitPart:IsDescendantOf(Workspace) and not hitPart:IsDescendantOf(Player.Character) then
                 local hitCharacter = hitPart:FindFirstAncestorOfClass("Model")
                 if hitCharacter and hitCharacter:IsA("Model") and Players:GetPlayerFromCharacter(hitCharacter) then
-                    print("[MoonBlossom] Triggerbot: Target visible - Raycast hit player")
                     return true
                 end
-                print("[MoonBlossom] Triggerbot: Target blocked - Raycast hit " .. tostring(hitPart))
                 return false
             end
         end
-        print("[MoonBlossom] Triggerbot: Target visible - No raycast collision")
         return true
     end
 
@@ -345,7 +392,7 @@ local success, err = pcall(function()
         local remote = tool:FindFirstChild("RemoteEvent") or tool:FindFirstChildOfClass("RemoteFunction") or tool:FindFirstChild("Fire")
         if remote and remote:IsA("RemoteEvent") then
             pcall(function()
-                remote:FireServer()  -- Вызываем remote события оружия
+                remote:FireServer()
                 print("[MoonBlossom] Triggerbot: Fired remote event for " .. tool.Name)
             end)
         elseif remote and remote:IsA("RemoteFunction") then
@@ -354,7 +401,6 @@ local success, err = pcall(function()
                 print("[MoonBlossom] Triggerbot: Invoked remote function for " .. tool.Name)
             end)
         else
-            -- Fallback на mouse1click, если есть
             if _G.mouse1click then
                 _G.mouse1click()
                 print("[MoonBlossom] Triggerbot: Used _G.mouse1click fallback")
@@ -366,27 +412,8 @@ local success, err = pcall(function()
 
     -- Функция для обновления текста кнопок
     local function updateButtonText(button, enabled)
-        if button.Name == "BHopToggle" then
-            button.Text = "Bunny Hop: " .. (enabled and "ON" or "OFF")
-        elseif button.Name == "SpinbotToggle" then
-            button.Text = "Spinbot: " .. (enabled and "ON" or "OFF")
-        elseif button.Name == "ChamsToggle" then
-            button.Text = "Player Chams: " .. (enabled and "ON" or "OFF")
-        elseif button.Name == "SilentAimToggle" then
-            button.Text = "Silent Aim: " .. (enabled and "ON" or "OFF")
-        elseif button.Name == "ESPToggle" then
-            button.Text = "ESP: " .. (enabled and "ON" or "OFF")
-        elseif button.Name == "StrafeToggle" then
-            button.Text = "Air Strafe: " .. (enabled and "ON" or "OFF")
-        elseif button.Name == "ShadersToggle" then
-            button.Text = "Shaders: " .. (enabled and "ON" or "OFF")
-        elseif button.Name == "AimAssistToggle" then
-            button.Text = "Aim Assist: " .. (enabled and "ON" or "OFF") .. " (Toggle: K)"
-        elseif button.Name == "WalkSpeedToggle" then
-            button.Text = "WalkSpeed: " .. (enabled and "ON" or "OFF")
-        elseif button.Name == "TriggerbotToggle" then
-            button.Text = "Triggerbot: " .. (enabled and "ON" or "OFF") .. " (Toggle: L)"
-        end
+        local baseText = button.Text:match("^(.*):") or button.Text
+        button.Text = baseText .. ": " .. (enabled and "ON" or "OFF")
     end
 
     -- Анимации переключения
@@ -395,9 +422,9 @@ local success, err = pcall(function()
         local goal = {}
         
         if state then
-            goal.BackgroundColor3 = Color3.fromRGB(120, 120, 120)
+            goal.BackgroundColor3 = Color3.fromRGB(70, 50, 90)
         else
-            goal.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
+            goal.BackgroundColor3 = Color3.fromRGB(50, 30, 70)
         end
         
         TweenService:Create(button, tweenInfo, goal):Play()
@@ -406,21 +433,29 @@ local success, err = pcall(function()
 
     -- Обработчики кнопок GUI
     CloseButton.MouseButton1Click:Connect(function()
-        ScreenGui:Destroy()
-        GUIEnabled = false
-        if fovCircle then
-            fovCircle:Remove()
-        end
-        Camera.CameraType = Enum.CameraType.Custom
-        -- Восстанавливаем масштаб тела при закрытии, если Spinbot был активен
-        if SpinbotEnabled and Player.Character and Player.Character:FindFirstChild("Humanoid") then
-            local humanoid = Player.Character.Humanoid
-            for _, property in pairs({"BodyWidthScale", "BodyDepthScale", "HeadScale", "BodyHeightScale"}) do
-                if originalBodyScales[property] then
-                    humanoid[property].Value = originalBodyScales[property]
+        local tweenOut = TweenService:Create(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+            Size = UDim2.new(0, 0, 0, 0),
+            Position = UDim2.new(0.7, 0, 0.5, 0),
+            BackgroundTransparency = 1
+        })
+        tweenOut:Play()
+        tweenOut.Completed:Connect(function()
+            ScreenGui:Destroy()
+            GUIEnabled = false
+            if fovCircle then
+                fovCircle:Remove()
+            end
+            Camera.CameraType = Enum.CameraType.Custom
+            -- Восстанавливаем масштаб тела при закрытии
+            if SpinbotEnabled and Player.Character and Player.Character:FindFirstChild("Humanoid") then
+                local humanoid = Player.Character.Humanoid
+                for _, property in pairs({"BodyWidthScale", "BodyDepthScale", "HeadScale", "BodyHeightScale"}) do
+                    if originalBodyScales[property] then
+                        humanoid[property].Value = originalBodyScales[property]
+                    end
                 end
             end
-        end
+        end)
     end)
 
     MinimizeButton.MouseButton1Click:Connect(function()
@@ -428,7 +463,7 @@ local success, err = pcall(function()
         if ButtonsContainer.Visible then
             MainFrame.Size = UDim2.new(0, 350, 0, 500)
         else
-            MainFrame.Size = UDim2.new(0, 350, 0, 30)
+            MainFrame.Size = UDim2.new(0, 350, 0, 35)
         end
     end)
 
@@ -444,19 +479,16 @@ local success, err = pcall(function()
         if Player.Character and Player.Character:FindFirstChild("Humanoid") then
             local humanoid = Player.Character.Humanoid
             if SpinbotEnabled then
-                -- Сохраняем исходные масштабы
                 originalBodyScales.BodyWidthScale = humanoid.BodyWidthScale.Value
                 originalBodyScales.BodyDepthScale = humanoid.BodyDepthScale.Value
                 originalBodyScales.HeadScale = humanoid.HeadScale.Value
                 originalBodyScales.BodyHeightScale = humanoid.BodyHeightScale.Value
-                -- Уменьшаем масштаб тела (визуальный эффект)
                 humanoid.BodyWidthScale.Value = 0.5
                 humanoid.BodyDepthScale.Value = 0.5
                 humanoid.HeadScale.Value = 0.5
                 humanoid.BodyHeightScale.Value = 0.5
                 print("[MoonBlossom] Spinbot: Body scale reduced to 0.5")
             else
-                -- Восстанавливаем масштаб
                 humanoid.BodyWidthScale.Value = originalBodyScales.BodyWidthScale or 1
                 humanoid.BodyDepthScale.Value = originalBodyScales.BodyDepthScale or 1
                 humanoid.HeadScale.Value = originalBodyScales.HeadScale or 1
@@ -517,7 +549,7 @@ local success, err = pcall(function()
     end)
 
     AimAssistToggle.MouseButton1Click:Connect(function()
-        -- Кнопка в GUI отключена, переключение только через K
+        -- Toggle only via K
     end)
 
     WalkSpeedToggle.MouseButton1Click:Connect(function()
@@ -537,10 +569,10 @@ local success, err = pcall(function()
     end)
 
     TriggerbotToggle.MouseButton1Click:Connect(function()
-        -- Кнопка в GUI отключена, переключение только через L
+        -- Toggle only via L
     end)
 
-    -- Бинд Aim Assist на клавишу K, Triggerbot на L
+    -- Бинд Aim Assist на K, Triggerbot на L
     UIS.InputBegan:Connect(function(input, gameProcessedEvent)
         if input.KeyCode == Enum.KeyCode.K and not gameProcessedEvent then
             AimAssistEnabled = not AimAssistEnabled
@@ -626,7 +658,7 @@ local success, err = pcall(function()
         end
     end)
 
-    -- Air Strafe функция (перенаправление текущей скорости без ускорения)
+    -- Air Strafe
     RunService.Heartbeat:Connect(function()
         if StrafeEnabled and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
             local Char = Player.Character
@@ -658,7 +690,7 @@ local success, err = pcall(function()
         end
     end)
 
-    -- Функция для поиска ближайшего игрока в FOV с проверкой дистанции
+    -- Функция для поиска ближайшего игрока в FOV
     local function findClosestPlayerInFOV(fov)
         local closestPlayer = nil
         local closestDistance = math.huge
@@ -692,7 +724,7 @@ local success, err = pcall(function()
         return closestPlayer
     end
 
-    -- Aim Assist с лёгкой плавностью (FOV 180, автоматический, макс. дистанция 400)
+    -- Aim Assist
     local function handleAimAssist()
         if AimAssistEnabled and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
             local closestPlayer = findClosestPlayerInFOV(aimAssistFOV)
@@ -703,26 +735,20 @@ local success, err = pcall(function()
                 local targetPosition = targetHead.Position
                 
                 if isTargetVisible(targetPosition) then
-                    print("[MoonBlossom] AimAssist: Targeting " .. closestPlayer.Name)
                     local direction = (targetPosition - cameraPosition).Unit
                     local currentLook = Camera.CFrame.LookVector
-                    local smoothFactor = 0.85 -- Чуть более плавное наведение
+                    local smoothFactor = 0.85
                     local newLook = currentLook:Lerp(direction, smoothFactor)
                     Camera.CFrame = CFrame.new(cameraPosition, cameraPosition + newLook)
-                else
-                    print("[MoonBlossom] AimAssist: Target not visible - " .. closestPlayer.Name)
                 end
-            else
-                print("[MoonBlossom] AimAssist: No valid target found")
             end
         end
     end
 
-    -- FIXED Triggerbot с fallback на remote события оружия
+    -- FIXED Triggerbot
     local function handleTriggerbot()
         if TriggerbotEnabled and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
             if not Player.Character:FindFirstChildOfClass("Tool") then
-                print("[MoonBlossom] Triggerbot: No weapon equipped")
                 return
             end
             local closestPlayer = findClosestPlayerInFOV(triggerbotFOV)
@@ -736,32 +762,20 @@ local success, err = pcall(function()
                         local mousePos = Vector2.new(Mouse.X, Mouse.Y)
                         local distance = (Vector2.new(screenPos.X, screenPos.Y) - mousePos).Magnitude
                         
-                        -- Проверяем, находится ли курсор на голове (в пределах 10 пикселей)
                         if distance <= 10 and isTargetVisible(targetHead.Position) then
-                            print("[MoonBlossom] Triggerbot: Firing at " .. closestPlayer.Name .. " (distance: " .. math.floor(distance) .. " pixels)")
-                            fireWeapon()  -- FIXED: Используем новую функцию для стрельбы
-                            wait(0.1) -- Задержка для предотвращения спама
-                        else
-                            print("[MoonBlossom] Triggerbot: Target not on crosshair - " .. closestPlayer.Name .. " (distance: " .. math.floor(distance) .. " pixels)")
+                            fireWeapon()
+                            wait(0.1)
                         end
-                    else
-                        print("[MoonBlossom] Triggerbot: Target not visible - " .. closestPlayer.Name)
                     end
-                else
-                    print("[MoonBlossom] Triggerbot: Target is dead - " .. closestPlayer.Name)
                 end
-            else
-                print("[MoonBlossom] Triggerbot: No valid target found")
             end
-        else
-            print("[MoonBlossom] Triggerbot: Player character or HumanoidRootPart missing")
         end
     end
 
     -- Обновление FOV круга, Aim Assist и Triggerbot
     RunService.RenderStepped:Connect(function()
         if fovCircle then
-            fovCircle.Position = Vector2.new(Mouse.X, Mouse.Y + 50) -- Смещение круга вниз на 50 пикселей
+            fovCircle.Position = Vector2.new(Mouse.X, Mouse.Y + 50)
             fovCircle.Radius = math.max(aimAssistFOV, triggerbotFOV)
             fovCircle.Visible = AimAssistEnabled or SilentAimEnabled or TriggerbotEnabled
         end
@@ -774,7 +788,7 @@ local success, err = pcall(function()
         handleTriggerbot()
     end)
 
-    -- Улучшенный Silent Aim с FOV 180 и проверкой дистанции 400
+    -- Silent Aim
     local function findClosestPlayerToCursor()
         local closestPlayer = nil
         local closestDistance = math.huge
@@ -808,25 +822,19 @@ local success, err = pcall(function()
         return closestPlayer
     end
 
-    -- Обработчик Silent Aim
     Mouse.Button1Down:Connect(function()
         if SilentAimEnabled and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
             local closestPlayer = findClosestPlayerToCursor()
             if closestPlayer and closestPlayer.Character and closestPlayer.Character:FindFirstChild("Head") then
                 local targetHead = closestPlayer.Character.Head
                 if isTargetVisible(targetHead.Position) then
-                    print("[MoonBlossom] SilentAim: Targeting " .. closestPlayer.Name)
                     Camera.CFrame = CFrame.new(Camera.CFrame.Position, targetHead.Position)
-                else
-                    print("[MoonBlossom] SilentAim: Target not visible - " .. closestPlayer.Name)
                 end
-            else
-                print("[MoonBlossom] SilentAim: No valid target found")
             end
         end
     end)
 
-    -- Улучшенная система Chams
+    -- Chams функции
     function enableChams()
         for _, otherPlayer in ipairs(Players:GetPlayers()) do
             if otherPlayer ~= Player then
@@ -938,7 +946,7 @@ local success, err = pcall(function()
         end)
     end
 
-    -- ESP система с боксами, трассерами, именами и дистанцией
+    -- ESP функции
     function enableESP()
         for _, otherPlayer in ipairs(Players:GetPlayers()) do
             if otherPlayer ~= Player then
@@ -1064,7 +1072,7 @@ local success, err = pcall(function()
         table.insert(ESPConnections, espUpdate)
     end
 
-    -- Темные мрачные шейдеры
+    -- Shaders функции
     function enableShaders()
         local bloom = Instance.new("BloomEffect")
         bloom.Name = "MoonBlossomBloom"
@@ -1242,7 +1250,7 @@ local success, err = pcall(function()
 
     -- Уведомление в чат
     game:GetService("StarterGui"):SetCore("ChatMakeSystemMessage", {
-        Text = "Moon Blossom v4.0 FIXED! Triggerbot now fires via remote events, Aim Assist (FOV 180) on K, Triggerbot (FOV 10) on L, Spinbot rotates with smaller hitbox, FOV circle lowered, max dist 400, Air Strafe, grey GUI",
+        Text = "Moon Blossom v4.0 PREMIUM loaded! Animated GUI, gradients, hovers, pulsing title ✨ Aim Assist on K, Triggerbot on L",
         Color = Color3.fromRGB(180, 100, 255),
         Font = Enum.Font.GothamBold,
         FontSize = Enum.FontSize.Size18
@@ -1272,6 +1280,11 @@ local success, err = pcall(function()
             print("[MoonBlossom] Spinbot: Body scale reapplied to 0.5 on respawn")
         end
     end)
+
+    -- Анимация входа при запуске
+    animateEntrance()
+    wait(0.5)
+    animateButtons(0.05)
 
     -- Гарантируем отображение GUI
     wait(1)
