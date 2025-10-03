@@ -62,7 +62,7 @@ local success, err = pcall(function()
     Title.Size = UDim2.new(0.7, 0, 1, 0)
     Title.Position = UDim2.new(0.05, 0, 0, 0)
     Title.BackgroundTransparency = 1
-    Title.Text = "Moon Blossom v4.0"
+    Title.Text = "Moon Blossom v4.0 (Fixed Triggerbot)"
     Title.TextColor3 = Color3.fromRGB(220, 180, 255)
     Title.Font = Enum.Font.GothamBold
     Title.TextSize = 14
@@ -214,7 +214,7 @@ local success, err = pcall(function()
     StatusLabel.Size = UDim2.new(1, 0, 0, 20)
     StatusLabel.Position = UDim2.new(0, 0, 0.95, 0)
     StatusLabel.BackgroundTransparency = 1
-    StatusLabel.Text = "Status: Active"
+    StatusLabel.Text = "Status: Active (Triggerbot Fixed)"
     StatusLabel.TextColor3 = Color3.fromRGB(180, 150, 200)
     StatusLabel.Font = Enum.Font.Gotham
     StatusLabel.TextSize = 12
@@ -331,6 +331,37 @@ local success, err = pcall(function()
         end
         print("[MoonBlossom] Triggerbot: Target visible - No raycast collision")
         return true
+    end
+
+    -- Функция для стрельбы (фикс Triggerbot)
+    local function fireWeapon()
+        local char = Player.Character
+        if not char then return end
+        local tool = char:FindFirstChildOfClass("Tool")
+        if not tool then
+            print("[MoonBlossom] Triggerbot: No tool equipped")
+            return
+        end
+        local remote = tool:FindFirstChild("RemoteEvent") or tool:FindFirstChildOfClass("RemoteFunction") or tool:FindFirstChild("Fire")
+        if remote and remote:IsA("RemoteEvent") then
+            pcall(function()
+                remote:FireServer()  -- Вызываем remote события оружия
+                print("[MoonBlossom] Triggerbot: Fired remote event for " .. tool.Name)
+            end)
+        elseif remote and remote:IsA("RemoteFunction") then
+            pcall(function()
+                remote:InvokeServer()
+                print("[MoonBlossom] Triggerbot: Invoked remote function for " .. tool.Name)
+            end)
+        else
+            -- Fallback на mouse1click, если есть
+            if _G.mouse1click then
+                _G.mouse1click()
+                print("[MoonBlossom] Triggerbot: Used _G.mouse1click fallback")
+            else
+                print("[MoonBlossom] Triggerbot: No remote or mouse1click - can't fire")
+            end
+        end
     end
 
     -- Функция для обновления текста кнопок
@@ -687,7 +718,7 @@ local success, err = pcall(function()
         end
     end
 
-    -- Triggerbot с fallback на mouse1press/mouse1release
+    -- FIXED Triggerbot с fallback на remote события оружия
     local function handleTriggerbot()
         if TriggerbotEnabled and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
             if not Player.Character:FindFirstChildOfClass("Tool") then
@@ -708,15 +739,7 @@ local success, err = pcall(function()
                         -- Проверяем, находится ли курсор на голове (в пределах 10 пикселей)
                         if distance <= 10 and isTargetVisible(targetHead.Position) then
                             print("[MoonBlossom] Triggerbot: Firing at " .. closestPlayer.Name .. " (distance: " .. math.floor(distance) .. " pixels)")
-                            pcall(function()
-                                if _G.mouse1click then
-                                    _G.mouse1click()
-                                else
-                                    mouse1press()
-                                    wait(0.05)
-                                    mouse1release()
-                                end
-                            end)
+                            fireWeapon()  -- FIXED: Используем новую функцию для стрельбы
                             wait(0.1) -- Задержка для предотвращения спама
                         else
                             print("[MoonBlossom] Triggerbot: Target not on crosshair - " .. closestPlayer.Name .. " (distance: " .. math.floor(distance) .. " pixels)")
@@ -1219,7 +1242,7 @@ local success, err = pcall(function()
 
     -- Уведомление в чат
     game:GetService("StarterGui"):SetCore("ChatMakeSystemMessage", {
-        Text = "Moon Blossom v4.0 loaded! Aim Assist (FOV 180) on K, Triggerbot (FOV 10) on L, Spinbot rotates character with smaller hitbox, FOV circle lowered by 50px, max distance 400, Air Strafe redirects velocity, larger grey GUI",
+        Text = "Moon Blossom v4.0 FIXED! Triggerbot now fires via remote events, Aim Assist (FOV 180) on K, Triggerbot (FOV 10) on L, Spinbot rotates with smaller hitbox, FOV circle lowered, max dist 400, Air Strafe, grey GUI",
         Color = Color3.fromRGB(180, 100, 255),
         Font = Enum.Font.GothamBold,
         FontSize = Enum.FontSize.Size18
