@@ -111,20 +111,10 @@ local success, err = pcall(function()
     BHopToggle.TextSize = 14
     BHopToggle.Parent = ButtonsContainer
 
-    local SpinbotToggle = Instance.new("TextButton")
-    SpinbotToggle.Name = "SpinbotToggle"
-    SpinbotToggle.Size = UDim2.new(0, 290, 0, 35)
-    SpinbotToggle.Position = UDim2.new(0.045, 0, 0.095, 0)
-    SpinbotToggle.Text = "Spinbot: OFF"
-    SpinbotToggle.BackgroundColor3 = Color3.fromRGB(80, 60, 100)
-    SpinbotToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
-    SpinbotToggle.Font = Enum.Font.Gotham
-    SpinbotToggle.Parent = ButtonsContainer
-
     local SitWalkToggle = Instance.new("TextButton")
     SitWalkToggle.Name = "SitWalkToggle"
     SitWalkToggle.Size = UDim2.new(0, 290, 0, 35)
-    SitWalkToggle.Position = UDim2.new(0.045, 0, 0.165, 0)
+    SitWalkToggle.Position = UDim2.new(0.045, 0, 0.095, 0)
     SitWalkToggle.Text = "Sit Walk: OFF"
     SitWalkToggle.BackgroundColor3 = Color3.fromRGB(80, 60, 100)
     SitWalkToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
@@ -134,7 +124,7 @@ local success, err = pcall(function()
     local ChamsToggle = Instance.new("TextButton")
     ChamsToggle.Name = "ChamsToggle"
     ChamsToggle.Size = UDim2.new(0, 290, 0, 35)
-    ChamsToggle.Position = UDim2.new(0.045, 0, 0.235, 0)
+    ChamsToggle.Position = UDim2.new(0.045, 0, 0.165, 0)
     ChamsToggle.Text = "Player Chams: OFF"
     ChamsToggle.BackgroundColor3 = Color3.fromRGB(80, 60, 100)
     ChamsToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
@@ -144,7 +134,7 @@ local success, err = pcall(function()
     local SilentAimToggle = Instance.new("TextButton")
     SilentAimToggle.Name = "SilentAimToggle"
     SilentAimToggle.Size = UDim2.new(0, 290, 0, 35)
-    SilentAimToggle.Position = UDim2.new(0.045, 0, 0.305, 0)
+    SilentAimToggle.Position = UDim2.new(0.045, 0, 0.235, 0)
     SilentAimToggle.Text = "Silent Aim: OFF"
     SilentAimToggle.BackgroundColor3 = Color3.fromRGB(80, 60, 100)
     SilentAimToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
@@ -154,7 +144,7 @@ local success, err = pcall(function()
     local ESPToggle = Instance.new("TextButton")
     ESPToggle.Name = "ESPToggle"
     ESPToggle.Size = UDim2.new(0, 290, 0, 35)
-    ESPToggle.Position = UDim2.new(0.045, 0, 0.375, 0)
+    ESPToggle.Position = UDim2.new(0.045, 0, 0.305, 0)
     ESPToggle.Text = "ESP: OFF"
     ESPToggle.BackgroundColor3 = Color3.fromRGB(80, 60, 100)
     ESPToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
@@ -164,7 +154,7 @@ local success, err = pcall(function()
     local StrafeToggle = Instance.new("TextButton")
     StrafeToggle.Name = "StrafeToggle"
     StrafeToggle.Size = UDim2.new(0, 290, 0, 35)
-    StrafeToggle.Position = UDim2.new(0.045, 0, 0.445, 0)
+    StrafeToggle.Position = UDim2.new(0.045, 0, 0.375, 0)
     StrafeToggle.Text = "Air Strafe: OFF"
     StrafeToggle.BackgroundColor3 = Color3.fromRGB(80, 60, 100)
     StrafeToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
@@ -174,7 +164,7 @@ local success, err = pcall(function()
     local ShadersToggle = Instance.new("TextButton")
     ShadersToggle.Name = "ShadersToggle"
     ShadersToggle.Size = UDim2.new(0, 290, 0, 35)
-    ShadersToggle.Position = UDim2.new(0.045, 0, 0.515, 0)
+    ShadersToggle.Position = UDim2.new(0.045, 0, 0.445, 0)
     ShadersToggle.Text = "Shaders: OFF"
     ShadersToggle.BackgroundColor3 = Color3.fromRGB(80, 60, 100)
     ShadersToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
@@ -184,7 +174,7 @@ local success, err = pcall(function()
     local AimAssistToggle = Instance.new("TextButton")
     AimAssistToggle.Name = "AimAssistToggle"
     AimAssistToggle.Size = UDim2.new(0, 290, 0, 35)
-    AimAssistToggle.Position = UDim2.new(0.045, 0, 0.585, 0)
+    AimAssistToggle.Position = UDim2.new(0.045, 0, 0.515, 0)
     AimAssistToggle.Text = "Aim Assist: OFF"
     AimAssistToggle.BackgroundColor3 = Color3.fromRGB(80, 60, 100)
     AimAssistToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
@@ -194,22 +184,32 @@ local success, err = pcall(function()
     local WalkSpeedToggle = Instance.new("TextButton")
     WalkSpeedToggle.Name = "WalkSpeedToggle"
     WalkSpeedToggle.Size = UDim2.new(0, 290, 0, 35)
-    WalkSpeedToggle.Position = UDim2.new(0.045, 0, 0.655, 0)
+    WalkSpeedToggle.Position = UDim2.new(0.045, 0, 0.585, 0)
     WalkSpeedToggle.Text = "WalkSpeed: OFF"
     WalkSpeedToggle.BackgroundColor3 = Color3.fromRGB(80, 60, 100)
     WalkSpeedToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
     WalkSpeedToggle.Font = Enum.Font.Gotham
     WalkSpeedToggle.Parent = ButtonsContainer
 
-    local FlyToggle = Instance.new("TextButton")
-    FlyToggle.Name = "FlyToggle"
-    FlyToggle.Size = UDim2.new(0, 290, 0, 35)
-    FlyToggle.Position = UDim2.new(0.045, 0, 0.725, 0)
-    FlyToggle.Text = "Fly: OFF (Press K)"
-    FlyToggle.BackgroundColor3 = Color3.fromRGB(80, 60, 100)
-    FlyToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
-    FlyToggle.Font = Enum.Font.Gotham
-    FlyToggle.Parent = ButtonsContainer
+    local FreezeToggle = Instance.new("TextButton")
+    FreezeToggle.Name = "FreezeToggle"
+    FreezeToggle.Size = UDim2.new(0, 290, 0, 35)
+    FreezeToggle.Position = UDim2.new(0.045, 0, 0.655, 0)
+    FreezeToggle.Text = "Freeze: OFF"
+    FreezeToggle.BackgroundColor3 = Color3.fromRGB(80, 60, 100)
+    FreezeToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
+    FreezeToggle.Font = Enum.Font.Gotham
+    FreezeToggle.Parent = ButtonsContainer
+
+    local BindFreezeToggle = Instance.new("TextButton")
+    BindFreezeToggle.Name = "BindFreezeToggle"
+    BindFreezeToggle.Size = UDim2.new(0, 290, 0, 35)
+    BindFreezeToggle.Position = UDim2.new(0.045, 0, 0.725, 0)
+    BindFreezeToggle.Text = "Bind Freeze: OFF"
+    BindFreezeToggle.BackgroundColor3 = Color3.fromRGB(80, 60, 100)
+    BindFreezeToggle.TextColor3 = Color3.fromRGB(220, 180, 255)
+    BindFreezeToggle.Font = Enum.Font.Gotham
+    BindFreezeToggle.Parent = ButtonsContainer
 
     -- Статус
     local StatusLabel = Instance.new("TextLabel")
@@ -237,7 +237,6 @@ local success, err = pcall(function()
 
     -- Логика
     local BHopEnabled = false
-    local SpinbotEnabled = false
     local SitWalkEnabled = false
     local ChamsEnabled = false
     local SilentAimEnabled = false
@@ -246,7 +245,8 @@ local success, err = pcall(function()
     local ShadersEnabled = false
     local AimAssistEnabled = false
     local WalkSpeedEnabled = false
-    local FlyEnabled = false
+    local FreezeEnabled = false
+    local BindFreezeEnabled = false
     local GUIEnabled = true
 
     -- Переменные для баннихопа
@@ -269,10 +269,6 @@ local success, err = pcall(function()
     local currentShaders = {}
     local originalPartProperties = {}
 
-    -- Переменные для спинбота
-    local spinRotation = 0
-    local totalSpinbotOffset = Vector3.new(0, 0, 0)
-
     -- Переменные для Aim Assist
     local aimAssistTarget = nil
     local aimAssistFOV = 180
@@ -281,11 +277,11 @@ local success, err = pcall(function()
     -- Переменная для хранения исходной скорости
     local originalWalkSpeed = 16
 
-    -- Переменные для полета
-    local flySpeed = 50
-    local flyConnection = nil
-    local bodyGyro = nil
-    local bodyVelocity = nil
+    -- Переменные для Freeze
+    local freezeEnabled = false
+    local bindFreezeEnabled = false
+    local currentBindKey = nil
+    local bindConnection = nil
 
     -- Функция для создания визуального FOV
     local function createFOVCircle()
@@ -309,8 +305,6 @@ local success, err = pcall(function()
     local function updateButtonText(button, enabled)
         if button.Name == "BHopToggle" then
             button.Text = "Bunny Hop: " .. (enabled and "ON" or "OFF")
-        elseif button.Name == "SpinbotToggle" then
-            button.Text = "Spinbot: " .. (enabled and "ON" or "OFF")
         elseif button.Name == "SitWalkToggle" then
             button.Text = "Sit Walk: " .. (enabled and "ON" or "OFF")
         elseif button.Name == "ChamsToggle" then
@@ -327,8 +321,10 @@ local success, err = pcall(function()
             button.Text = "Aim Assist: " .. (enabled and "ON" or "OFF")
         elseif button.Name == "WalkSpeedToggle" then
             button.Text = "WalkSpeed: " .. (enabled and "ON" or "OFF")
-        elseif button.Name == "FlyToggle" then
-            button.Text = "Fly: " .. (enabled and "ON" or "OFF") .. " (Press K)"
+        elseif button.Name == "FreezeToggle" then
+            button.Text = "Freeze: " .. (enabled and "ON" or "OFF")
+        elseif button.Name == "BindFreezeToggle" then
+            button.Text = "Bind Freeze: " .. (enabled and "ON" or "OFF")
         end
     end
 
@@ -345,6 +341,52 @@ local success, err = pcall(function()
         
         TweenService:Create(button, tweenInfo, goal):Play()
         updateButtonText(button, state)
+    end
+
+    -- Функция для управления заморозкой
+    local function toggleFreeze(enabled)
+        if not Player.Character or not Player.Character:FindFirstChild("HumanoidRootPart") then
+            print("Waiting for character or HumanoidRootPart for freeze")
+            Player.CharacterAdded:Wait()
+            if not Player.Character then
+                warn("No character after respawn")
+                return
+            end
+        end
+        local success, errorMsg = pcall(function()
+            local humanoidRootPart = Player.Character.HumanoidRootPart
+            humanoidRootPart.Anchored = enabled
+            print("Player", enabled and "frozen" or "unfrozen")
+        end)
+        if not success then
+            warn("Freeze failed:", errorMsg)
+        end
+    end
+
+    -- Функция для установки бинда на фриз
+    local function setupBindFreeze()
+        if not bindFreezeEnabled or not currentBindKey then
+            return
+        end
+        
+        -- Обработка нажатия клавиши бинда
+        local connection
+        connection = UIS.InputBegan:Connect(function(input, gameProcessedEvent)
+            if gameProcessedEvent then return end
+            
+            if input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == currentBindKey then
+                freezeEnabled = not freezeEnabled
+                toggleFreeze(freezeEnabled)
+                
+                -- Обновляем текст кнопки фриза
+                FreezeToggle.Text = freezeEnabled and "Freeze: ON" or "Freeze: OFF"
+                FreezeToggle.BackgroundColor3 = freezeEnabled and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(80, 60, 100)
+                
+                print("Freeze toggled via bind to", freezeEnabled and "ON" or "OFF")
+            end
+        end)
+        
+        return connection
     end
 
     -- Улучшенная система Chams
@@ -657,126 +699,23 @@ local success, err = pcall(function()
         end
     end)
 
-    -- Улучшенный Silent Aim с FOV 180
-    local function findClosestPlayerToCursor()
-        return findClosestPlayerInFOV(180, true)
-    end
-
-    -- Обработчик Silent Aim
-    Mouse.Button1Down:Connect(function()
-        if SilentAimEnabled and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
-            local closestPlayer = findClosestPlayerToCursor()
-            if closestPlayer and closestPlayer.Character and closestPlayer.Character:FindFirstChild("Head") then
-                Camera.CFrame = CFrame.new(Camera.CFrame.Position, closestPlayer.Character.Head.Position)
-            end
+    -- Улучшенный Silent Aim с FOV 180 (работает при зажатии ЛКМ каждые 0.05 секунд)
+    local silentAimLoop
+    local function startSilentAimLoop()
+        if silentAimLoop then
+            silentAimLoop:Disconnect()
         end
-    end)
-
-    -- Функция для включения/выключения полета
-    local function toggleFly()
-        if FlyEnabled then
-            -- Выключаем полет
-            if flyConnection then
-                flyConnection:Disconnect()
-                flyConnection = nil
-            end
-            
-            if bodyGyro and bodyGyro.Parent then
-                bodyGyro:Destroy()
-            end
-            
-            if bodyVelocity and bodyVelocity.Parent then
-                bodyVelocity:Destroy()
-            end
-            
-            -- Восстанавливаем гравитацию
-            if Player.Character then
-                local humanoid = Player.Character:FindFirstChildOfClass("Humanoid")
-                if humanoid then
-                    humanoid.PlatformStand = false
-                end
-                
-                for _, part in ipairs(Player.Character:GetDescendants()) do
-                    if part:IsA("BasePart") then
-                        part.CustomPhysicalProperties = nil
+        
+        silentAimLoop = RunService.Heartbeat:Connect(function()
+            if SilentAimEnabled and UIS:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) then
+                if Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
+                    local closestPlayer = findClosestPlayerInFOV(180, true)
+                    if closestPlayer and closestPlayer.Character and closestPlayer.Character:FindFirstChild("Head") then
+                        Camera.CFrame = CFrame.new(Camera.CFrame.Position, closestPlayer.Character.Head.Position)
                     end
                 end
             end
-        else
-            -- Включаем полет
-            if not Player.Character or not Player.Character:FindFirstChild("HumanoidRootPart") then
-                return
-            end
-            
-            local humanoid = Player.Character:FindFirstChildOfClass("Humanoid")
-            if not humanoid then
-                return
-            end
-            
-            humanoid.PlatformStand = true
-            
-            -- Создаем BodyGyro для управления вращением
-            bodyGyro = Instance.new("BodyGyro")
-            bodyGyro.P = 10000
-            bodyGyro.D = 500
-            bodyGyro.MaxTorque = Vector3.new(20000, 20000, 20000)
-            bodyGyro.CFrame = Player.Character.HumanoidRootPart.CFrame
-            bodyGyro.Parent = Player.Character.HumanoidRootPart
-            
-            -- Создаем BodyVelocity для управления движением
-            bodyVelocity = Instance.new("BodyVelocity")
-            bodyVelocity.Velocity = Vector3.new(0, 0, 0)
-            bodyVelocity.MaxForce = Vector3.new(10000, 10000, 10000)
-            bodyVelocity.Parent = Player.Character.HumanoidRootPart
-            
-            -- Убираем гравитацию для частей персонажа
-            for _, part in ipairs(Player.Character:GetDescendants()) do
-                if part:IsA("BasePart") then
-                    part.CustomPhysicalProperties = PhysicalProperties.new(0, 0, 0)
-                end
-            end
-            
-            -- Обработчик полета
-            flyConnection = RunService.Heartbeat:Connect(function()
-                if not FlyEnabled or not Player.Character or not Player.Character:FindFirstChild("HumanoidRootPart") then
-                    return
-                end
-                
-                local rootPart = Player.Character.HumanoidRootPart
-                local moveDirection = Vector3.new()
-                
-                if UIS:IsKeyDown(Enum.KeyCode.W) then
-                    moveDirection = moveDirection + rootPart.CFrame.LookVector
-                end
-                if UIS:IsKeyDown(Enum.KeyCode.S) then
-                    moveDirection = moveDirection - rootPart.CFrame.LookVector
-                end
-                if UIS:IsKeyDown(Enum.KeyCode.A) then
-                    moveDirection = moveDirection - rootPart.CFrame.RightVector
-                end
-                if UIS:IsKeyDown(Enum.KeyCode.D) then
-                    moveDirection = moveDirection + rootPart.CFrame.RightVector
-                end
-                if UIS:IsKeyDown(Enum.KeyCode.Space) then
-                    moveDirection = moveDirection + Vector3.new(0, 1, 0)
-                end
-                if UIS:IsKeyDown(Enum.KeyCode.LeftShift) then
-                    moveDirection = moveDirection - Vector3.new(0, 1, 0)
-                end
-                
-                if moveDirection.Magnitude > 0 then
-                    moveDirection = moveDirection.Unit * flySpeed
-                    bodyVelocity.Velocity = moveDirection
-                    
-                    -- Обновляем вращение для плавного поворота
-                    if bodyGyro then
-                        bodyGyro.CFrame = CFrame.new(rootPart.Position, rootPart.Position + rootPart.CFrame.LookVector)
-                    end
-                else
-                    bodyVelocity.Velocity = Vector3.new(0, 0, 0)
-                end
-            end)
-        end
+        end)
     end
 
     -- Обработчики кнопок GUI
@@ -785,6 +724,12 @@ local success, err = pcall(function()
         GUIEnabled = false
         if fovCircle then
             fovCircle:Remove()
+        end
+        if silentAimLoop then
+            silentAimLoop:Disconnect()
+        end
+        if bindConnection then
+            bindConnection:Disconnect()
         end
     end)
 
@@ -802,14 +747,16 @@ local success, err = pcall(function()
         toggleButton(BHopToggle, BHopEnabled)
     end)
 
-    SpinbotToggle.MouseButton1Click:Connect(function()
-        SpinbotEnabled = not SpinbotEnabled
-        toggleButton(SpinbotToggle, SpinbotEnabled)
-    end)
-
     SitWalkToggle.MouseButton1Click:Connect(function()
         SitWalkEnabled = not SitWalkEnabled
         toggleButton(SitWalkToggle, SitWalkEnabled)
+        
+        if Player.Character then
+            local Humanoid = Player.Character:FindFirstChildOfClass("Humanoid")
+            if Humanoid then
+                Humanoid.Sit = SitWalkEnabled
+            end
+        end
     end)
 
     ChamsToggle.MouseButton1Click:Connect(function()
@@ -826,6 +773,14 @@ local success, err = pcall(function()
     SilentAimToggle.MouseButton1Click:Connect(function()
         SilentAimEnabled = not SilentAimEnabled
         toggleButton(SilentAimToggle, SilentAimEnabled)
+        
+        if SilentAimEnabled then
+            startSilentAimLoop()
+        else
+            if silentAimLoop then
+                silentAimLoop:Disconnect()
+            end
+        end
         
         if fovCircle then
             fovCircle.Visible = AimAssistEnabled or SilentAimEnabled
@@ -884,20 +839,52 @@ local success, err = pcall(function()
         end
     end)
 
-    FlyToggle.MouseButton1Click:Connect(function()
-        FlyEnabled = not FlyEnabled
-        toggleButton(FlyToggle, FlyEnabled)
-        toggleFly()
+    FreezeToggle.MouseButton1Click:Connect(function()
+        freezeEnabled = not freezeEnabled
+        toggleButton(FreezeToggle, freezeEnabled)
+        toggleFreeze(freezeEnabled)
     end)
 
-    -- Обработчик клавиши K для полета
-    UIS.InputBegan:Connect(function(input, gameProcessed)
-        if gameProcessed then return end
+    BindFreezeToggle.MouseButton1Click:Connect(function()
+        bindFreezeEnabled = not bindFreezeEnabled
         
-        if input.KeyCode == Enum.KeyCode.K then
-            FlyEnabled = not FlyEnabled
-            toggleButton(FlyToggle, FlyEnabled)
-            toggleFly()
+        if bindFreezeEnabled then
+            -- Запрос клавиши для бинда
+            BindFreezeToggle.Text = "PRESS A KEY..."
+            BindFreezeToggle.BackgroundColor3 = Color3.fromRGB(255, 255, 0)
+            
+            -- Ждем нажатия клавиши
+            local keyConnection
+            keyConnection = UIS.InputBegan:Connect(function(input, gameProcessedEvent)
+                if gameProcessedEvent then return end
+                
+                if input.UserInputType == Enum.UserInputType.Keyboard then
+                    currentBindKey = input.KeyCode
+                    BindFreezeToggle.Text = "BIND: " .. tostring(currentBindKey):gsub("Enum.KeyCode.", "")
+                    BindFreezeToggle.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+                    
+                    -- Настраиваем бинд
+                    if bindConnection then
+                        bindConnection:Disconnect()
+                    end
+                    bindConnection = setupBindFreeze()
+                    
+                    print("Bind freeze set to key:", currentBindKey)
+                    keyConnection:Disconnect()
+                end
+            end)
+        else
+            -- Выключаем бинд
+            BindFreezeToggle.Text = "Bind Freeze: OFF"
+            BindFreezeToggle.BackgroundColor3 = Color3.fromRGB(80, 60, 100)
+            
+            if bindConnection then
+                bindConnection:Disconnect()
+                bindConnection = nil
+            end
+            currentBindKey = nil
+            
+            print("Bind freeze disabled")
         end
     end)
 
@@ -934,45 +921,6 @@ local success, err = pcall(function()
         -- Обновляем только если WalkSpeed включен
         if WalkSpeedEnabled and Humanoid.WalkSpeed ~= 50 then
             Humanoid.WalkSpeed = 50
-        end
-    end)
-
-    -- Улучшенный спинбот с уходом под землю на 2.5 и SitWalk
-    RunService.Heartbeat:Connect(function()
-        if SpinbotEnabled and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
-            local Char = Player.Character
-            local RootPart = Char.HumanoidRootPart
-            local Humanoid = Char:FindFirstChildOfClass("Humanoid")
-            
-            RootPart.CFrame = RootPart.CFrame - totalSpinbotOffset
-            
-            local newOffset = Vector3.new(0, -2.5, 0)
-            totalSpinbotOffset = newOffset
-            
-            spinRotation = spinRotation + 100
-            if spinRotation > 180 then spinRotation = 90 end
-            
-            RootPart.CFrame = RootPart.CFrame * CFrame.Angles(0, math.rad(spinRotation), 0) + newOffset
-            
-            -- Добавляем SitWalk функционал
-            if SitWalkEnabled and Humanoid then
-                Humanoid.Sit = true
-            end
-        else
-            if totalSpinbotOffset ~= Vector3.new(0, 0, 0) then
-                if Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
-                    Player.Character.HumanoidRootPart.CFrame = Player.Character.HumanoidRootPart.CFrame - totalSpinbotOffset
-                end
-                totalSpinbotOffset = Vector3.new(0, 0, 0)
-            end
-            
-            -- Отключаем сидение при выключенном спинботе
-            if Player.Character then
-                local Humanoid = Player.Character:FindFirstChildOfClass("Humanoid")
-                if Humanoid and SitWalkEnabled then
-                    Humanoid.Sit = false
-                end
-            end
         end
     end)
 
@@ -1052,7 +1000,6 @@ local success, err = pcall(function()
 
     -- Обновляем текст кнопок при запуске
     updateButtonText(BHopToggle, BHopEnabled)
-    updateButtonText(SpinbotToggle, SpinbotEnabled)
     updateButtonText(SitWalkToggle, SitWalkEnabled)
     updateButtonText(ChamsToggle, ChamsEnabled)
     updateButtonText(SilentAimToggle, SilentAimEnabled)
@@ -1061,11 +1008,12 @@ local success, err = pcall(function()
     updateButtonText(ShadersToggle, ShadersEnabled)
     updateButtonText(AimAssistToggle, AimAssistEnabled)
     updateButtonText(WalkSpeedToggle, WalkSpeedEnabled)
-    updateButtonText(FlyToggle, FlyEnabled)
+    updateButtonText(FreezeToggle, FreezeEnabled)
+    updateButtonText(BindFreezeToggle, BindFreezeEnabled)
 
     -- Уведомление в чат
     game:GetService("StarterGui"):SetCore("ChatMakeSystemMessage", {
-        Text = "Moon Blossom v2.0 loaded! Press K to toggle Fly",
+        Text = "Moon Blossom v2.0 loaded!",
         Color = Color3.fromRGB(180, 100, 255),
         Font = Enum.Font.GothamBold,
         FontSize = Enum.FontSize.Size18
@@ -1091,8 +1039,14 @@ local success, err = pcall(function()
             if ESPEnabled then
                 enableESP()
             end
-            if FlyEnabled then
-                toggleFly()
+            if SilentAimEnabled then
+                startSilentAimLoop()
+            end
+            if freezeEnabled then
+                toggleFreeze(freezeEnabled)
+            end
+            if bindFreezeEnabled and currentBindKey then
+                bindConnection = setupBindFreeze()
             end
         end
     end)
