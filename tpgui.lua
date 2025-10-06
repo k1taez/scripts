@@ -104,22 +104,22 @@ local freezeButtonCorner = Instance.new("UICorner")
 freezeButtonCorner.CornerRadius = UDim.new(0, 10)
 freezeButtonCorner.Parent = freezeButton
 
--- Создаем кнопку неуязвимости
-local godButton = Instance.new("TextButton")
-godButton.Name = "GodButton"
-godButton.Size = UDim2.new(0.8, 0, 0.25, 0)
-godButton.Position = UDim2.new(0.1, 0, 0.65, 0)
-godButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
-godButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-godButton.TextScaled = true
-godButton.Text = "GOD: OFF"
-godButton.Parent = frame
-print("GodButton created")
+-- Создаем кнопку бинда на фриз
+local bindFreezeButton = Instance.new("TextButton")
+bindFreezeButton.Name = "BindFreezeButton"
+bindFreezeButton.Size = UDim2.new(0.8, 0, 0.25, 0)
+bindFreezeButton.Position = UDim2.new(0.1, 0, 0.65, 0)
+bindFreezeButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+bindFreezeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+bindFreezeButton.TextScaled = true
+bindFreezeButton.Text = "BIND FREEZE: OFF"
+bindFreezeButton.Parent = frame
+print("BindFreezeButton created")
 
--- Закругленные углы для кнопки неуязвимости
-local godButtonCorner = Instance.new("UICorner")
-godButtonCorner.CornerRadius = UDim.new(0, 10)
-godButtonCorner.Parent = godButton
+-- Закругленные углы для кнопки бинда
+local bindButtonCorner = Instance.new("UICorner")
+bindButtonCorner.CornerRadius = UDim.new(0, 10)
+bindButtonCorner.Parent = bindFreezeButton
 
 -- Координаты для телепортации
 local positions = {
@@ -128,7 +128,8 @@ local positions = {
 }
 local isTeleporting = false
 local freezeEnabled = false
-local godEnabled = false
+local bindFreezeEnabled = false
+local currentBindKey = nil
 local TELEPORT_INTERVAL = 0.01 -- Кулдаун 0.1 секунды
 
 -- Функция для телепортации
@@ -171,37 +172,43 @@ local function toggleFreeze(enabled)
     end
 end
 
--- Функция для управления неуязвимостью
-local function toggleGod(enabled)
-    if not player.Character or not player.Character:FindFirstChild("Humanoid") then
-        print("Waiting for character or Humanoid for god mode")
-        player.CharacterAdded:Wait()
-        if not player.Character then
-            warn("No character after respawn")
-            return
+-- Функция для установки бинда на фриз
+local function setupBindFreeze()
+    if not bindFreezeEnabled or not currentBindKey then
+        return
+    end
+    
+    -- Обработка нажатия клавиши бинда
+    local connection
+    connection = UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
+        if gameProcessedEvent then return end
+        
+        if input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == currentBindKey then
+            freezeEnabled = not freezeEnabled
+            toggleFreeze(freezeEnabled)
+            
+            -- Обновляем текст кнопки фриза
+            freezeButton.Text = freezeEnabled and "FREEZE: ON" or "FREEZE: OFF"
+            freezeButton.BackgroundColor3 = freezeEnabled and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(100, 100, 100)
+            
+            print("Freeze toggled via bind to", freezeEnabled and "ON" or "OFF")
         end
-    end
-    local success, errorMsg = pcall(function()
-        local humanoid = player.Character.Humanoid
-        humanoid:SetAttribute("IsInvulnerable", enabled)
-        print("God mode", enabled and "enabled" or "disabled")
     end)
-    if not success then
-        warn("God mode failed:", errorMsg)
-    end
+    
+    return connection
 end
 
 -- Цикл для телепортации на вторую координату
 local function teleportLoop()
     while isTeleporting do
-        teleportToPosition(positions[2]) -- Телепортация на (-500, 500, 3)
+        teleportToPosition(positions[2]) -- Телепортация на (-5000, 3, 3)
         wait(TELEPORT_INTERVAL)
     end
 end
 
--- Функция для телепортации 5-6 раз на первую координату
+-- Функция для телепортации 15-16 раз на первую координату
 local function teleportOff()
-    local teleportCount = math.random(15, 16) -- Случайное число от 5 до 6
+    local teleportCount = math.random(15, 16) -- Случайное число от 15 до 16
     print("Teleporting to", positions[1], teleportCount, "times")
     for i = 1, teleportCount do
         teleportToPosition(positions[1]) -- Телепортация на (0, 3, 0)
@@ -219,7 +226,7 @@ toggleButton.MouseButton1Click:Connect(function()
     if isTeleporting then
         spawn(teleportLoop)
     else
-        spawn(teleportOff) -- Телепортация 5-6 раз на первую координату
+        spawn(teleportOff) -- Телепортация 15-16 раз на первую координату
     end
 end)
 
@@ -233,14 +240,49 @@ freezeButton.MouseButton1Click:Connect(function()
     toggleFreeze(freezeEnabled)
 end)
 
--- Обработка нажатия на кнопку неуязвимости
-godButton.MouseButton1Click:Connect(function()
-    godEnabled = not godEnabled
-    godButton.Text = godEnabled and "GOD: ON" or "GOD: OFF"
-    godButton.BackgroundColor3 = godEnabled and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(100, 100, 100)
-    print("God mode toggled to", godEnabled and "ON" or "OFF")
+-- Обработка нажатия на кнопку бинда на фриз
+local bindConnection
+bindFreezeButton.MouseButton1Click:Connect(function()
+    bindFreezeEnabled = not bindFreezeEnabled
     
-    toggleGod(godEnabled)
+    if bindFreezeEnabled then
+        -- Запрос клавиши для бинда
+        bindFreezeButton.Text = "PRESS A KEY..."
+        bindFreezeButton.BackgroundColor3 = Color3.fromRGB(255, 255, 0)
+        
+        -- Ждем нажатия клавиши
+        local keyConnection
+        keyConnection = UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
+            if gameProcessedEvent then return end
+            
+            if input.UserInputType == Enum.UserInputType.Keyboard then
+                currentBindKey = input.KeyCode
+                bindFreezeButton.Text = "BIND: " .. tostring(currentBindKey):gsub("Enum.KeyCode.", "")
+                bindFreezeButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+                
+                -- Настраиваем бинд
+                if bindConnection then
+                    bindConnection:Disconnect()
+                end
+                bindConnection = setupBindFreeze()
+                
+                print("Bind freeze set to key:", currentBindKey)
+                keyConnection:Disconnect()
+            end
+        end)
+    else
+        -- Выключаем бинд
+        bindFreezeButton.Text = "BIND FREEZE: OFF"
+        bindFreezeButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+        
+        if bindConnection then
+            bindConnection:Disconnect()
+            bindConnection = nil
+        end
+        currentBindKey = nil
+        
+        print("Bind freeze disabled")
+    end
 end)
 
 -- Перетаскивание окна через таскбар
@@ -282,3 +324,7 @@ UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
         print("Teleport Hub", screenGui.Enabled and "opened" or "closed")
     end
 end)
+
+print("Teleport Hub loaded successfully!")
+print("Press K to open/close the hub")
+print("Use BIND FREEZE to set a key for quick freeze toggle")
