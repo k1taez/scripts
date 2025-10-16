@@ -63,7 +63,7 @@ local success, err = pcall(function()
     Title.Size = UDim2.new(0.7, 0, 1, 0)
     Title.Position = UDim2.new(0.05, 0, 0, 0)
     Title.BackgroundTransparency = 1
-    Title.Text = "Moon Blossom v2.0"
+    Title.Text = "Moon Blossom v2.1"
     Title.TextColor3 = Color3.fromRGB(220, 180, 255)
     Title.Font = Enum.Font.GothamBold
     Title.TextSize = 16
@@ -99,7 +99,7 @@ local success, err = pcall(function()
     ButtonsContainer.BackgroundTransparency = 1
     ButtonsContainer.Parent = MainFrame
 
-    -- Кнопки переключателей (увеличиваем размер и отступы)
+    -- Кнопки переключателей
     local BHopToggle = Instance.new("TextButton")
     BHopToggle.Name = "BHopToggle"
     BHopToggle.Size = UDim2.new(0, 290, 0, 35)
@@ -499,37 +499,34 @@ local success, err = pcall(function()
         end)
     end
 
-    -- ESP система
+    -- ИСПРАВЛЕННАЯ ESP система с правильным управлением
+    local ESPLoop = nil
+
     function enableESP()
-        for _, otherPlayer in ipairs(Players:GetPlayers()) do
-            if otherPlayer ~= Player then
-                createESP(otherPlayer)
-            end
+        if ESPLoop then
+            ESPLoop:Disconnect()
+            ESPLoop = nil
         end
         
-        table.insert(ESPConnections, Players.PlayerAdded:Connect(function(newPlayer)
-            if ESPEnabled then
-                createESP(newPlayer)
+        ESPLoop = RunService.RenderStepped:Connect(function()
+            if not ESPEnabled then
+                disableESP()
+                return
             end
-        end))
-        
-        table.insert(ESPConnections, Players.PlayerRemoving:Connect(function(leftPlayer)
-            if ESPObjects[leftPlayer] then
-                for _, obj in pairs(ESPObjects[leftPlayer]) do
-                    if obj then
-                        obj:Remove()
-                    end
+            
+            for _, otherPlayer in ipairs(Players:GetPlayers()) do
+                if otherPlayer ~= Player then
+                    updateESP(otherPlayer)
                 end
-                ESPObjects[leftPlayer] = nil
             end
-        end))
+        end)
     end
 
     function disableESP()
-        for _, connection in ipairs(ESPConnections) do
-            connection:Disconnect()
+        if ESPLoop then
+            ESPLoop:Disconnect()
+            ESPLoop = nil
         end
-        ESPConnections = {}
         
         for player, objects in pairs(ESPObjects) do
             for _, obj in pairs(objects) do
@@ -541,94 +538,101 @@ local success, err = pcall(function()
         ESPObjects = {}
     end
 
-    function createESP(targetPlayer)
-        if ESPObjects[targetPlayer] then return end
-        
-        local espGroup = {}
-        
-        local box = Drawing.new("Square")
-        box.Visible = false
-        box.Color = Color3.fromRGB(255, 100, 255)
-        box.Thickness = 2
-        box.Filled = false
-        table.insert(espGroup, {Type = "Box", Object = box})
-        
-        local tracer = Drawing.new("Line")
-        tracer.Visible = false
-        tracer.Color = Color3.fromRGB(255, 100, 255)
-        tracer.Thickness = 1
-        table.insert(espGroup, {Type = "Tracer", Object = tracer})
-        
-        local name = Drawing.new("Text")
-        name.Visible = false
-        name.Color = Color3.fromRGB(255, 100, 255)
-        name.Size = 14
-        name.Center = true
-        name.Outline = true
-        table.insert(espGroup, {Type = "Name", Object = name})
-        
-        ESPObjects[targetPlayer] = espGroup
-        
-        local function updateESP()
-            if not ESPEnabled or not targetPlayer or not targetPlayer.Parent then
-                for _, espObject in pairs(espGroup) do
-                    espObject.Object.Visible = false
-                end
-                return
-            end
-            
-            local character = targetPlayer.Character
-            if not character then
-                for _, espObject in pairs(espGroup) do
-                    espObject.Object.Visible = false
-                end
-                return
-            end
-            
-            local rootPart = character:FindFirstChild("HumanoidRootPart")
-            local head = character:FindFirstChild("Head")
-            local humanoid = character:FindFirstChildOfClass("Humanoid")
-            
-            if not (rootPart and head and humanoid and humanoid.Health > 0) then
-                for _, espObject in pairs(espGroup) do
-                    espObject.Object.Visible = false
-                end
-                return
-            end
-            
-            local rootPos, rootVisible = Camera:WorldToViewportPoint(rootPart.Position)
-            local headPos = Camera:WorldToViewportPoint(head.Position + Vector3.new(0, 1, 0))
-            
-            if rootVisible then
-                local height = math.abs(headPos.Y - rootPos.Y) * 2
-                local width = height * 1.5
-                
-                for _, espObject in pairs(espGroup) do
-                    if espObject.Type == "Box" then
-                        espObject.Object.Size = Vector2.new(width, height)
-                        espObject.Object.Position = Vector2.new(rootPos.X - width/2, rootPos.Y - height/2)
-                        espObject.Object.Visible = true
-                    elseif espObject.Type == "Tracer" then
-                        espObject.Object.From = Vector2.new(Camera.ViewportSize.X/2, Camera.ViewportSize.Y)
-                        espObject.Object.To = Vector2.new(rootPos.X, rootPos.Y)
-                        espObject.Object.Visible = true
-                    elseif espObject.Type == "Name" then
-                        espObject.Object.Text = targetPlayer.Name
-                        espObject.Object.Position = Vector2.new(rootPos.X, rootPos.Y - height/2 - 20)
-                        espObject.Object.Visible = true
+    function updateESP(targetPlayer)
+        if not ESPEnabled or not targetPlayer or not targetPlayer.Parent then
+            if ESPObjects[targetPlayer] then
+                for _, obj in pairs(ESPObjects[targetPlayer]) do
+                    if obj then
+                        obj:Remove()
                     end
                 end
-            else
-                for _, espObject in pairs(espGroup) do
-                    espObject.Object.Visible = false
-                end
+                ESPObjects[targetPlayer] = nil
             end
+            return
         end
         
-        local espUpdate
-        espUpdate = RunService.RenderStepped:Connect(updateESP)
+        local character = targetPlayer.Character
+        if not character then
+            if ESPObjects[targetPlayer] then
+                for _, obj in pairs(ESPObjects[targetPlayer]) do
+                    if obj then
+                        obj:Remove()
+                    end
+                end
+                ESPObjects[targetPlayer] = nil
+            end
+            return
+        end
         
-        table.insert(ESPConnections, espUpdate)
+        local rootPart = character:FindFirstChild("HumanoidRootPart")
+        local head = character:FindFirstChild("Head")
+        local humanoid = character:FindFirstChildOfClass("Humanoid")
+        
+        if not (rootPart and head and humanoid and humanoid.Health > 0) then
+            if ESPObjects[targetPlayer] then
+                for _, obj in pairs(ESPObjects[targetPlayer]) do
+                    if obj then
+                        obj:Remove()
+                    end
+                end
+                ESPObjects[targetPlayer] = nil
+            end
+            return
+        end
+        
+        local rootPos, rootVisible = Camera:WorldToViewportPoint(rootPart.Position)
+        local headPos = Camera:WorldToViewportPoint(head.Position + Vector3.new(0, 1, 0))
+        
+        if not ESPObjects[targetPlayer] then
+            ESPObjects[targetPlayer] = {}
+            
+            local box = Drawing.new("Square")
+            box.Visible = false
+            box.Color = Color3.fromRGB(255, 100, 255)
+            box.Thickness = 2
+            box.Filled = false
+            table.insert(ESPObjects[targetPlayer], box)
+            
+            local tracer = Drawing.new("Line")
+            tracer.Visible = false
+            tracer.Color = Color3.fromRGB(255, 100, 255)
+            tracer.Thickness = 1
+            table.insert(ESPObjects[targetPlayer], tracer)
+            
+            local name = Drawing.new("Text")
+            name.Visible = false
+            name.Color = Color3.fromRGB(255, 100, 255)
+            name.Size = 14
+            name.Center = true
+            name.Outline = true
+            table.insert(ESPObjects[targetPlayer], name)
+        end
+        
+        local espGroup = ESPObjects[targetPlayer]
+        local box = espGroup[1]
+        local tracer = espGroup[2]
+        local name = espGroup[3]
+        
+        if rootVisible then
+            local height = math.abs(headPos.Y - rootPos.Y) * 2
+            local width = height * 1.5
+            
+            box.Size = Vector2.new(width, height)
+            box.Position = Vector2.new(rootPos.X - width/2, rootPos.Y - height/2)
+            box.Visible = true
+            
+            tracer.From = Vector2.new(Camera.ViewportSize.X/2, Camera.ViewportSize.Y)
+            tracer.To = Vector2.new(rootPos.X, rootPos.Y)
+            tracer.Visible = true
+            
+            name.Text = targetPlayer.Name
+            name.Position = Vector2.new(rootPos.X, rootPos.Y - height/2 - 20)
+            name.Visible = true
+        else
+            box.Visible = false
+            tracer.Visible = false
+            name.Visible = false
+        end
     end
 
     -- Функция для поиска ближайшего игрока в FOV
@@ -672,42 +676,71 @@ local success, err = pcall(function()
         return closestPlayer
     end
 
-    -- Исправленный Aim Assist с FOV 180 (на ЛКМ)
-    RunService.RenderStepped:Connect(function()
-        if fovCircle then
-            fovCircle.Position = Vector2.new(Camera.ViewportSize.X/2, Camera.ViewportSize.Y/2)
-            fovCircle.Visible = AimAssistEnabled or SilentAimEnabled
+    -- ИСПРАВЛЕННЫЙ Aim Assist с правильным управлением
+    local AimAssistLoop = nil
+
+    local function startAimAssist()
+        if AimAssistLoop then
+            AimAssistLoop:Disconnect()
         end
         
-        if AimAssistEnabled and UIS:IsMouseButtonPressed(Enum.UserInputType.MouseButton2) then
-            if Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
-                local closestPlayer = findClosestPlayerInFOV(aimAssistFOV, true)
-                
-                if closestPlayer and closestPlayer.Character and closestPlayer.Character:FindFirstChild("Head") then
-                    local targetHead = closestPlayer.Character.Head
-                    local cameraPosition = Camera.CFrame.Position
-                    local targetPosition = targetHead.Position
+        AimAssistLoop = RunService.RenderStepped:Connect(function()
+            if not AimAssistEnabled then
+                if AimAssistLoop then
+                    AimAssistLoop:Disconnect()
+                    AimAssistLoop = nil
+                end
+                return
+            end
+            
+            if fovCircle then
+                fovCircle.Position = Vector2.new(Camera.ViewportSize.X/2, Camera.ViewportSize.Y/2)
+                fovCircle.Visible = true
+            end
+            
+            if UIS:IsMouseButtonPressed(Enum.UserInputType.MouseButton2) then
+                if Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
+                    local closestPlayer = findClosestPlayerInFOV(aimAssistFOV, true)
                     
-                    local direction = (targetPosition - cameraPosition).Unit
-                    local currentLook = Camera.CFrame.LookVector
-                    local smoothFactor = 0.3
-                    
-                    local newLook = currentLook:Lerp(direction, smoothFactor)
-                    Camera.CFrame = CFrame.new(cameraPosition, cameraPosition + newLook)
+                    if closestPlayer and closestPlayer.Character and closestPlayer.Character:FindFirstChild("Head") then
+                        local targetHead = closestPlayer.Character.Head
+                        local cameraPosition = Camera.CFrame.Position
+                        local targetPosition = targetHead.Position
+                        
+                        local direction = (targetPosition - cameraPosition).Unit
+                        local currentLook = Camera.CFrame.LookVector
+                        local smoothFactor = 0.3
+                        
+                        local newLook = currentLook:Lerp(direction, smoothFactor)
+                        Camera.CFrame = CFrame.new(cameraPosition, cameraPosition + newLook)
+                    end
                 end
             end
-        end
-    end)
+        end)
+    end
 
-    -- Улучшенный Silent Aim с FOV 180 (работает при зажатии ЛКМ каждые 0.05 секунд)
-    local silentAimLoop
-    local function startSilentAimLoop()
-        if silentAimLoop then
-            silentAimLoop:Disconnect()
+    -- ИСПРАВЛЕННЫЙ Silent Aim с правильным управлением
+    local SilentAimLoop = nil
+
+    local function startSilentAim()
+        if SilentAimLoop then
+            SilentAimLoop:Disconnect()
         end
         
-        silentAimLoop = RunService.Heartbeat:Connect(function()
-            if SilentAimEnabled and UIS:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) then
+        SilentAimLoop = RunService.Heartbeat:Connect(function()
+            if not SilentAimEnabled then
+                if SilentAimLoop then
+                    SilentAimLoop:Disconnect()
+                    SilentAimLoop = nil
+                end
+                return
+            end
+            
+            if fovCircle then
+                fovCircle.Visible = true
+            end
+            
+            if UIS:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) then
                 if Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
                     local closestPlayer = findClosestPlayerInFOV(180, true)
                     if closestPlayer and closestPlayer.Character and closestPlayer.Character:FindFirstChild("Head") then
@@ -725,12 +758,20 @@ local success, err = pcall(function()
         if fovCircle then
             fovCircle:Remove()
         end
-        if silentAimLoop then
-            silentAimLoop:Disconnect()
+        if SilentAimLoop then
+            SilentAimLoop:Disconnect()
+        end
+        if AimAssistLoop then
+            AimAssistLoop:Disconnect()
+        end
+        if ESPLoop then
+            ESPLoop:Disconnect()
         end
         if bindConnection then
             bindConnection:Disconnect()
         end
+        disableChams()
+        disableESP()
     end)
 
     MinimizeButton.MouseButton1Click:Connect(function()
@@ -775,10 +816,11 @@ local success, err = pcall(function()
         toggleButton(SilentAimToggle, SilentAimEnabled)
         
         if SilentAimEnabled then
-            startSilentAimLoop()
+            startSilentAim()
         else
-            if silentAimLoop then
-                silentAimLoop:Disconnect()
+            if SilentAimLoop then
+                SilentAimLoop:Disconnect()
+                SilentAimLoop = nil
             end
         end
         
@@ -812,8 +854,13 @@ local success, err = pcall(function()
         AimAssistEnabled = not AimAssistEnabled
         toggleButton(AimAssistToggle, AimAssistEnabled)
         
-        if not AimAssistEnabled then
-            aimAssistTarget = nil
+        if AimAssistEnabled then
+            startAimAssist()
+        else
+            if AimAssistLoop then
+                AimAssistLoop:Disconnect()
+                AimAssistLoop = nil
+            end
         end
         
         if fovCircle then
@@ -1013,7 +1060,7 @@ local success, err = pcall(function()
 
     -- Уведомление в чат
     game:GetService("StarterGui"):SetCore("ChatMakeSystemMessage", {
-        Text = "Moon Blossom v2.0 loaded!",
+        Text = "Moon Blossom v2.1 loaded!",
         Color = Color3.fromRGB(180, 100, 255),
         Font = Enum.Font.GothamBold,
         FontSize = Enum.FontSize.Size18
@@ -1040,7 +1087,10 @@ local success, err = pcall(function()
                 enableESP()
             end
             if SilentAimEnabled then
-                startSilentAimLoop()
+                startSilentAim()
+            end
+            if AimAssistEnabled then
+                startAimAssist()
             end
             if freezeEnabled then
                 toggleFreeze(freezeEnabled)
